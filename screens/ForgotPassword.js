@@ -4,25 +4,23 @@ import { useNavigation } from '@react-navigation/core'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../firebase'
 
-const ForgotPassword = () => {
-  return (
-    <KeyboardAvoidingView
-    style={styles.container}
-    behavior='padding'>
+export const ForgotPassword = ({ navigation }) => {
+    return (
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior='padding'>
 
-      <Text>Forgot Password</Text>
+            <Text>Forgot Password</Text>
 
-    </KeyboardAvoidingView>
-  )
+        </KeyboardAvoidingView>
+    )
 }
 
-export default ForgotPassword
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: "#c8b9e4"
-},
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "#c8b9e4"
+    },
 })

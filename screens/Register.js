@@ -5,25 +5,23 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../firebase'
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-const Register = () => {
-  return (
-    <KeyboardAvoidingView
-    style={styles.container}
-    behavior='padding'>
+export const Register = ({ navigation }) => {
+    return (
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior='padding'>
 
-      <Text>Register</Text>
+            <Text>Register</Text>
 
-    </KeyboardAvoidingView>
-  )
+        </KeyboardAvoidingView>
+    )
 }
 
-export default Register
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: "#c8b9e4"
-},
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: "#c8b9e4"
+    },
 })
