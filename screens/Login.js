@@ -30,7 +30,7 @@ const Login = () => {
     useEffect(() => {                                               // checks if a user is already logged in
         const unsubscribe = auth.onAuthStateChanged(user => {
             if(user) {
-                navigation.replace("HomeScreen")
+                navigation.replace('Login')
             }
         })
 
