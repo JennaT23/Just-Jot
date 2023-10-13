@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/core'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../../../firebase'
 import { registerstyle } from './register.style'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
 
 export const Register = ({ navigation }) => {
     const [email, setEmail] = useState('')
@@ -22,15 +22,41 @@ export const Register = ({ navigation }) => {
               console.log("creating new user");
               const user = userCredential.user;
               console.log("created new user: " + user.email);
-              navigation.replace('Login');
-              // ...
             })
             .catch((error) => {
               console.log("failed to create new user");
               const errorCode = error.code;
               const errorMessage = error.message;
-              // ..
-            });
+        });
+
+        onAuthStateChanged(auth, function(user) {
+
+            if (user) {
+
+                // Updates the user attributes:
+
+                updateProfile(user, { // <-- Update Method here
+
+                displayName: username,
+
+                }).then(function() {
+
+                // Profile updated successfully!
+
+                var displayName = user.displayName;
+
+                console.log("displayname: " + displayName);
+                navigation.replace('Login');
+
+                }, function(error) {
+                // An error happened.
+                    console.log("failed to create new user");
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });     
+
+            }
+        });
     }
 
     // useEffect(() => {                                               // checks if a user is already logged in
