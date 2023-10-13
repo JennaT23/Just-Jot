@@ -1,11 +1,25 @@
-import React from 'react'
-import { Text } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { appHomeStyle } from './appHome.style'
+import { getAuth } from 'firebase/auth'
 
 export const Home = () => {
+    const auth = getAuth()
+    const user = auth.currentUser;
+    const [username, setUsername] = useState('');
+
+    useEffect(() => {
+        if (user) {
+            setUsername(user.displayName)
+        }
+    }, [user])
+
     return (
         <SafeAreaView>
-            <Text>Welcome to Hell :D</Text>
+            <View>
+                <Text style={appHomeStyle.title}>Hello {username}!</Text>
+            </View>
         </SafeAreaView>
     )
 }
