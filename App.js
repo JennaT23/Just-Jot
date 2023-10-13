@@ -9,6 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
 import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
+import { Home } from './app/screens/appHome/appHome.screen'
 
 // function HomeScreen() {
 //     return (
