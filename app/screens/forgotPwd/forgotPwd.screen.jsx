@@ -15,27 +15,20 @@ export const ForgotPassword = ({ navigation }) => {
     const userAuthstyle = useThemedStyles(userAuth_style);
 
     const [email, setEmail] = useState('')
-    const [newPassword, setNewPassword] = useState('')
 
     const handleReset = () => {                                  // function to handle creating a new account
         console.log('email: ' + email);
         console.log('new password: ' + newPassword);
 
-        auth
-        .updateUser(uid, {
-            email: email,
-            emailVerified: true,
-            password: newPassword,
-            disabled: true,
-        })
-        .then((userRecord) => {
-            // See the UserRecord reference doc for the contents of userRecord.
-            console.log('Successfully updated user', userRecord.toJSON());
-            navigation.replace('Login');
-        })
-        .catch((error) => {
-            console.log('Error updating user:', error);
-        });
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                Alert.alert('Password Reset Email Sent', 'Please check your email for password reset instructions.')
+            })
+            .catch((error) => {
+                Alert.alert('Password reset failed', error.message)
+            })
+
+        navigation.replace('Login')
     }
 
     // useEffect(() => {                                               // checks if a user is already logged in
@@ -52,19 +45,20 @@ export const ForgotPassword = ({ navigation }) => {
         <SafeAreaView
                     style={appstyle.pageContainer}
                     behavior='padding'>
-
+                      
 
             <View style={userAuthstyle.inputContainer}>
 
                 <Text style={appstyle.title}>Reset Password</Text>
 
                 <TextInput
-                    placeholder='Email'
+                    placeholder='Enter Email to Reset Password'
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={appstyle.input}
                     inputMode='email'
                 />
+
                 <TextInput
                     placeholder='New Password'
                     value={newPassword}
@@ -72,6 +66,7 @@ export const ForgotPassword = ({ navigation }) => {
                     style={appstyle.input}
                     secureTextEntry
                 />
+
             </View>
 
             <View style={userAuthstyle.buttonContainer}>
