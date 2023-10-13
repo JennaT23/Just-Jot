@@ -41,14 +41,14 @@ export const loginstyle = StyleSheet.create({
     // },
     forgotPassword: {
         padding: 10,
-        textDecorationLine: 'underline',
+        //textDecorationLine: 'underline',
     },
     forgotPasswordContainer: {
         alignItems: 'flex-end'
     },
     clickableText: {
         padding: 15,
-        textDecorationLine: 'underline',
+        //textDecorationLine: 'underline',
     },
     title: {
         fontSize: 24,
