@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { appHomeStyle } from './appHome.style'
+import { appHomeStyle as appHome_style } from './appHome.style'
+import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
+// import { Text } from '../../../appStyles/customStyle'
+import useThemedStyles from '../../../appStyles/useThemedStyles'
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
+    const appstyle = useThemedStyles(app_style);
+    const appHomestyle = useThemedStyles(appHome_style);
+
     const auth = getAuth()
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
@@ -16,9 +22,9 @@ export const Home = () => {
     }, [user])
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={appstyle.pageContainer}>
             <View>
-                <Text style={appHomeStyle.title}>Hello {username}!</Text>
+                <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
         </SafeAreaView>
     )

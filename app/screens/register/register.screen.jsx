@@ -19,20 +19,14 @@ export const Register = ({ navigation }) => {
     const [username, setUsername] = useState('')
 
     const handleRegister = () => {                                  // function to handle creating a new account
-        console.log('email: ' + email);
-        console.log('password: ' + password);
-
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
               // Signed up 
-              console.log("creating new user");
               const user = userCredential.user;
-              console.log("created new user: " + user.email);
+            //   console.log("created new user: " + user.email);
             })
             .catch((error) => {
-              console.log("failed to create new user");
-              const errorCode = error.code;
-              const errorMessage = error.message;
+                Alert.alert('Failed to create new user', error.message)
         });
 
         onAuthStateChanged(auth, function(user) {
@@ -51,14 +45,13 @@ export const Register = ({ navigation }) => {
 
                 var displayName = user.displayName;
 
-                console.log("displayname: " + displayName);
+                // console.log("displayname: " + displayName);
+                Alert.alert('Account successfully created')
                 navigation.replace('Login');
 
                 }, function(error) {
                 // An error happened.
-                    console.log("failed to create new user");
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
+                    Alert.alert('Something went wrong, please check your information and try again', error.message)
                 });     
 
             }

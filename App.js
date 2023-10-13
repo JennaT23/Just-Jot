@@ -18,7 +18,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
                     <Stack.Screen options={{ headerShown: true }} name="Register" component={Register} />
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
-                    <Stack.Screen options={{ headerShown: true }} name="Home" component={Home} />
+                    <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
                 </Stack.Navigator>
             </NavigationContainer>
         </ThemeProvider>

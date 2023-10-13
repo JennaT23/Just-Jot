@@ -30,11 +30,11 @@ export const Login = ({ n }) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 const user = userCredentials.user;
-                console.log("Logged in:", user.email)
                 replace('Home')
             })
             .catch((error) => {
                 console.log("Error", error)
+                Alert.alert('Login failed', error.message)
             })
     }
 
