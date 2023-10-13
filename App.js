@@ -3,10 +3,12 @@ import { StyleSheet } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Login } from './screens/Login'
-import { Register } from './screens/Register'
-import { ForgotPassword } from './screens/ForgotPassword'
-import { Home } from './screens/Home'
+// import { Login } from './screens/Login'
+// import { Register } from './screens/Register'
+// import { ForgotPassword } from './screens/ForgotPassword'
+import { Login } from './app/screens/login/login.screen'
+import { Register } from './app/screens/register/register.screen'
+import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
 
 // function HomeScreen() {
 //     return (
