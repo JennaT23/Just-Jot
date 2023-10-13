@@ -1,12 +1,22 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, SafeAreaView, Alert } from 'react-native'
+import { TextInput, TouchableOpacity, View, Image, SafeAreaView, Alert, Switch } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/core'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../../../firebase'
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { loginstyle } from './login.style'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { loginstyle as login_style } from './login.style'
+import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { userAuthstyle as userAuth_style } from '../userAuthstyle'
+import useTheme from '../../../appStyles/useTheme'
+import useThemedStyles from '../../../appStyles/useThemedStyles'
+import Text from '../../../appStyles/customStyle'
 
 export const Login = ({ n }) => {
+    const theme = useTheme();
+
+    const appstyle = useThemedStyles(app_style);
+    const loginstyle = useThemedStyles(login_style);
+    const userAuthstyle = useThemedStyles(userAuth_style);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { navigate } = useNavigation()
@@ -26,32 +36,7 @@ export const Login = ({ n }) => {
             .catch((error) => {
                 console.log("Error", error)
             })
-
-        // navigate('Home')
-        // try {
-        //     const response = await signInWithEmailAndPassword(auth, email, password);
-        //     console.log('User logged in:', response.user);
-        //     replace('Register');
-        //     console.log('after navigate')
-        // } catch (error) {
-        //     console.log('Error', error.message);
-        // }
     }
-    // signInWithEmailAndPassword(auth, email, password)
-    //     .then(userCredential => {
-    //         console.log('auth', auth, 'email', email, 'password', password)
-    //         const user = userCredential.user;
-    //         console.log(userCredential.user)
-    //         console.log('Logged in with', user.email);
-    //         navigation.replace('Home');
-    //         isValidLogin = true;
-    //     })
-    //     .catch(error => alert(error.message))
-    // console.log('came out')
-    // if (isValidLogin) {
-    //     console.log('inside loop')
-    //     console.log('after navigate TT')
-    // }
 
     const handleForgotPassword = () => {
         navigate('ForgotPassword');
@@ -69,31 +54,34 @@ export const Login = ({ n }) => {
 
     return (
         <SafeAreaView
-            style={loginstyle.container}
+            style={appstyle.pageContainer}
             behavior='padding'
         >
+
+        {/* KEEP BECAUSE WILL NEED FOR LATER */}
+        <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} />
 
             {/* <Image
             source={require('../assets/')}                                     // find a logo and replace the source
             style={styles.logo}
         /> */}
 
-            <View style={loginstyle.inputContainer}>
+            <View style={userAuthstyle.inputContainer}>
 
-                <Text style={loginstyle.title}>Login</Text>
+                <Text style={appstyle.title}>Login</Text>
 
                 <TextInput
                     placeholder='Email'
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    style={[loginstyle.input, { marginBottom: 10 }]}
-                    keyboardType='email-address'
+                    style={appstyle.input}
+                    inputMode='email'
                 />
                 <TextInput
                     placeholder='Password'
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    style={loginstyle.input}
+                    style={appstyle.input}
                     secureTextEntry
                 />
 
@@ -104,17 +92,17 @@ export const Login = ({ n }) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={loginstyle.buttonContainer}>
+            <View style={userAuthstyle.buttonContainer}>
 
                 <TouchableOpacity                                               // login button
                     onPress={handleLogin}
-                    style={loginstyle.button}
+                    style={appstyle.button}
                 >
-                    <Text style={loginstyle.buttonText}>LOGIN</Text>
+                    <Text style={appstyle.buttonText}>LOGIN</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleRegister}>
-                    <Text style={loginstyle.clickableText}>Don't have an account? Signup</Text>
+                    <Text style={appstyle.clickableText}>Don't have an account? Signup</Text>
                 </TouchableOpacity>
 
             </View>

@@ -1,11 +1,19 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, Image } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/core'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../../../firebase'
-import { forgotPwdstyle } from './forgotPwd.style'
+import { forgotPwdstyle as forgotPwd_style } from './forgotPwd.style'
+import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { userAuthstyle as userAuth_style } from '../userAuthstyle'
+import Text from '../../../appStyles/customStyle'
+import useThemedStyles from '../../../appStyles/useThemedStyles'
 
 export const ForgotPassword = ({ navigation }) => {
+    const appstyle = useThemedStyles(app_style);
+    const forgotPwdstyle = useThemedStyles(forgotPwd_style);
+    const userAuthstyle = useThemedStyles(userAuth_style);
+
     const [email, setEmail] = useState('')
     const [newPassword, setNewPassword] = useState('')
 
@@ -42,37 +50,37 @@ export const ForgotPassword = ({ navigation }) => {
 
     return (
         <SafeAreaView
-                    style={forgotPwdstyle.container}
+                    style={appstyle.pageContainer}
                     behavior='padding'>
 
 
-            <View style={forgotPwdstyle.inputContainer}>
+            <View style={userAuthstyle.inputContainer}>
 
-                <Text style={forgotPwdstyle.title}>Reset Password</Text>
+                <Text style={appstyle.title}>Reset Password</Text>
 
                 <TextInput
                     placeholder='Email'
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    style={forgotPwdstyle.input}
+                    style={appstyle.input}
                     inputMode='email'
                 />
                 <TextInput
                     placeholder='New Password'
                     value={newPassword}
                     onChangeText={text => setNewPassword(text)}
-                    style={forgotPwdstyle.input}
+                    style={appstyle.input}
                     secureTextEntry
                 />
             </View>
 
-            <View style={forgotPwdstyle.buttonContainer}>
+            <View style={userAuthstyle.buttonContainer}>
 
                 <TouchableOpacity                                               // reset button
                     onPress={handleReset}
-                    style={forgotPwdstyle.button}
+                    style={appstyle.button}
                 >
-                    <Text style={forgotPwdstyle.buttonText}>Reset Password</Text>
+                    <Text style={appstyle.buttonText}>Reset Password</Text>
                 </TouchableOpacity>
 
             </View>

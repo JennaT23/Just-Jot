@@ -1,12 +1,18 @@
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Image, SafeAreaView } from 'react-native'
+import { TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/core'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../../../firebase'
-import { registerstyle } from './register.style'
-import { getAuth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
+import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { userAuthstyle as userAuth_style } from '../userAuthstyle'
+import { registerstyle as register_style } from './register.style'
+import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
+import Text from '../../../appStyles/customStyle'
+import useThemedStyles from '../../../appStyles/useThemedStyles'
 
 export const Register = ({ navigation }) => {
+    const appstyle = useThemedStyles(app_style);
+    const registerstyle = useThemedStyles(register_style);
+    const userAuthstyle = useThemedStyles(userAuth_style);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
@@ -71,49 +77,49 @@ export const Register = ({ navigation }) => {
 
     return (
         <SafeAreaView
-                    style={registerstyle.container}
+                    style={appstyle.pageContainer}
                     behavior='padding'>
 
 
-            <View style={registerstyle.inputContainer}>
+            <View style={userAuthstyle.inputContainer}>
 
-                <Text style={registerstyle.title}>Register</Text>
+                <Text style={appstyle.title}>Register</Text>
 
                 <TextInput
                     placeholder='Name'
                     value={name}
                     onChangeText={text => setName(text)}
-                    style={registerstyle.input}
+                    style={appstyle.input}
                 />
                 <TextInput
                     placeholder='Email'
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    style={registerstyle.input}
+                    style={appstyle.input}
                     inputMode='email'
                 />
                 <TextInput
                     placeholder='Username'
                     value={username}
                     onChangeText={text => setUsername(text)}
-                    style={registerstyle.input}
+                    style={appstyle.input}
                 />
                 <TextInput
                     placeholder='Password'
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    style={registerstyle.input}
+                    style={appstyle.input}
                     secureTextEntry
                 />
             </View>
 
-            <View style={registerstyle.buttonContainer}>
+            <View style={userAuthstyle.buttonContainer}>
 
                 <TouchableOpacity                                               // register button
                     onPress={handleRegister}
-                    style={registerstyle.button}
+                    style={appstyle.button}
                 >
-                    <Text style={registerstyle.buttonText}>Register</Text>
+                    <Text style={appstyle.buttonText}>Register</Text>
                 </TouchableOpacity>
 
             </View>
