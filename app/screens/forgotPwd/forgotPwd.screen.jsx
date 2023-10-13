@@ -1,13 +1,12 @@
-import { KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity, View, SafeAreaView, Image } from 'react-native'
+import { TextInput, TouchableOpacity, View, SafeAreaView, Alert, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/core'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../../../firebase'
 import { forgotPwdstyle as forgotPwd_style } from './forgotPwd.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { userAuthstyle as userAuth_style } from '../userAuthstyle'
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
+import { sendPasswordResetEmail } from 'firebase/auth'
 
 export const ForgotPassword = ({ navigation }) => {
     const appstyle = useThemedStyles(app_style);
@@ -18,7 +17,6 @@ export const ForgotPassword = ({ navigation }) => {
 
     const handleReset = () => {                                  // function to handle creating a new account
         console.log('email: ' + email);
-        console.log('new password: ' + newPassword);
 
         sendPasswordResetEmail(auth, email)
             .then(() => {
@@ -43,8 +41,8 @@ export const ForgotPassword = ({ navigation }) => {
 
     return (
         <SafeAreaView
-                    style={appstyle.pageContainer}
-                    behavior='padding'>
+            style={appstyle.pageContainer}
+            behavior='padding'>
                       
 
             <View style={userAuthstyle.inputContainer}>
@@ -57,14 +55,6 @@ export const ForgotPassword = ({ navigation }) => {
                     onChangeText={text => setEmail(text)}
                     style={appstyle.input}
                     inputMode='email'
-                />
-
-                <TextInput
-                    placeholder='New Password'
-                    value={newPassword}
-                    onChangeText={text => setNewPassword(text)}
-                    style={appstyle.input}
-                    secureTextEntry
                 />
 
             </View>
