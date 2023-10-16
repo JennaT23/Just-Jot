@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { Text } from 'react-native-paper'
+//import { Text } from 'react-native-paper'
 import { View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { appHomeStyle } from './appHome.style'
+import { appHomeStyle as appHome_style } from './appHome.style'
+import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
+import Text from '../../../appStyles/customStyle'
+import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { Card } from 'react-native-paper'
 
 export const Home = ({ navigation }) => {
+    const appstyle = useThemedStyles(app_style);
+    const appHomestyle = useThemedStyles(appHome_style);
+
     const auth = getAuth()
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
@@ -18,28 +24,27 @@ export const Home = ({ navigation }) => {
     }, [user])
 
     return (
-        //<SafeAreaView>
-        <>
+        // <SafeAreaView style={appstyle.pageContainer}>
+        <SafeAreaView>
             <View>
-                <Text variant="headlineLarge">Hello {username}!</Text>
+                <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
             <View>
                 <Card>
                     <Card.Title title="Friday, October 13 2023" />
                     <Card.Content>
-                        <Text variant="titleSmall">Card Title</Text>
+                        <Text>Card Title</Text>
                         <Text>Card content</Text>
                     </Card.Content>
                 </Card>
                 <Card>
                     <Card.Title title="Saturday, October 12 2023" />
                     <Card.Content>
-                        <Text variant="titleSmall">Card Title 2</Text>
+                        <Text>Card Title 2</Text>
                         <Text>Card content 2</Text>
                     </Card.Content>
                 </Card>
             </View>
-        </>
-        //</SafeAreaView >
+        </SafeAreaView >
     )
 }
