@@ -1,7 +1,5 @@
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView, Image, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/core'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { auth } from '../../../firebase'
 import { forgotPwdstyle } from './forgotPwd.style'
 import { sendPasswordResetEmail } from 'firebase/auth'
