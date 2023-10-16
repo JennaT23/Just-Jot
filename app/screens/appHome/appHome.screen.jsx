@@ -55,8 +55,9 @@ export const Home = ({ navigation }) => {
         return `${day} ${month} ${date} ${year} ${formattedTime}`;
     };
 
-    const handleView = () => {
-        navigation.navigate('ViewEntry');
+    const handleView = (entry) => {
+        console.log(entry);
+        navigation.navigate('ViewEntry', { entry });
     };
 
     return (
@@ -68,12 +69,11 @@ export const Home = ({ navigation }) => {
             <View>
                 {journalEntries.map((entry, index) => (
                     <Card key={index}>
-                        {/* <Card.Title title="Friday, October 13 2023" /> */}
                         <Card.Content>
                             <Title>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Title>
                             <Paragraph>{entry.Text}</Paragraph>
                             <Card.Actions>
-                                <Button onPress={handleView}>View</Button>
+                                <Button onPress={() => handleView(entry)}>View</Button>
                             </Card.Actions>
                         </Card.Content>
                     </Card>
