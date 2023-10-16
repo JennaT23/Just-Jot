@@ -5,6 +5,7 @@ import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
 import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
 import { Home } from './app/screens/appHome/appHome.screen'
+import { ViewEntry } from './app/screens/viewEntry/viewEntry'
 import ThemeProvider from './appStyles/themeProvider';
 
 
@@ -19,6 +20,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true }} name="Register" component={Register} />
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+                    <Stack.Screen options={{ headerShow: true }} name="ViewEntry" component={ViewEntry} />
                 </Stack.Navigator>
             </NavigationContainer>
         </ThemeProvider>
