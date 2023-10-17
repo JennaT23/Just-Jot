@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
-//import { Text } from 'react-native-paper'
-import { View } from 'react-native'
+import { Button, View, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appHomeStyle as appHome_style } from './appHome.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
+import { useNavigation } from '@react-navigation/core'
 import { Card, Title, Paragraph, Button } from 'react-native-paper'
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 
 export const Home = ({ navigation }) => {
     const appstyle = useThemedStyles(app_style);
     const appHomestyle = useThemedStyles(appHome_style);
+
+    const { navigate } = useNavigation()
 
     const auth = getAuth()
     const user = auth.currentUser;
@@ -26,6 +28,10 @@ export const Home = ({ navigation }) => {
         fetchJournalEntries();
     }, [user])
 
+    // temporary
+    const movePage = () => {
+        navigate("NewEntry");
+    }
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
@@ -65,6 +71,13 @@ export const Home = ({ navigation }) => {
         <SafeAreaView>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
+
+                {/* temporary */}
+                <TouchableOpacity
+                    onPress={movePage}
+                    style={appstyle.button}
+                />
+
             </View>
             <View>
                 {journalEntries.map((entry, index) => (
