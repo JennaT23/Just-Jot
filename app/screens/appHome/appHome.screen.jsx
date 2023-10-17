@@ -7,7 +7,7 @@ import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
-import { Card, Title, Paragraph, Button } from 'react-native-paper'
+import { Card, Title, Paragraph, Button, FAB } from 'react-native-paper'
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 
 export const Home = ({ navigation }) => {
@@ -29,7 +29,7 @@ export const Home = ({ navigation }) => {
     }, [user])
 
     // temporary
-    const movePage = () => {
+    const moveNewEntry = () => {
         navigation.navigate('NewEntry');
     }
     const fetchJournalEntries = async () => {
@@ -68,16 +68,9 @@ export const Home = ({ navigation }) => {
 
     return (
         // <SafeAreaView style={appstyle.pageContainer}>
-        <SafeAreaView>
+        <SafeAreaView style={appHomestyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
-
-                {/* temporary */}
-                <TouchableOpacity
-                    onPress={movePage}
-                    style={appstyle.button}
-                />
-
             </View>
             <View>
                 {journalEntries.map((entry, index) => (
@@ -92,6 +85,8 @@ export const Home = ({ navigation }) => {
                     </Card>
                 ))}
             </View>
+            <FAB style={appHomestyle.fab} icon="plus"
+                onPress={moveNewEntry} /> 
         </SafeAreaView >
     )
 }
