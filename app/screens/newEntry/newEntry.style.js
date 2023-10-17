@@ -22,6 +22,7 @@ export const newEntrystyle = theme => StyleSheet.create({
     },
     container: {
         flex: 1,
+        marginTop: -25,
 
     },
     cardTitle: {

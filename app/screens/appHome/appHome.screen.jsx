@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appHomeStyle as appHome_style } from './appHome.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -30,7 +30,7 @@ export const Home = ({ navigation }) => {
 
     // temporary
     const movePage = () => {
-        navigate("NewEntry");
+        navigation.navigate('NewEntry');
     }
     const fetchJournalEntries = async () => {
         try {

@@ -21,7 +21,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true }} name="Register" component={Register} />
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
-                    <Stack.Screen options={{ headerShown: false }} name="NewEntry" component={NewEntry} />
+                    <Stack.Screen options={{ headerShown: true }} name="NewEntry" component={NewEntry} />
                     <Stack.Screen options={{ headerShow: true }} name="ViewEntry">
                         {props => <ViewEntry {...props} />}
                     </Stack.Screen>
