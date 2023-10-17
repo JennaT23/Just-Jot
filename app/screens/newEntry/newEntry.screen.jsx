@@ -8,6 +8,7 @@ import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { newEntrystyle as newEntry_style } from './newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
+import { writeJournalEntryToFirebase } from '../../firebase/writeJournalEntriesToFirebase'
 
 
 export const NewEntry = ({ navigation }) => {
@@ -16,10 +17,18 @@ export const NewEntry = ({ navigation }) => {
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [text, setContent] = useState('');
 
-    const saveNote = () => {
-        // code for saving to DB
+    const auth = getAuth()
+    const user = auth.currentUser;
+
+    const saveEntry = () => {
+        const date = new Date();
+        const location = "[0 N, 0 E]"; // change to get actual geolocation
+        const uid = user.uid;
+        const journal = {date, location, title, text, uid};
+        console.log(journal);
+        writeJournalEntryToFirebase(journal);
     }
 
     return (
@@ -40,7 +49,7 @@ export const NewEntry = ({ navigation }) => {
                     style={newEntrystyle.iconButton}
                 />
                 <TouchableOpacity
-                    onPress={saveNote}
+                    onPress={saveEntry}
                     style={newEntrystyle.saveButton}>
                     <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
                 </TouchableOpacity>
@@ -49,7 +58,7 @@ export const NewEntry = ({ navigation }) => {
             <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
             <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                 <View style={newEntrystyle.noteBodyContainer}>
-                    <TextInput value={content} onChangeText={text => setContent(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' /> 
+                    <TextInput value={text} onChangeText={text => setContent(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' /> 
                 </View>
             </ScrollView>
 
