@@ -3,8 +3,13 @@ import { appstyle } from "../../../appStyles/appstyle";
 import Text from "../../../appStyles/customStyle";
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { viewEntryStyle } from "./viewEntry.style";
+import useThemedStyles from "../../../appStyles/useThemedStyles";
+import { ScrollView, View } from "react-native";
 
 export const ViewEntry = ({ navigation, route }) => {
+    const viewstyle = useThemedStyles(viewEntryStyle);
+
     console.log('entryData', route.params.entry);
     const entry = route.params.entry;
 
@@ -28,10 +33,14 @@ export const ViewEntry = ({ navigation, route }) => {
     };
 
     return (
-        <SafeAreaView>
-            <Title>{entry.Title}</Title>
-            <Subheading>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
-            <Paragraph>{entry.Text}</Paragraph>
-        </SafeAreaView>
+        <ScrollView style={viewstyle.container}>
+            <View style={viewstyle.view}>
+                <Title style={viewstyle.title}>{entry.Title}</Title>
+                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+            </View>
+            <View style={viewstyle.view}>
+                <Paragraph>{entry.Text}</Paragraph>
+            </View>
+        </ScrollView>
     );
 };

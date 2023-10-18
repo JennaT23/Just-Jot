@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { View, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
+import { View, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
 import { IconButton } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -22,6 +22,9 @@ export const NewEntry = ({ navigation }) => {
     const auth = getAuth()
     const user = auth.currentUser;
 
+    const scrollViewRef = useRef(null);
+    const textInputRef = useRef(null);
+
     const saveEntry = () => {
         const date = new Date();
         const location = "[0 N, 0 E]"; // change to get actual geolocation
@@ -31,6 +34,18 @@ export const NewEntry = ({ navigation }) => {
         writeJournalEntryToFirebase(journal);
         navigation.replace('Home');
     }
+
+    // supposed to make the TextInput component scroll as you are typing
+    useEffect(() => {
+        if (scrollViewRef.current && textInputRef.current) {
+            scrollViewRef.current.scrollTo({
+                y: textInputRef.current.measureInWindow((x, y, width, height) => {
+                    return y;
+                }),
+                animated: true,
+            });
+        }
+    }, [text]);
 
     return (
         <SafeAreaView style={newEntrystyle.container}>
@@ -57,10 +72,18 @@ export const NewEntry = ({ navigation }) => {
             </View>
 
             <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
-            <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-                <View style={newEntrystyle.noteBodyContainer}>
-                    <TextInput value={text} onChangeText={text => setContent(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' />
-                </View>
+            <ScrollView ref={scrollViewRef} contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
+                {/* <KeyboardAvoidingView style={newEntrystyle.noteBodyContainer}> */}
+                <TextInput
+                    ref={textInputRef}
+                    value={text}
+                    onChangeText={text => setContent(text)}
+                    style={newEntrystyle.noteBody}
+                    multiline={true}
+                    editable
+                    placeholder='Start entry'
+                />
+                {/* </KeyboardAvoidingView> */}
             </ScrollView>
 
         </SafeAreaView>
