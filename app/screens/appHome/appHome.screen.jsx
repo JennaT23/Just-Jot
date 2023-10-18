@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appHomeStyle as appHome_style } from './appHome.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -7,7 +7,7 @@ import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
-import { Card, Title, Paragraph, Button, FAB } from 'react-native-paper'
+import { Card, Title, Paragraph, Button, FAB, Subheading } from 'react-native-paper'
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 
 export const Home = ({ navigation }) => {
@@ -72,21 +72,26 @@ export const Home = ({ navigation }) => {
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            <View>
+            <ScrollView>
                 {journalEntries.map((entry, index) => (
                     <Card key={index}>
                         <Card.Content>
-                            <Title>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Title>
-                            <Paragraph>{entry.Text}</Paragraph>
-                            <Card.Actions>
-                                <Button onPress={() => handleView(entry)}>View</Button>
-                            </Card.Actions>
+                            <TouchableOpacity onPress={() => handleView(entry)}>
+                                <Title>{entry.Title}</Title>
+                                <Subheading>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+                                <Paragraph>{entry.Text}</Paragraph>
+                            </TouchableOpacity>
+                            {/* <Card.Actions>
+                                <TouchableOpacity onPress={() => handleView(entry)}>
+                                    <Text>View</Text>
+                                </TouchableOpacity>
+                            </Card.Actions> */}
                         </Card.Content>
                     </Card>
                 ))}
-            </View>
+            </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
-                onPress={moveNewEntry} /> 
+                onPress={moveNewEntry} />
         </SafeAreaView >
     )
 }
