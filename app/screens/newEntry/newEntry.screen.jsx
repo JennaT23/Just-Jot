@@ -26,9 +26,10 @@ export const NewEntry = ({ navigation }) => {
         const date = new Date();
         const location = "[0 N, 0 E]"; // change to get actual geolocation
         const uid = user.uid;
-        const journal = {date, location, title, text, uid};
+        const journal = { date, location, title, text, uid };
         console.log(journal);
         writeJournalEntryToFirebase(journal);
+        navigation.replace('Home');
     }
 
     return (
@@ -54,11 +55,11 @@ export const NewEntry = ({ navigation }) => {
                     <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
                 </TouchableOpacity>
             </View>
-            
+
             <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
             <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                 <View style={newEntrystyle.noteBodyContainer}>
-                    <TextInput value={text} onChangeText={text => setContent(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' /> 
+                    <TextInput value={text} onChangeText={text => setContent(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' />
                 </View>
             </ScrollView>
 

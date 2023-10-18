@@ -1,3 +1,4 @@
+import { Paragraph, Subheading, Title } from "react-native-paper";
 import { appstyle } from "../../../appStyles/appstyle";
 import Text from "../../../appStyles/customStyle";
 import React from 'react';
@@ -28,8 +29,9 @@ export const ViewEntry = ({ navigation, route }) => {
 
     return (
         <SafeAreaView>
-            <Text style={appstyle.title}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Text>
-            <Text>{entry.Text}</Text>
+            <Title>{entry.Title}</Title>
+            <Subheading>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+            <Paragraph>{entry.Text}</Paragraph>
         </SafeAreaView>
     );
 };
