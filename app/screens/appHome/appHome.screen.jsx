@@ -74,11 +74,11 @@ export const Home = ({ navigation }) => {
             </View>
             <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <Card key={index}>
+                    <Card key={index} style={appHomestyle.card}>
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title>{entry.Title}</Title>
-                                <Subheading>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+                                <Title style={appHomestyle.title}>{entry.Title}</Title>
+                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
