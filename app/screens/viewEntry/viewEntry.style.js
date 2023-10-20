@@ -1,0 +1,17 @@
+import { StyleSheet } from "react-native";
+
+export const viewEntryStyle = theme => StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.colors.BACKGROUND,
+    },
+    view: {
+        padding: 20,
+    },
+    title: {
+        fontWeight: 'bold'
+    },
+    subheading: {
+        color: theme.colors.SUBHEADING,
+    },
+})
