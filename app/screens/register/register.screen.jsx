@@ -1,4 +1,4 @@
-import { TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
+import { TextInput, TouchableOpacity, View, SafeAreaView, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../../../firebase'
 import { appstyle as app_style } from '../../../appStyles/appstyle'

@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc } from "firebase/firestore"; 
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { Alert } from "react-native";
 
 export const writeJournalEntryToFirebase = async (entry) => {
@@ -15,7 +15,6 @@ export const writeJournalEntryToFirebase = async (entry) => {
       });
 
       Alert.alert('Entry Saved');
-
     } catch (error) {
         console.error('Error saving journal entry:', error);
         throw error;

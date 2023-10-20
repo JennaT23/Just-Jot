@@ -5,7 +5,7 @@ export const newEntrystyle = theme => StyleSheet.create({
         flex: 1,
         borderTopWidth: 1,
         borderColor: '#b5b5b5',
-        
+
     },
     noteBody: {
         textAlignVertical: 'top',
