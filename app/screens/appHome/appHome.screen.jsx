@@ -29,7 +29,7 @@ export const Home = ({ navigation }) => {
     }, [user])
 
     const moveNewEntry = () => {
-        const entry = {Text: '', Title: '', Location: '', Date: '', uid: user.uid};
+        const entry = {Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid};
         navigation.navigate('NewEntry', { entry });
     }
     const fetchJournalEntries = async () => {

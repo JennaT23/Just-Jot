@@ -9,7 +9,6 @@ import { NewEntry } from './app/screens/newEntry/newEntry.screen'
 import { ViewEntry } from './app/screens/viewEntry/viewEntry'
 import { EditEntry } from './app/screens/editEntry/editEntry'
 import ThemeProvider from './appStyles/themeProvider';
-import { HeaderBackButton } from '@react-navigation/elements'
 import { EntryTemplate } from './templates/entryTemplate';
 
 
@@ -33,19 +32,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true }} name="EditEntry">
                         {props => <EditEntry {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen name="ViewEntry"
-                        // options={{
-                        //     headerLeft: (props) => (
-                        //         <HeaderBackButton 
-                        //             onPress={() => {
-                        //                 useNavigation().navigate('Home');
-                        //             }}
-                        //         />
-                        //     ),
-                        //     headerShown: true,
-                        //     headerBackVisible: false
-                        // }}
-                        >
+                    <Stack.Screen name="ViewEntry">
                         {props => <ViewEntry {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>

@@ -32,7 +32,7 @@ export const newEntrystyle = theme => StyleSheet.create({
         padding: 10,
         fontSize: 20,
         backgroundColor: '#f5e9c1',
-    
+        fontWeight: 'bold',
     },
     toolBar: {
         flexDirection: "row",

@@ -9,6 +9,8 @@ import useThemedStyles from '../appStyles/useThemedStyles'
 import { newEntrystyle as newEntry_style } from '../app/screens/newEntry/newEntry.style'
 import useTheme from '../appStyles/useTheme'
 import { PickDate } from '../app/useful/datePicker'
+import { entryTemplatestyle as entryTemplate_style} from './entryTemplate.style'
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 
 export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
@@ -17,29 +19,33 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
+    const entryTemplatestyle = useThemedStyles(entryTemplate_style);
 
-    const [title, setTitle] = useState(entryData.Title !== null ? entryData.Title : ' ');
+    const [title, setTitle] = useState(entryData.Title);
     const [text, setText] = useState(entryData.Text);
     const [location, setLocation] = useState(entryData.Location);
-    const [entryDate, setEntryDate] = useState(entryData.Date);
-    console.log("entryDate: ", entryDate);
-    const [showPicker, setShowPicker] = useState(false);
+    const [entryDate, setEntryDate] = useState(new Date(entryData.Date.toDateString()));
+    const [entryTime, setEntryTime] = useState(entryData.Date);
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [showTimePicker, setShowTimePicker] = useState(false);
 
     const auth = getAuth()
     const user = auth.currentUser;
     const displayDate = new Date(pickerDisplayDate).toDateString();
 
-    const toggleDatePicker = () => {
-        setShowPicker(!showPicker);
-    }
-    
-    const getDate = (selectedDate) => {
-        const newDate = new Date(selectedDate);
-        const chosenDate = new Date(newDate.toDateString());
+    const handleDateChange = (event, selectedDate) => {
+        if (selectedDate) {
+            setEntryDate(selectedDate);
+        }
+        setShowDatePicker(false);
+    };
 
-        setEntryDate(chosenDate.toDateString());
-        toggleDatePicker();
-    }
+    const handleTimeChange = (event, selectedTime) => {
+        if (selectedTime) {
+            setEntryTime(selectedTime);
+        }
+        setShowTimePicker(false);
+    };
 
     // const getLocation = () => {
 
@@ -57,8 +63,10 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         navigation.navigate('ViewEntry', { entry });
     }
 
-    const renderPickDate = showPicker ? <PickDate displayDate={displayDate} sendDate={getDate} /> : null;
-
+    // const formattedTime = entryTime.toLocaleTimeString('en-US', {
+    //     hour: '2-digit',
+    //     minute: '2-digit',
+    // });
 
 
     const formatCustomDateTime = (dateTime) => {
@@ -104,20 +112,27 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 </TouchableOpacity>
             </View>
             <View style={newEntrystyle.container}>
-                <Pressable onPress={toggleDatePicker}>
-                    <TextInput value={formatCustomDateTime(entryDate.toDate())} editable={true} onTextChange={setEntryDate} onPressIn={toggleDatePicker} style={newEntrystyle.cardTitle} placeholder='date:'/>
-                </Pressable>
-
-                { renderPickDate }
-
-                <TextInput value={location} onChangeText={text => setLocation(text)} style={newEntrystyle.cardTitle} placeholder='location:'/>
+                <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                    <Text style={entryTemplatestyle.cardText}>Date: {entryDate.toDateString()}</Text>
+                </TouchableOpacity>
+                {showDatePicker && (
+                    <DateTimePicker
+                        testID='datePicker'
+                        value={entryDate}
+                        mode='date'
+                        is24Hour={false}
+                        display='spinner'
+                        onChange={handleDateChange}
+                    />
+                )}
+                <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
                 <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={newEntrystyle.noteBodyContainer}>
-                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' /> 
+                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' />
                     </View>
                 </ScrollView>
             </View>
         </SafeAreaView>
-    )
+    );
 }
