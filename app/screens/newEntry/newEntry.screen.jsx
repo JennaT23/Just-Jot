@@ -1,91 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { View, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
-import { IconButton } from 'react-native-paper'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { appstyle as app_style } from '../../../appStyles/appstyle'
-import { getAuth } from 'firebase/auth'
-import Text from '../../../appStyles/customStyle'
-import useThemedStyles from '../../../appStyles/useThemedStyles'
-import { newEntrystyle as newEntry_style } from './newEntry.style'
-import useTheme from '../../../appStyles/useTheme'
+import React, { useState, useEffect } from 'react'
 import { writeJournalEntryToFirebase } from '../../firebase/writeJournalEntriesToFirebase'
+import { EntryTemplate } from '../../../templates/entryTemplate'
 
 
-export const NewEntry = ({ navigation }) => {
-    const theme = useTheme();
-    const appstyle = useThemedStyles(app_style);
-    const newEntrystyle = useThemedStyles(newEntry_style);
-
-    const [title, setTitle] = useState('');
-    const [text, setContent] = useState('');
-
-    const auth = getAuth()
-    const user = auth.currentUser;
-
-    const scrollViewRef = useRef(null);
-    const textInputRef = useRef(null);
-
-    const saveEntry = () => {
-        const date = new Date();
-        const location = "[0 N, 0 E]"; // change to get actual geolocation
-        const uid = user.uid;
-        const journal = { date, location, title, text, uid };
-        console.log(journal);
-        writeJournalEntryToFirebase(journal);
-        navigation.replace('Home');
-    }
-
-    // supposed to make the TextInput component scroll as you are typing
-    useEffect(() => {
-        if (scrollViewRef.current && textInputRef.current) {
-            scrollViewRef.current.scrollTo({
-                y: textInputRef.current.measureInWindow((x, y, width, height) => {
-                    return y;
-                }),
-                animated: true,
-            });
-        }
-    }, [text]);
+export const NewEntry = ({ navigation, route }) => {
+    const entry = route.params.entry;
+    const displayDate = new Date().toDateString();
 
     return (
-        <SafeAreaView style={newEntrystyle.container}>
-            <View style={newEntrystyle.toolBar}>
-                <IconButton
-                    icon="image-plus"
-                    size={30}
-                    onPress={() => console.log('Pressed')}
-                    style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton
-                    icon="camera"
-                    size={30}
-                    iconColor={theme.colors.TEXT}
-                    onPress={() => console.log('Pressed')}
-                    style={newEntrystyle.iconButton}
-                />
-                <TouchableOpacity
-                    onPress={saveEntry}
-                    style={newEntrystyle.saveButton}>
-                    <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
-                </TouchableOpacity>
-            </View>
-
-            <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
-            <ScrollView ref={scrollViewRef} contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-                {/* <KeyboardAvoidingView style={newEntrystyle.noteBodyContainer}> */}
-                <TextInput
-                    ref={textInputRef}
-                    value={text}
-                    onChangeText={text => setContent(text)}
-                    style={newEntrystyle.noteBody}
-                    multiline={true}
-                    editable
-                    placeholder='Start entry'
-                />
-                {/* </KeyboardAvoidingView> */}
-            </ScrollView>
-
-        </SafeAreaView>
+        <EntryTemplate entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase}/>
     )
 }

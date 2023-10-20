@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
@@ -7,7 +7,9 @@ import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
 import { Home } from './app/screens/appHome/appHome.screen'
 import { NewEntry } from './app/screens/newEntry/newEntry.screen'
 import { ViewEntry } from './app/screens/viewEntry/viewEntry'
+import { EditEntry } from './app/screens/editEntry/editEntry'
 import ThemeProvider from './appStyles/themeProvider';
+import { EntryTemplate } from './templates/entryTemplate';
 
 
 const Stack = createNativeStackNavigator();
@@ -21,8 +23,16 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true, title: 'Register' }} name="Register" component={Register} />
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
-                    <Stack.Screen options={{ headerShown: true, title: 'New Entry' }} name="NewEntry" component={NewEntry} />
-                    <Stack.Screen options={{ headerShow: true, title: '' }} name="ViewEntry">
+                    <Stack.Screen options={{ headerShown: true }} name="NewEntry">
+                        {props => <NewEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="EntryTemplate">
+                        {props => <EntryTemplate {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="EditEntry">
+                        {props => <EditEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="ViewEntry">
                         {props => <ViewEntry {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
