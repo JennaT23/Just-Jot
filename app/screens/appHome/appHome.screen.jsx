@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appHomeStyle as appHome_style } from './appHome.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -7,7 +7,7 @@ import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
-import { Card, Title, Paragraph, Button, FAB } from 'react-native-paper'
+import { Card, Title, Paragraph, Button, FAB, Subheading } from 'react-native-paper'
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 
 export const Home = ({ navigation }) => {
@@ -28,9 +28,9 @@ export const Home = ({ navigation }) => {
         fetchJournalEntries();
     }, [user])
 
-    // temporary
     const moveNewEntry = () => {
-        navigation.navigate('NewEntry');
+        const entry = {Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid};
+        navigation.navigate('NewEntry', { entry });
     }
     const fetchJournalEntries = async () => {
         try {
@@ -62,7 +62,8 @@ export const Home = ({ navigation }) => {
     };
 
     const handleView = (entry) => {
-        console.log(entry);
+        console.log("home entry: ", entry);
+        console.log("home date: ", entry.Date);
         navigation.navigate('ViewEntry', { entry });
     };
 
@@ -72,21 +73,26 @@ export const Home = ({ navigation }) => {
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            <View>
+            <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <Card key={index}>
+                    <Card key={index} style={appHomestyle.card}>
                         <Card.Content>
-                            <Title>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Title>
-                            <Paragraph>{entry.Text}</Paragraph>
-                            <Card.Actions>
-                                <Button onPress={() => handleView(entry)}>View</Button>
-                            </Card.Actions>
+                            <TouchableOpacity onPress={() => handleView(entry)}>
+                                <Title style={appHomestyle.title}>{entry.Title}</Title>
+                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+                                <Paragraph>{entry.Text}</Paragraph>
+                            </TouchableOpacity>
+                            {/* <Card.Actions>
+                                <TouchableOpacity onPress={() => handleView(entry)}>
+                                    <Text>View</Text>
+                                </TouchableOpacity>
+                            </Card.Actions> */}
                         </Card.Content>
                     </Card>
                 ))}
-            </View>
+            </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
-                onPress={moveNewEntry} /> 
+                onPress={moveNewEntry} />
         </SafeAreaView >
     )
 }
