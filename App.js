@@ -10,6 +10,8 @@ import { ViewEntry } from './app/screens/viewEntry/viewEntry'
 import { EditEntry } from './app/screens/editEntry/editEntry'
 import ThemeProvider from './appStyles/themeProvider';
 import { EntryTemplate } from './templates/entryTemplate';
+import { Map } from './app/screens/map/map.screen';
+import { Settings } from './app/screens/settings/settings.screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +24,8 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
                     <Stack.Screen options={{ headerShown: true, title: 'Register' }} name="Register" component={Register} />
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen options={{ headerShown: true }} name="Map" component={Map} />
+                    <Stack.Screen options={{ headerShown: true }} name="Settings" component={Settings} />
                     <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
                     <Stack.Screen options={{ headerShown: true }} name="NewEntry">
                         {props => <NewEntry {...props} />}

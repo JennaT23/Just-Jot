@@ -17,8 +17,17 @@ export const appHomeStyle = theme => StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        bottom: 25,
+        bottom: 85,
         right: 20,
-        alignSelf: 'center',
-    }
+        alignSelf: 'flex-end',
+    },
+    menu: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        // flex: 1,
+    },
+    iconButton: {
+        // marginHorizontal: 5,
+        // marginVertical: 5,
+    },
 })
