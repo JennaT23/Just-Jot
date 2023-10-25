@@ -8,6 +8,6 @@ export const NewEntry = ({ navigation, route }) => {
     const displayDate = new Date().toDateString();
 
     return (
-        <EntryTemplate entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase}/>
+        <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase} />
     )
 }

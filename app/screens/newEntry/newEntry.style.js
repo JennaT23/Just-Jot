@@ -5,12 +5,10 @@ export const newEntrystyle = theme => StyleSheet.create({
         flex: 1,
         borderTopWidth: 1,
         borderColor: '#b5b5b5',
-
     },
     noteBody: {
         textAlignVertical: 'top',
         backgroundColor: '#fcf6e1',
-        padding: 10,
         flex: 1,
         fontSize: 16,
     },
@@ -22,13 +20,12 @@ export const newEntrystyle = theme => StyleSheet.create({
     },
     container: {
         flex: 1,
-
     },
     entryContainer: {
         marginTop: -25,
     },
     cardTitle: {
-        marginTop: 5,
+        margin: 5,
         padding: 10,
         fontSize: 20,
         backgroundColor: '#f5e9c1',

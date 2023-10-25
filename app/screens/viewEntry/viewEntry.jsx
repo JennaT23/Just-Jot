@@ -60,7 +60,7 @@ export const ViewEntry = ({ navigation, route }) => {
             </View>
             <View style={viewstyle.view}>
                 <Title style={viewstyle.title}>{entry.Title}</Title>
-                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(new Date(entry.Date))}</Subheading>
             </View>
             <View style={viewstyle.view}>
                 <Paragraph>{entry.Text}</Paragraph>
@@ -72,8 +72,8 @@ export const ViewEntry = ({ navigation, route }) => {
 ViewEntry.navigationOptions = ({ navigation }) => {
     return {
         headerLeft: () => (
-            <HeaderBackButton 
-                onPress={() => {navigation.navigate('Home')}}
+            <HeaderBackButton
+                onPress={() => { navigation.navigate('Home') }}
             />
         )
     }

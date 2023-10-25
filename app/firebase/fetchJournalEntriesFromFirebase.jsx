@@ -10,7 +10,7 @@ export const fetchJournalEntriesFromFirebase = async () => {
 
         const entries = querySnapshot.docs.map((doc) => ({
             id: doc.id,
-            Date: doc.data().Date,
+            Date: new Date(doc.data().Date),
             Location: doc.data().Location,
             Title: doc.data().Title,
             Text: doc.data().Text,

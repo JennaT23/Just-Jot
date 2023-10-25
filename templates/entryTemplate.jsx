@@ -9,8 +9,9 @@ import useThemedStyles from '../appStyles/useThemedStyles'
 import { newEntrystyle as newEntry_style } from '../app/screens/newEntry/newEntry.style'
 import useTheme from '../appStyles/useTheme'
 import { PickDate } from '../app/useful/datePicker'
-import { entryTemplatestyle as entryTemplate_style} from './entryTemplate.style'
+import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { useNavigation } from '@react-navigation/native'
 
 
 export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
@@ -24,7 +25,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const [title, setTitle] = useState(entryData.Title);
     const [text, setText] = useState(entryData.Text);
     const [location, setLocation] = useState(entryData.Location);
-    const [entryDate, setEntryDate] = useState(new Date(entryData.Date.toDateString()));
+    const [entryDate, setEntryDate] = useState(new Date(entryData.Date));
     const [entryTime, setEntryTime] = useState(entryData.Date);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
@@ -54,7 +55,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const saveEntry = () => {
         const location = "[0 N, 0 E]"; // change to get actual geolocation
         const uid = user.uid;
-        const entry = {Date: entryDate, Location: location, Title: title, Text: text, uid: uid, id: entryData.id};
+        const entry = { Date: entryDate, Location: location, Title: title, Text: text, uid: uid, id: entryData.id };
 
         console.log("hello firebase1");
         writeToFirebase(entry);
@@ -128,8 +129,8 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
                 <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-                    <View style={newEntrystyle.noteBodyContainer}>
-                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry' />
+                    <View style={entryTemplatestyle.textInput}>
+                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry...' />
                     </View>
                 </ScrollView>
             </View>
