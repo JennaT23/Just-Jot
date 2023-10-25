@@ -29,37 +29,44 @@ export const Home = ({ navigation }) => {
     }, [user])
 
     const moveNewEntry = () => {
-        const entry = {Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid};
+        const entry = { Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid };
         navigation.navigate('NewEntry', { entry });
     }
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
             setJournalEntries(entries);
-            console.log(journalEntries);
+            console.log("fetch", journalEntries);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
 
-    const formatCustomDateTime = (dateTime) => {
-        const months = [
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    function formatDate(date) {
+        console.log("date", date);
 
-        const day = days[dateTime.getDay()];
-        const month = months[dateTime.getMonth()];
-        const date = dateTime.getDate();
-        const year = dateTime.getFullYear();
+        if (!(date instanceof Date)) {
+            throw new Error("Invalid date object");
+        }
 
-        const hours = dateTime.getHours();
-        const minutes = dateTime.getMinutes();
-        const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-        return `${day} ${month} ${date} ${year} ${formattedTime}`;
-    };
+        const dayOfWeek = daysOfWeek[date.getDay()];
+        const month = months[date.getMonth()];
+        const day = date.getDate();
+        const year = date.getFullYear();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        // Format the time to be in 12-hour format
+        const amPm = hours >= 12 ? "PM" : "AM";
+        const formattedHours = hours % 12 || 12;
+
+        const formattedDate = `${dayOfWeek}. ${month}. ${day}, ${year} ${formattedHours}:${String(minutes).padStart(2, '0')} ${amPm}`;
+
+        return formattedDate;
+    }
 
     const handleView = (entry) => {
         console.log("home entry: ", entry);
@@ -79,7 +86,7 @@ export const Home = ({ navigation }) => {
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
                                 <Title style={appHomestyle.title}>{entry.Title}</Title>
-                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
