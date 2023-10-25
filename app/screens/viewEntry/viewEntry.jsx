@@ -71,6 +71,7 @@ export const ViewEntry = ({ navigation, route }) => {
 };
 
 ViewEntry.navigationOptions = ({ navigation }) => {
+    console.log('this sucks');
     return {
         headerLeft: () => (
             <HeaderBackButton

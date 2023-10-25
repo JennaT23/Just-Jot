@@ -7,12 +7,16 @@ import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
-import { Card, Title, Paragraph, Button, FAB, Subheading } from 'react-native-paper'
+import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'react-native-paper'
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
+import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
+import useTheme from '../../../appStyles/useTheme'
 
 export const Home = ({ navigation }) => {
+    const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
     const appHomestyle = useThemedStyles(appHome_style);
+    const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
 
@@ -100,6 +104,29 @@ export const Home = ({ navigation }) => {
             </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
                 onPress={moveNewEntry} />
+            <View style={appHomestyle.menu}>
+                <IconButton 
+                    icon="home-outline"
+                    size={35}
+                    onPress={() => navigation.navigate('Home')}
+                    style={appHomestyle.iconButton}
+                    iconColor={theme.colors.TEXT}
+                />
+                <IconButton 
+                    icon="map-marker-radius-outline"
+                    size={35}
+                    onPress={() => navigation.navigate('Map')}
+                    style={appHomestyle.iconButton}
+                    iconColor={theme.colors.TEXT}
+                />
+                <IconButton 
+                    icon="cog-outline"
+                    size={35}
+                    onPress={() => navigation.navigate('Settings')}
+                    style={appHomestyle.iconButton}
+                    iconColor={theme.colors.TEXT}
+                />
+            </View>
         </SafeAreaView >
     )
 }
