@@ -113,24 +113,32 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 </TouchableOpacity>
             </View>
             <View style={newEntrystyle.container}>
-                <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-                    <Text style={entryTemplatestyle.cardText}>Date: {entryDate.toDateString()}</Text>
+                <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
+                <TouchableOpacity onPress={() => setShowDatePicker(true)} style={entryTemplatestyle.date}>
+                    <Text style={entryTemplatestyle.dateText}>Date: {entryDate.toDateString()}</Text>
+                    <IconButton
+                        icon='calendar-edit'
+                        size={30}
+                        style={entryTemplatestyle.calendarIcon}
+                        iconColor={theme.colors.TEXT}
+                    />
                 </TouchableOpacity>
                 {showDatePicker && (
-                    <DateTimePicker
-                        testID='datePicker'
-                        value={entryDate}
-                        mode='date'
-                        is24Hour={false}
-                        display='spinner'
-                        onChange={handleDateChange}
-                    />
+                    <View>
+                        <DateTimePicker
+                            testID='datePicker'
+                            value={entryDate}
+                            mode='date'
+                            is24Hour={false}
+                            display='spinner'
+                            onChange={handleDateChange}
+                        />
+                    </View>
                 )}
                 <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
-                <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
-                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start entry...' />
+                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
                     </View>
                 </ScrollView>
             </View>

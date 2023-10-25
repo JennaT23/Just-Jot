@@ -9,6 +9,7 @@ import { ScrollView, View } from "react-native";
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
 import { HeaderBackButton } from '@react-navigation/elements'
+import { useNavigation } from "@react-navigation/native";
 // import { useNavigation } from '@react-navigation/native';
 
 
@@ -73,7 +74,7 @@ ViewEntry.navigationOptions = ({ navigation }) => {
     return {
         headerLeft: () => (
             <HeaderBackButton
-                onPress={() => { navigation.navigate('Home') }}
+                onPress={() => { useNavigation().navigate('Home') }}
             />
         )
     }
