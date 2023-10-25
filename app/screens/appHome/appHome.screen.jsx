@@ -28,9 +28,9 @@ export const Home = ({ navigation }) => {
         fetchJournalEntries();
     }, [user])
 
-    // temporary
     const moveNewEntry = () => {
-        navigation.navigate('NewEntry');
+        const entry = {Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid};
+        navigation.navigate('NewEntry', { entry });
     }
     const fetchJournalEntries = async () => {
         try {
@@ -62,7 +62,8 @@ export const Home = ({ navigation }) => {
     };
 
     const handleView = (entry) => {
-        console.log(entry);
+        console.log("home entry: ", entry);
+        console.log("home date: ", entry.Date);
         navigation.navigate('ViewEntry', { entry });
     };
 

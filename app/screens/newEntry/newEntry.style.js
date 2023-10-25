@@ -22,16 +22,17 @@ export const newEntrystyle = theme => StyleSheet.create({
     },
     container: {
         flex: 1,
-        marginTop: -25,
 
+    },
+    entryContainer: {
+        marginTop: -25,
     },
     cardTitle: {
         marginTop: 5,
         padding: 10,
         fontSize: 20,
         backgroundColor: '#f5e9c1',
-        fontWeight: 'bold'
-
+        fontWeight: 'bold',
     },
     toolBar: {
         flexDirection: "row",

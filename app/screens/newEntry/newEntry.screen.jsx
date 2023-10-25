@@ -1,16 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { View, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native'
-import { IconButton } from 'react-native-paper'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { appstyle as app_style } from '../../../appStyles/appstyle'
-import { getAuth } from 'firebase/auth'
-import Text from '../../../appStyles/customStyle'
-import useThemedStyles from '../../../appStyles/useThemedStyles'
-import { newEntrystyle as newEntry_style } from './newEntry.style'
-import useTheme from '../../../appStyles/useTheme'
+import React, { useState, useEffect } from 'react'
 import { writeJournalEntryToFirebase } from '../../firebase/writeJournalEntriesToFirebase'
-import * as permissions from 'react-native-permissions';
-import * as ImagePicker from 'expo-image-picker';
 
 
 export const NewEntry = ({ navigation }) => {
@@ -37,19 +26,6 @@ export const NewEntry = ({ navigation }) => {
         navigation.replace('Home');
     }
 
-    const pickImage = async() => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aaspect: [4, 3],
-            quality: 1,
-        })
-
-        if(!result.canceled) {
-            // handle stuff for when image input is cancelled
-        }
-    };
-
     // supposed to make the TextInput component scroll as you are typing
     useEffect(() => {
         if (scrollViewRef.current && textInputRef.current) {
@@ -62,55 +38,7 @@ export const NewEntry = ({ navigation }) => {
         }
     }, [text]);
 
-    // supposed to request user to grant access to camera roll
-    useEffect(() => {
-        (async () => {
-            const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status != 'granted') {
-                alert("Sorry, we need camera roll access to make this work!");
-            }
-        })();
-    }, []);
-
     return (
-        <SafeAreaView style={newEntrystyle.container}>
-            <View style={newEntrystyle.toolBar}>
-                <IconButton
-                    icon="image-plus"
-                    size={30}
-                    onPress={() => console.log('Pressed')}
-                    style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton
-                    icon="camera"
-                    size={30}
-                    iconColor={theme.colors.TEXT}
-                    onPress={() => console.log('Pressed')}
-                    style={newEntrystyle.iconButton}
-                />
-                <TouchableOpacity
-                    onPress={saveEntry}
-                    style={newEntrystyle.saveButton}>
-                    <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
-                </TouchableOpacity>
-            </View>
-
-            <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
-            <ScrollView ref={scrollViewRef} contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-                {/* <KeyboardAvoidingView style={newEntrystyle.noteBodyContainer}> */}
-                <TextInput
-                    ref={textInputRef}
-                    value={text}
-                    onChangeText={text => setContent(text)}
-                    style={newEntrystyle.noteBody}
-                    multiline={true}
-                    editable
-                    placeholder='Start entry'
-                />
-                {/* </KeyboardAvoidingView> */}
-            </ScrollView>
-
-        </SafeAreaView>
+        <EntryTemplate entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase}/>
     )
 }
