@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TextInput, TouchableOpacity, ScrollView, Pressable } from 'react-native'
+import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image } from 'react-native'
 import { IconButton } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appstyle as app_style } from '../appStyles/appstyle'
@@ -11,6 +11,7 @@ import useTheme from '../appStyles/useTheme'
 import { PickDate } from '../app/useful/datePicker'
 import { entryTemplatestyle as entryTemplate_style} from './entryTemplate.style'
 import DateTimePicker from '@react-native-community/datetimepicker'
+import * as ImagePicker from 'expo-image-picker';
 
 
 export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
@@ -29,6 +30,8 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
 
+    const [selectedImageUri, setSelectedImageUri] = useState(null);
+
     const auth = getAuth()
     const user = auth.currentUser;
     const displayDate = new Date(pickerDisplayDate).toDateString();
@@ -46,6 +49,33 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         }
         setShowTimePicker(false);
     };
+
+    
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          aspect: [4, 3],
+          quality: 1,
+        });
+      
+        if (result.canceled) {
+            console.log("User cancelled image picker")
+        }else if (result.assets ** result.assets.length > 0) {
+            const setSelectedImageUri = result.assets[0].uri;
+            setSelectedImageUri(selectedImageUri);
+        }
+      };
+
+      // supposed to ask user for access to use camera roll
+      useEffect(() => {
+          (async () => {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+              alert('Sorry, we need camera roll permissions to make this work!');
+            }
+          })();
+        }, []);
 
     // const getLocation = () => {
 
@@ -94,7 +124,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <IconButton
                     icon="image-plus"
                     size={30}
-                    onPress={() => console.log('Pressed')}
+                    onPress={pickImage}
                     style={newEntrystyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
@@ -125,6 +155,11 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         onChange={handleDateChange}
                     />
                 )}
+
+                <View style={newEntrystyle.imageContainer}>
+                    {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={newEntrystyle.selectedImage} />}
+                </View>
+
                 <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
                 <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Title' />
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
