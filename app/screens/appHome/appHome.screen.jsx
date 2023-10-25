@@ -30,20 +30,21 @@ export const Home = ({ navigation }) => {
 
     const moveNewEntry = () => {
         const entry = { Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid };
-        console.log(navigation);
         navigation.navigate('NewEntry', { entry });
     }
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
             setJournalEntries(entries);
-            console.log(journalEntries);
+            console.log("fetch", journalEntries);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
 
     function formatDate(date) {
+        console.log("date", date);
+
         if (!(date instanceof Date)) {
             throw new Error("Invalid date object");
         }

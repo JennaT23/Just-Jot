@@ -6,17 +6,21 @@ export const fetchJournalEntriesFromFirebase = async () => {
     try {
         const journalEntriesCollection = collection(db, 'JournalEntries');
         const querySnapshot = await getDocs(journalEntriesCollection);
-        console.log(querySnapshot.docs)
 
         const entries = querySnapshot.docs.map((doc) => ({
             id: doc.id,
-            Date: new Date(doc.data().Date),
+            Date: doc.data().Date.toDate(),
             Location: doc.data().Location,
             Title: doc.data().Title,
             Text: doc.data().Text,
             Title: doc.data().Title,
             uid: doc.data().uid,
         }));
+
+        for (entry in entries) {
+            console.log("loop date", entry.Date);
+        }
+
         return entries;
     } catch (error) {
         console.error('Error fetching journal entries:', error);
