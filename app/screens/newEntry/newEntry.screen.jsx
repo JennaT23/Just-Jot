@@ -9,6 +9,8 @@ import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { newEntrystyle as newEntry_style } from './newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
 import { writeJournalEntryToFirebase } from '../../firebase/writeJournalEntriesToFirebase'
+import * as permissions from 'react-native-permissions';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export const NewEntry = ({ navigation }) => {
@@ -35,6 +37,19 @@ export const NewEntry = ({ navigation }) => {
         navigation.replace('Home');
     }
 
+    const pickImage = async() => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aaspect: [4, 3],
+            quality: 1,
+        })
+
+        if(!result.canceled) {
+            // handle stuff for when image input is cancelled
+        }
+    };
+
     // supposed to make the TextInput component scroll as you are typing
     useEffect(() => {
         if (scrollViewRef.current && textInputRef.current) {
@@ -46,6 +61,16 @@ export const NewEntry = ({ navigation }) => {
             });
         }
     }, [text]);
+
+    // supposed to request user to grant access to camera roll
+    useEffect(() => {
+        (async () => {
+            const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status != 'granted') {
+                alert("Sorry, we need camera roll access to make this work!");
+            }
+        })();
+    }, []);
 
     return (
         <SafeAreaView style={newEntrystyle.container}>
