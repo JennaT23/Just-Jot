@@ -108,13 +108,22 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
 
           const takePicture = async () => {
-            setShowCamera(true);
-            if (cameraRef) {
-                let photo = await cameraRef.takePictureAsync();
-                console.log(photo);
-                setSelectedImageUri(photo.uri);
-            }
+            let result = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+        
+            console.log("Camera Result:", result); // to test, remove later
+        
+            if (!result.canceled) {
+                if (result.assets && result.assets.length > 0) {
+                    setSelectedImageUri(result.assets[0].uri);
+                }
+            }        
         };
+        
+        
 
     // const getLocation = () => {
 
@@ -211,19 +220,17 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                             
                             {selectedImageUri && <Image source={{ uri: selectedImageUri  }} style={newEntrystyle.selectedImage} />}
 
-                            {hasCameraPermission && showCamera ? (
-                                <Camera
-                                    style={{ flex: 1 }}
-                                    type={Camera.Constants.Type.back}
-                                    ref={(ref) => {
-                                        setCameraRef(ref);
-                                    }}
-                                />
-                            ) : (
-                                <View style={newEntrystyle.noCameraAccessContainer}>
-                                    <Text>Error!</Text>     
-                                </View>
-                            )}
+                        {hasCameraPermission && showCamera ? (
+                            <Camera
+                                style={{ flex: 1 }}
+                                type={Camera.Constants.Type.back}
+                                ref={(ref) => {
+                                    setCameraRef(ref);
+                                }}
+                            />
+                        ): (
+                            <Text></Text>
+                        )}
                     </View>
 
 

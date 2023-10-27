@@ -36,6 +36,12 @@ export const Home = ({ navigation }) => {
         const entry = { Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid };
         navigation.navigate('NewEntry', { entry });
     }
+
+    const moveNewMemory = () => {
+        const memory = { Text: '', Title: '', Location: '', MakeDate: new Date(), ShowDate: new Date(), uid: user.uid };
+        navigation.navigate('NewMemory', { memory });
+    }
+
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
@@ -104,29 +110,6 @@ export const Home = ({ navigation }) => {
             </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
                 onPress={moveNewEntry} />
-            {/* <View style={appHomestyle.menu}>
-                <IconButton 
-                    icon="home-outline"
-                    size={35}
-                    onPress={() => navigation.navigate('Home')}
-                    style={appHomestyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton 
-                    icon="map-marker-radius-outline"
-                    size={35}
-                    onPress={() => navigation.navigate('Map')}
-                    style={appHomestyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton 
-                    icon="cog-outline"
-                    size={35}
-                    onPress={() => navigation.navigate('Settings')}
-                    style={appHomestyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-            </View> */}
         </SafeAreaView >
     )
 }
