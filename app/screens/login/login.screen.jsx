@@ -9,6 +9,7 @@ import { userAuthstyle as userAuth_style } from '../userAuthstyle'
 import useTheme from '../../../appStyles/useTheme'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import Text from '../../../appStyles/customStyle'
+import { NavBar } from '../navbar/NavBar.screen'
 
 
 export const Login = ({ n }) => {
@@ -31,7 +32,7 @@ export const Login = ({ n }) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 const user = userCredentials.user;
-                replace('Home')
+                replace('NavBar')
             })
             .catch((error) => {
                 console.log("Error", error)
@@ -59,8 +60,8 @@ export const Login = ({ n }) => {
             behavior='padding'
         >
 
-        {/* KEEP BECAUSE WILL NEED FOR LATER */}
-        <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} />
+            {/* KEEP BECAUSE WILL NEED FOR LATER */}
+            <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} />
 
             {/* <Image
             source={require('../assets/')}                                     // find a logo and replace the source

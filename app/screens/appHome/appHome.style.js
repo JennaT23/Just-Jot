@@ -17,7 +17,7 @@ export const appHomeStyle = theme => StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        bottom: 85,
+        bottom: 10,
         right: 20,
         alignSelf: 'flex-end',
     },
