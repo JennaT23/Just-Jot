@@ -196,7 +196,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     <IconButton
                         icon='calendar-edit'
                         size={30}
-                        style={entryTemplatestyle.calendarIcon}
                         iconColor={theme.colors.TEXT}
                     />
                 </TouchableOpacity>
@@ -213,7 +212,15 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     </View>
                 )}
 
-                <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
+                {/* <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' /> */}
+                <TouchableOpacity style={entryTemplatestyle.date}>
+                    <Text style={entryTemplatestyle.dateText}>Location: {location}</Text>
+                    <IconButton
+                        icon='map-marker-outline'
+                        size={30}
+                        iconColor={theme.colors.TEXT}
+                    />
+                </TouchableOpacity>
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
