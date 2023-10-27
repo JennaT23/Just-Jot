@@ -209,25 +209,23 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
                             
+                            {selectedImageUri && <Image source={{ uri: selectedImageUri  }} style={newEntrystyle.selectedImage} />}
+
+                            {hasCameraPermission && showCamera ? (
+                                <Camera
+                                    style={{ flex: 1 }}
+                                    type={Camera.Constants.Type.back}
+                                    ref={(ref) => {
+                                        setCameraRef(ref);
+                                    }}
+                                />
+                            ) : (
+                                <View style={newEntrystyle.noCameraAccessContainer}>
+                                    <Text>Error!</Text>     
+                                </View>
+                            )}
                     </View>
 
-                    <View> 
-                        {selectedImageUri && <Image source={{ uri: selectedImageUri  }} style={newEntrystyle.selectedImage} />}
-
-                        {hasCameraPermission && showCamera ? (
-                            <Camera
-                                style={{ flex: 1 }}
-                                type={Camera.Constants.Type.back}
-                                ref={(ref) => {
-                                    setCameraRef(ref);
-                                }}
-                            />
-                        ) : (
-                            <View style={newEntrystyle.noCameraAccessContainer}>
-                                <Text>Error!</Text>     
-                            </View>
-                        )}
-                    </View>
 
                 </ScrollView>
             </View>
