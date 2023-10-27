@@ -15,7 +15,6 @@ import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
 import { Memory } from './app/screens/memory/memory.screen';
-import { NewMemory } from './app/screens/newMemory/newMemory.screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +25,7 @@ const Tab = createBottomTabNavigator();
 function NavBar() {
     return (
         <Tab.Navigator
+            initialRouteName={Home}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
@@ -40,6 +40,11 @@ function NavBar() {
                             ? 'map-marker-radius-outline'
                             : 'map-marker-radius-outline';
                     }
+                    else if (route.name === 'Memory') {
+                        iconName = focused
+                            ? 'star-outline'
+                            : 'star-outline';
+                    }
                     else if (route.name === 'Settings') {
                         iconName = focused ? 'cog-outline' : 'cog-outline';
                     }
@@ -47,14 +52,14 @@ function NavBar() {
                     // You can return any component that you like here!
                     return <IconButton icon={iconName} size={size} iconColor={color} />;
                 },
-                tabBarActiveTintColor: 'tomato',
+                tabBarActiveTintColor: 'black',
                 tabBarInactiveTintColor: 'gray',
             })}
         >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Map" component={Map} />
+            <Tab.Screen name="Memory" component={Memory} />
             <Tab.Screen name="Settings" component={Settings} />
-
 
         </Tab.Navigator>
     )
@@ -83,12 +88,6 @@ const App = () => {
                     </Stack.Screen>
                     <Stack.Screen name="ViewEntry">
                         {props => <ViewEntry {...props} />}
-                    </Stack.Screen>
-                    <Stack.Screen name="Memories">
-                        {props => <Memory {...props} />}
-                    </Stack.Screen>
-                    <Stack.Screen name="NewMemory">
-                        {props => <NewMemory {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

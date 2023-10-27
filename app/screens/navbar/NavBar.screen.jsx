@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from "react-native-paper";
-
+import { Memory } from "../memory/memory.screen";
 import { Home } from "../appHome/appHome.screen";
 import { Map } from "../map/map.screen";
 import { Settings } from "../settings/settings.screen";
@@ -41,6 +41,7 @@ export const NavBar = () => {
                     name="Memory"
                     component={Memory}
                     options={{
+                        tabBarLabel: "Memory Capsule",
                         tabBarIcon: ({ color, size }) => (
                             <IconButton name="star-outline" color={color} size={size} />
                         ),
