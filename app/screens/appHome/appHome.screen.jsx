@@ -109,31 +109,7 @@ export const Home = ({ navigation }) => {
                 ))}
             </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
-                onPress={moveNewMemory}
-            />
-            {/* <View style={appHomestyle.menu}>
-                <IconButton
-                    icon="home-outline"
-                    size={35}
-                    onPress={() => navigation.navigate('Home')}
-                    style={appHomestyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton
-                    icon="map-marker-radius-outline"
-                    size={35}
-                    onPress={() => navigation.navigate('Map')}
-                    style={appHomestyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton
-                    icon="cog-outline"
-                    size={35}
-                    onPress={() => navigation.navigate('Settings')}
-                    style={appHomestyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-            </View> */}
+                onPress={moveNewEntry} />
         </SafeAreaView >
     )
 }

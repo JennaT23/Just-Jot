@@ -29,5 +29,16 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         flexDirection: "row",
     },
     calendarIcon: {
-    }
+    },
+    selectedImage: {
+        width: 200, 
+        height: 200, 
+        resizeMode: 'cover',
+    },
+    noCameraAccessContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    
 })

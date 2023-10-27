@@ -20,8 +20,6 @@ import { Memory } from './app/screens/memory/memory.screen';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
-
 function NavBar() {
     return (
         <Tab.Navigator
