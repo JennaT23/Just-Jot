@@ -14,6 +14,8 @@ import { Map } from './app/screens/map/map.screen';
 import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
+import { Memory } from './app/screens/memory/memory.screen';
+import { NewMemory } from './app/screens/newMemory/newMemory.screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -81,6 +83,12 @@ const App = () => {
                     </Stack.Screen>
                     <Stack.Screen name="ViewEntry">
                         {props => <ViewEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="Memories">
+                        {props => <Memory {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="NewMemory">
+                        {props => <NewMemory {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>
