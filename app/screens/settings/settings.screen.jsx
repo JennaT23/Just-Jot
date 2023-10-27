@@ -11,8 +11,7 @@ import { useNavigation } from '@react-navigation/core'
 import { getAuth } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-
-export const Settings = () => {
+export const Settings = ({ navigation }) => {
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
@@ -37,7 +36,7 @@ export const Settings = () => {
         {
             header: 'Options',
             items: [
-                {icon: 'gear', label: 'Sign Out', type:'link'},
+                { icon: 'gear', label: 'Sign Out', type: 'link' },
             ],
         },
     ]
