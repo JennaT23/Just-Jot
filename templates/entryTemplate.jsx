@@ -108,13 +108,22 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
 
           const takePicture = async () => {
-            setShowCamera(true);
-            if (cameraRef) {
-                let photo = await cameraRef.takePictureAsync();
-                console.log(photo);
-                setSelectedImageUri(photo.uri);
-            }
+            let result = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+        
+            console.log("Camera Result:", result); // to test, remove later
+        
+            if (!result.canceled) {
+                if (result.assets && result.assets.length > 0) {
+                    setSelectedImageUri(result.assets[0].uri);
+                }
+            }        
         };
+        
+        
 
     // const getLocation = () => {
 
@@ -212,7 +221,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     </View>
 
                     <View> 
-                        {selectedImageUri && <Image source={{ uri: 'https://placekitten.com/200/300' }} style={newEntrystyle.selectedImage} />}
+                        {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={newEntrystyle.selectedImage} />}
 
                         {hasCameraPermission && showCamera ? (
                             <Camera
@@ -222,10 +231,8 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                                     setCameraRef(ref);
                                 }}
                             />
-                        ) : (
-                            <View style={newEntrystyle.noCameraAccessContainer}>
-                                <Text></Text>     
-                            </View>
+                        ): (
+                            <Text></Text>
                         )}
                     </View>
 
