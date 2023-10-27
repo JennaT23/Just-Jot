@@ -222,7 +222,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                                 />
                             ) : (
                                 <View style={newEntrystyle.noCameraAccessContainer}>
-                                    <Text></Text>
+                                    <Text></Text>       // error message in case there is no access to camera
                                 </View>
                             )}
                             
