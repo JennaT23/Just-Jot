@@ -6,6 +6,7 @@ import { getAuth } from 'firebase/auth';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
+import getLocation from '../app/location/getLocation'
 
 // Custom imports
 import Text from '../appStyles/customStyle';
@@ -115,7 +116,11 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     };
 
     const saveEntry = () => {
-        const location = "[0 N, 0 E]"; // change to get actual geolocation
+        // const location = "[0 N, 0 E]"; // change to get actual geolocation
+        
+        setLocation(new firebase.firestore.GeoPoint(latitude, longitude));
+        setLocation(getLocation);
+        console.log("location:", location);
         const uid = user.uid;
         const entry = { Date: entryDate, Location: location, Title: title, Text: text, uid: uid, id: entryData.id };
 
