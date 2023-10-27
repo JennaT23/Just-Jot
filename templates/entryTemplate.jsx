@@ -175,7 +175,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     <IconButton
                         icon='calendar-edit'
                         size={30}
-                        style={entryTemplatestyle.icon}
                         iconColor={theme.colors.TEXT}
                     />
                 </TouchableOpacity>
@@ -191,13 +190,13 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         />
                     </View>
                 )}
+
+                {/* <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' /> */}
                 <TouchableOpacity style={entryTemplatestyle.date}>
-                    {/* <TextInput value={`Location: ${location}`} onChangeText={text => setLocation(text)} style={entryTemplatestyle.dateText} placeholder='Location:' /> */}
                     <Text style={entryTemplatestyle.dateText}>Location: {location}</Text>
                     <IconButton
                         icon='map-marker-outline'
                         size={30}
-                        style={entryTemplatestyle.icon}
                         iconColor={theme.colors.TEXT}
                     />
                 </TouchableOpacity>
