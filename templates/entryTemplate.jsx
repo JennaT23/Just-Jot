@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { View, TextInput, TouchableOpacity, ScrollView, Pressable } from 'react-native'
-import { IconButton } from 'react-native-paper'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { appstyle as app_style } from '../appStyles/appstyle'
-import { getAuth } from 'firebase/auth'
-import Text from '../appStyles/customStyle'
-import useThemedStyles from '../appStyles/useThemedStyles'
-import { newEntrystyle as newEntry_style } from '../app/screens/newEntry/newEntry.style'
-import useTheme from '../appStyles/useTheme'
-import { PickDate } from '../app/useful/datePicker'
-import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import { useNavigation } from '@react-navigation/native'
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image } from 'react-native';
+import { IconButton } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { getAuth } from 'firebase/auth';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import * as ImagePicker from 'expo-image-picker';
+import { Camera } from 'expo-camera';
+
+// Custom imports
+import Text from '../appStyles/customStyle';
+import useThemedStyles from '../appStyles/useThemedStyles';
+import useTheme from '../appStyles/useTheme';
+import { PickDate } from '../app/useful/datePicker';
+import { useNavigation } from '@react-navigation/native';
+
+// Styles
+import { appstyle as app_style } from '../appStyles/appstyle';
+import { newEntrystyle as newEntry_style } from '../app/screens/newEntry/newEntry.style';
+import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style';
+
+
+
 
 
 export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
@@ -30,6 +39,14 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
 
+    // camera and camera roll hooks
+    const [selectedImageUri, setSelectedImageUri] = useState(null);
+    const [cameraPermission, setCameraPermission] = useState(null);
+    const [hasCameraPermission, setHasCameraPermission] = useState(null);
+    const [cameraRef, setCameraRef] = useState(null);
+    const [showCamera, setShowCamera] = useState(false);
+
+
     const auth = getAuth()
     const user = auth.currentUser;
     const displayDate = new Date(pickerDisplayDate).toDateString();
@@ -47,6 +64,57 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         }
         setShowTimePicker(false);
     };
+
+    
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+    
+        console.log("Image Picker Result:", result); // to test, remove later
+    
+        if (!result.canceled) {
+            if (result.assets && result.assets.length > 0) {
+                setSelectedImageUri(result.assets[0].uri);
+            }
+        }        
+    };
+
+    useEffect(() => {
+        console.log("Selected Image URI:", selectedImageUri);
+    }, [selectedImageUri]);
+    
+    
+      // supposed to ask user for access to use camera roll
+      useEffect(() => {
+          (async () => {
+            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== 'granted') {
+              alert('Sorry, we need camera roll permissions to make this work!');
+            }
+          })();
+        }, []);
+
+        // supposed to ask user for access to their camera
+        useEffect(() => {
+            (async () => {
+              const { status } = await Camera.requestCameraPermissionsAsync();
+              setHasCameraPermission(status === 'granted');
+            })();
+          }, []);
+
+
+          const takePicture = async () => {
+            setShowCamera(true);
+            if (cameraRef) {
+                let photo = await cameraRef.takePictureAsync();
+                console.log(photo);
+                setSelectedImageUri(photo.uri);
+            }
+        };
 
     // const getLocation = () => {
 
@@ -95,7 +163,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <IconButton
                     icon="image-plus"
                     size={30}
-                    onPress={() => console.log('Pressed')}
+                    onPress={pickImage}
                     style={newEntrystyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
@@ -103,7 +171,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     icon="camera"
                     size={30}
                     iconColor={theme.colors.TEXT}
-                    onPress={() => console.log('Pressed')}
+                    onPress={takePicture}
                     style={newEntrystyle.iconButton}
                 />
                 <TouchableOpacity
@@ -135,11 +203,32 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         />
                     </View>
                 )}
+
                 <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
+                            
                     </View>
+
+                    <View> 
+                        {selectedImageUri && <Image source={{ uri: 'https://placekitten.com/200/300' }} style={newEntrystyle.selectedImage} />}
+
+                        {hasCameraPermission && showCamera ? (
+                            <Camera
+                                style={{ flex: 1 }}
+                                type={Camera.Constants.Type.back}
+                                ref={(ref) => {
+                                    setCameraRef(ref);
+                                }}
+                            />
+                        ) : (
+                            <View style={newEntrystyle.noCameraAccessContainer}>
+                                <Text></Text>     
+                            </View>
+                        )}
+                    </View>
+
                 </ScrollView>
             </View>
         </SafeAreaView>
