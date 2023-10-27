@@ -62,7 +62,7 @@ const App = () => {
     return (
         <ThemeProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Map">
+                <Stack.Navigator initialRouteName="Login">
                     {/* <Stack.Screen
                         name="NavBar"
                         component={NavBar}
