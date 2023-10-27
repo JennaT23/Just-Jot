@@ -208,24 +208,25 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-
-                        
-                            {selectedImageUri && <Image source={{ uri: 'https://placekitten.com/200/300' }} style={newEntrystyle.selectedImage} />}
-
-                            {hasCameraPermission && showCamera ? (
-                                <Camera
-                                    style={{ flex: 1 }}
-                                    type={Camera.Constants.Type.back}
-                                    ref={(ref) => {
-                                        setCameraRef(ref);
-                                    }}
-                                />
-                            ) : (
-                                <View style={newEntrystyle.noCameraAccessContainer}>
-                                    <Text></Text>       // error message in case there is no access to camera
-                                </View>
-                            )}
                             
+                    </View>
+
+                    <View> 
+                        {selectedImageUri && <Image source={{ uri: 'https://placekitten.com/200/300' }} style={newEntrystyle.selectedImage} />}
+
+                        {hasCameraPermission && showCamera ? (
+                            <Camera
+                                style={{ flex: 1 }}
+                                type={Camera.Constants.Type.back}
+                                ref={(ref) => {
+                                    setCameraRef(ref);
+                                }}
+                            />
+                        ) : (
+                            <View style={newEntrystyle.noCameraAccessContainer}>
+                                <Text></Text>     
+                            </View>
+                        )}
                     </View>
 
                 </ScrollView>
