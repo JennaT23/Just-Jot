@@ -218,10 +218,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
                             
-                    </View>
-
-                    <View> 
-                        {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={newEntrystyle.selectedImage} />}
+                            {selectedImageUri && <Image source={{ uri: selectedImageUri  }} style={newEntrystyle.selectedImage} />}
 
                         {hasCameraPermission && showCamera ? (
                             <Camera
@@ -235,6 +232,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                             <Text></Text>
                         )}
                     </View>
+
 
                 </ScrollView>
             </View>
