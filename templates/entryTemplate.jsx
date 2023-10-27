@@ -212,7 +212,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     </View>
 
                     <View> 
-                        {selectedImageUri && <Image source={{ uri: 'https://placekitten.com/200/300' }} style={newEntrystyle.selectedImage} />}
+                        {selectedImageUri && <Image source={{ uri: selectedImageUri  }} style={newEntrystyle.selectedImage} />}
 
                         {hasCameraPermission && showCamera ? (
                             <Camera
@@ -224,7 +224,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                             />
                         ) : (
                             <View style={newEntrystyle.noCameraAccessContainer}>
-                                <Text></Text>     
+                                <Text>Error!</Text>     
                             </View>
                         )}
                     </View>
