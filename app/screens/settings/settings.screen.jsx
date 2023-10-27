@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, View, Switch, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
+import { SafeAreaView, View, Switch, StyleSheet, ScrollView, Image, TouchableOpacity, FeatherIcon } from "react-native"
 import { TabView } from 'react-native-paper'
 import Text from '../../../appStyles/customStyle'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/core'
 import { getAuth } from 'firebase/auth'
 
 
-export const Settings = () => {
+export const Settings = ({ navigation }) => {
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
