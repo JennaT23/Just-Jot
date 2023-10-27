@@ -9,7 +9,7 @@ import useTheme from '../../../appStyles/useTheme'
 import { Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/core'
 import { getAuth } from 'firebase/auth'
-
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export const Settings = () => {
 
