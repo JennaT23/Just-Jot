@@ -9,6 +9,7 @@ import { ScrollView, View } from "react-native";
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
 import { HeaderBackButton } from '@react-navigation/elements'
+import { useNavigation } from "@react-navigation/native";
 // import { useNavigation } from '@react-navigation/native';
 
 
@@ -60,7 +61,7 @@ export const ViewEntry = ({ navigation, route }) => {
             </View>
             <View style={viewstyle.view}>
                 <Title style={viewstyle.title}>{entry.Title}</Title>
-                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(entry.Date.toDate())}</Subheading>
+                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(new Date(entry.Date))}</Subheading>
             </View>
             <View style={viewstyle.view}>
                 <Paragraph>{entry.Text}</Paragraph>
@@ -70,10 +71,11 @@ export const ViewEntry = ({ navigation, route }) => {
 };
 
 ViewEntry.navigationOptions = ({ navigation }) => {
+    console.log('this sucks');
     return {
         headerLeft: () => (
-            <HeaderBackButton 
-                onPress={() => {navigation.navigate('Home')}}
+            <HeaderBackButton
+                onPress={() => { useNavigation().navigate('Home') }}
             />
         )
     }

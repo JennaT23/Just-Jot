@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import moment from 'moment'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { DateTimePicker } from '@react-native-community/datetimepicker';
 import { View, Platform, TouchableOpacity } from 'react-native';
 import Text from '../../appStyles/customStyle'
 
-export const PickDate = ({displayDate, sendDate}) => {
+export const PickDate = ({ displayDate, sendDate }) => {
 
     // const initialDate = new Date(displayDate);
     // const [date, setDate] = useState(initialDate);
@@ -16,7 +16,7 @@ export const PickDate = ({displayDate, sendDate}) => {
     maxDate = moment(maxDate).add(5, 'year');
     console.log(minDate);
 
-    const setChosenDate = ({type}, selectedDate) => {
+    const setChosenDate = ({ type }, selectedDate) => {
         console.log("selectedDate: " + selectedDate);
         // if(type == 'set' || type == 'dismissed') {
         //     const currentDate = selectedDate;
@@ -55,7 +55,7 @@ export const PickDate = ({displayDate, sendDate}) => {
                     press
                 </Text>
             </TouchableOpacity>
-            <DateTimePicker 
+            <DateTimePicker
                 mode='date'
                 display='default'
                 value={date}
@@ -94,7 +94,7 @@ export const PickDate = ({displayDate, sendDate}) => {
 
 //     return (
 //         <View>
-//             <DateTimePicker 
+//             <DateTimePicker
 //                 mode='date'
 //                 display='default'
 //                 value={date}
