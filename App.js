@@ -12,62 +12,63 @@ import ThemeProvider from './appStyles/themeProvider';
 import { EntryTemplate } from './templates/entryTemplate';
 import { Map } from './app/screens/map/map.screen';
 import { Settings } from './app/screens/settings/settings.screen';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
+import { Memory } from './app/screens/memory/memory.screen';
 
 
 const Stack = createNativeStackNavigator();
-// const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
+function NavBar() {
+    return (
+        <Tab.Navigator
+            initialRouteName={Home}
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
 
+                    if (route.name === 'Home') {
+                        iconName = focused
+                            ? 'home-outline'
+                            : 'home-outline';
+                    }
+                    else if (route.name === 'Map') {
+                        iconName = focused
+                            ? 'map-marker-radius-outline'
+                            : 'map-marker-radius-outline';
+                    }
+                    else if (route.name === 'Memory') {
+                        iconName = focused
+                            ? 'star-outline'
+                            : 'star-outline';
+                    }
+                    else if (route.name === 'Settings') {
+                        iconName = focused ? 'cog-outline' : 'cog-outline';
+                    }
 
-// function NavBar() {
-//     return (
-//         <Tab.Navigator
-//             screenOptions={({ route }) => ({
-//                 tabBarIcon: ({ focused, color, size }) => {
-//                     let iconName;
-        
-//                     if (route.name === 'Home') {
-//                     iconName = focused
-//                         ? 'home-outline'
-//                         : 'home-outline';
-//                     } 
-//                     else if(route.name === 'Map') {
-//                         iconName = focused 
-//                         ? 'map-marker-radius-outline' 
-//                         : 'map-marker-radius-outline';
-//                     }
-//                     else if (route.name === 'Settings') {
-//                     iconName = focused ? 'cog-outline' : 'cog-outline';
-//                     }
-        
-//                     // You can return any component that you like here!
-//                     return <IconButton icon={iconName} size={size} iconColor={color} />;
-//                 },
-//                 tabBarActiveTintColor: 'tomato',
-//                 tabBarInactiveTintColor: 'gray',
-//             })}
-//         >
-//             <Tab.Screen name="Home" component={Home} />
-//             <Tab.Screen name="Map" component={Map} />
-//             <Tab.Screen name="Settings" component={Settings} />
+                    // You can return any component that you like here!
+                    return <IconButton icon={iconName} size={size} iconColor={color} />;
+                },
+                tabBarActiveTintColor: 'black',
+                tabBarInactiveTintColor: 'gray',
+            })}
+        >
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Map" component={Map} />
+            <Tab.Screen name="Memory" component={Memory} />
+            <Tab.Screen name="Settings" component={Settings} />
 
-            
-//         </Tab.Navigator>
-//     )
-// }
+        </Tab.Navigator>
+    )
+}
 
 const App = () => {
     return (
         <ThemeProvider>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="Login">
-                    {/* <Stack.Screen
-                        name="NavBar"
-                        component={NavBar}
-                        options={{ headerShown: false }}
-                    /> */}
+                    <Stack.Screen options={{ headerShown: false }} name="NavBar" component={NavBar} />
                     <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
                     <Stack.Screen options={{ headerShown: true, title: 'Register' }} name="Register" component={Register} />
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
