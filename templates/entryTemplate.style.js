@@ -5,9 +5,8 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         padding: 10,
         fontSize: 15,
         flex: 1,
+        marginBottom: 5,
         // backgroundColor: '#f5e9c1',
-        textAlign: 'left',
-        marginTop: 5
     },
     cardText: {
         borderBottomWidth: 1,
@@ -24,15 +23,17 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         flex: 1,
     },
     date: {
+        margin: 5,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         flexDirection: "row",
+        alignItems: 'baseline',
     },
     calendarIcon: {
     },
     selectedImage: {
-        width: 200, 
-        height: 200, 
+        width: 200,
+        height: 200,
         resizeMode: 'cover',
     },
     noCameraAccessContainer: {
@@ -40,5 +41,5 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    
+
 })
