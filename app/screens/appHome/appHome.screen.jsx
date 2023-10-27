@@ -104,7 +104,7 @@ export const Home = ({ navigation }) => {
             </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
                 onPress={moveNewEntry} />
-            <View style={appHomestyle.menu}>
+            {/* <View style={appHomestyle.menu}>
                 <IconButton 
                     icon="home-outline"
                     size={35}
@@ -126,7 +126,7 @@ export const Home = ({ navigation }) => {
                     style={appHomestyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
-            </View>
+            </View> */}
         </SafeAreaView >
     )
 }
