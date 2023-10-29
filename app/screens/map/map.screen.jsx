@@ -8,9 +8,8 @@ export const Map = ({navigation}) => {
     
     return(
         <SafeAreaView  style={{flex: 1}}>
-            <Text>Map page</Text>
-            <Location/>
             <MyMap/>
+            <Location/>
         </SafeAreaView>
     )
 }
