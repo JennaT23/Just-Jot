@@ -67,7 +67,7 @@ const App = () => {
     return (
         <ThemeProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Login">
+                <Stack.Navigator initialRouteName="NavBar">
                     <Stack.Screen options={{ headerShown: false }} name="NavBar" component={NavBar} />
                     <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
                     <Stack.Screen options={{ headerShown: true, title: 'Register' }} name="Register" component={Register} />
