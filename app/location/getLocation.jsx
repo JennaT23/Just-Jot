@@ -1,33 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 
-export const getLatitude = async () => {
+export const getLocation = () => {
+  const [location, setLocation] = useState(null);
 
-  const [latitudeCoords, setlatitudeCoords] = useState(null);
+  useEffect(() => {
+    (async () => {
+      // check if location permission is granted
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        throw Error("Location access not granted");
+      }
 
-  if (await Location.requestForegroundPermissionsAsync() !== 'granted') {
-    setErrorMsg('Permission to access location was denied');
-    return;
-  }
-  let location = await Location.getCurrentPositionAsync();
+      // get location
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []); // empty dependency array to run only once (according to ChatGPT)
 
-  setlatitudeCoords(location.coords.latitude);
-
-  return;
+  return location;
 }
-
-export const getLongitude = async () => {
-  const [longitudeCoords, setlongitudeCoords] = useState(null);
-
-  if (await Location.requestForegroundPermissionsAsync() !== 'granted') {
-    setErrorMsg('Permission to access location was denied');
-    return;
-  }
-  let location = await Location.getCurrentPositionAsync();
-
-  setlongitudeCoords(location.coords.longitude);
-
-  return;
-}
-
-

@@ -7,7 +7,7 @@ export const mapMarkers = () => {
 
     useEffect(() => {
       fetchEntryLocations();
-  }, [user])
+  }, [])
 
   const fetchEntryLocations = async () => {
     try {
