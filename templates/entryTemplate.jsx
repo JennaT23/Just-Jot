@@ -6,8 +6,7 @@ import { getAuth } from 'firebase/auth';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
-import getLocation from '../app/location/getLocation'
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, GeoPoint } from "firebase/firestore";
 
 // Custom imports
 import Text from '../appStyles/customStyle';
@@ -15,6 +14,7 @@ import useThemedStyles from '../appStyles/useThemedStyles';
 import useTheme from '../appStyles/useTheme';
 import { PickDate } from '../app/useful/datePicker';
 import { useNavigation } from '@react-navigation/native';
+import { getLocation } from '../app/location/getLocation';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -35,7 +35,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     const [title, setTitle] = useState(entryData.Title);
     const [text, setText] = useState(entryData.Text);
-    const [location, setLocation] = useState(entryData.Location);
+    const [location, setLocation] = useState(null); // entryData.Location
     const [entryDate, setEntryDate] = useState(new Date(entryData.Date));
     const [entryTime, setEntryTime] = useState(entryData.Date);
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -122,15 +122,22 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     // }
 
+    const location2 = getLocation();
+    if (location2 === null) {
+        return <View><Text>Loading...</Text></View>;
+    }
+
+    // console.log("location2:", location2);
+
     const saveEntry = () => {
         // const location = "[0 N, 0 E]"; // change to get actual geolocation
         
-        setLocation(getLocation());
-        console.log("location:", location);
-        setLocation(getFirestore().GeoPoint(latitude, longitude));
+        // setLocation(new GeoPoint(location2.coords.latitude, location2.coords.longitude));
+        const location3 = new GeoPoint(location2.coords.latitude, location2.coords.longitude);
+        console.log("location3: ", location3);
 
         const uid = user.uid;
-        const entry = { Date: entryDate, Location: location, Title: title, Text: text, uid: uid, id: entryData.id };
+        const entry = { Date: entryDate, Location: location3, Title: title, Text: text, uid: uid, id: entryData.id };
 
         console.log("hello firebase1");
         writeToFirebase(entry);
