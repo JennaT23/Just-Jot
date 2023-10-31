@@ -118,9 +118,9 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
             }
         };
 
-    // const getLocation = () => {
-
-    // }
+    const chooseLocation = () => {
+        // code to have user enter an address and map it to a lat/lng location
+    }
 
 
     const saveEntry = () => {
@@ -216,9 +216,13 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     </View>
                 )}
 
-                {/* <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' /> */}
-                <TouchableOpacity style={entryTemplatestyle.cardText}>
-                    <Text>Location: {formatGeoPoint(location)}</Text>
+                <TouchableOpacity style={entryTemplatestyle.date} onPress={() => chooseLocation()}>
+                    <Text style={entryTemplatestyle.dateText}>Location: {formatGeoPoint(location)}</Text>
+                    <IconButton
+                        icon='map-marker-outline'
+                        size={30}
+                        iconColor={theme.colors.TEXT}
+                    />
                 </TouchableOpacity>
                 
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
