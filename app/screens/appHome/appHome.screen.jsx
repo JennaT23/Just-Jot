@@ -11,6 +11,7 @@ import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'rea
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
+import { getLocation } from '../../location/getLocation'
 
 export const Home = ({ navigation }) => {
     const theme = useTheme();
@@ -33,7 +34,7 @@ export const Home = ({ navigation }) => {
     }, [user])
 
     const moveNewEntry = () => {
-        const entry = { Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid };
+        const entry = { Text: '', Title: '', Location: null, Date: new Date(), uid: user.uid };
         navigation.navigate('NewEntry', { entry });
     }
 
@@ -78,6 +79,14 @@ export const Home = ({ navigation }) => {
         return formattedDate;
     }
 
+    const formatGeoPoint = (geopoint) => {
+        const lat = geopoint.latitude.toString();
+        const lng = geopoint.longitude.toString();
+
+        const formattedLocation = "["+lat+", "+lng+"]";
+        return formattedLocation;
+    }
+
     const handleView = (entry) => {
         console.log("home entry: ", entry);
         console.log("home date: ", entry.Date);
@@ -97,6 +106,7 @@ export const Home = ({ navigation }) => {
                             <TouchableOpacity onPress={() => handleView(entry)}>
                                 <Title style={appHomestyle.title}>{entry.Title}</Title>
                                 <Subheading style={appHomestyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                <Subheading style={appHomestyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>

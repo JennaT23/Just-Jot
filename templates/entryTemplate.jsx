@@ -6,7 +6,7 @@ import { getAuth } from 'firebase/auth';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera } from 'expo-camera';
-import { getFirestore, GeoPoint } from "firebase/firestore";
+import { GeoPoint } from "firebase/firestore";
 
 // Custom imports
 import Text from '../appStyles/customStyle';
@@ -35,7 +35,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     const [title, setTitle] = useState(entryData.Title);
     const [text, setText] = useState(entryData.Text);
-    const [location, setLocation] = useState(null); // entryData.Location
+    const [location, setLocation] = useState(entryData.Location);
     const [entryDate, setEntryDate] = useState(new Date(entryData.Date));
     const [entryTime, setEntryTime] = useState(entryData.Date);
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -122,22 +122,12 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     // }
 
-    const location2 = getLocation();
-    if (location2 === null) {
-        return <View><Text>Loading...</Text></View>;
-    }
-
-    // console.log("location2:", location2);
 
     const saveEntry = () => {
-        // const location = "[0 N, 0 E]"; // change to get actual geolocation
-        
-        // setLocation(new GeoPoint(location2.coords.latitude, location2.coords.longitude));
-        const location3 = new GeoPoint(location2.coords.latitude, location2.coords.longitude);
-        console.log("location3: ", location3);
+        const geopoint = new GeoPoint(location.latitude, location.longitude);
 
         const uid = user.uid;
-        const entry = { Date: entryDate, Location: location3, Title: title, Text: text, uid: uid, id: entryData.id };
+        const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, uid: uid, id: entryData.id };
 
         console.log("hello firebase1");
         writeToFirebase(entry);
@@ -169,6 +159,14 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
         return `${day} ${month} ${date} ${year} ${formattedTime}`;
+    }
+
+    const formatGeoPoint = (geopoint) => {
+        const lat = geopoint.latitude.toString();
+        const lng = geopoint.longitude.toString();
+
+        const formattedLocation = "["+lat+", "+lng+"]";
+        return formattedLocation;
     }
 
     return (
@@ -218,7 +216,11 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     </View>
                 )}
 
-                <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' />
+                {/* <TextInput value={location} onChangeText={text => setLocation(text)} style={entryTemplatestyle.cardText} placeholder='Location:' /> */}
+                <TouchableOpacity style={entryTemplatestyle.cardText}>
+                    <Text>Location: {formatGeoPoint(location)}</Text>
+                </TouchableOpacity>
+                
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
