@@ -14,7 +14,7 @@ import { Map } from './app/screens/map/map.screen';
 import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
-import { Memory } from './app/screens/memory/memory.screen';
+import { Memories } from './app/screens/memory/memory.screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -38,7 +38,7 @@ function NavBar() {
                             ? 'map-marker-radius-outline'
                             : 'map-marker-radius-outline';
                     }
-                    else if (route.name === 'Memory') {
+                    else if (route.name === 'Memories') {
                         iconName = focused
                             ? 'star-outline'
                             : 'star-outline';
@@ -56,7 +56,7 @@ function NavBar() {
         >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Memory" component={Memory} />
+            <Tab.Screen name="Memories" component={Memories} />
             <Tab.Screen name="Settings" component={Settings} />
 
         </Tab.Navigator>
@@ -75,6 +75,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true }} name="Map" component={Map} />
                     <Stack.Screen options={{ headerShown: true }} name="Settings" component={Settings} />
                     <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+                    <Stack.Screen options={{ headerShown: false }} name="Memories" component={Memories} />
                     <Stack.Screen options={{ headerShown: true }} name="NewEntry">
                         {props => <NewEntry {...props} />}
                     </Stack.Screen>
@@ -84,7 +85,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true }} name="EditEntry">
                         {props => <EditEntry {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen name="ViewEntry">
+                    <Stack.Screen options={{ headerShown: true }} name="ViewEntry">
                         {props => <ViewEntry {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
