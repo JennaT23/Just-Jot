@@ -1,10 +1,13 @@
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, whereEqualTo, query, where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export const fetchJournalEntriesFromFirebase = async () => {
     const db = getFirestore();
 
     try {
-        const journalEntriesCollection = collection(db, 'JournalEntries');
+        const auth = getAuth();
+        const user = auth.currentUser;
+        const journalEntriesCollection = query(collection(db, 'JournalEntries'), where("uid", "==", user.uid));
         const querySnapshot = await getDocs(journalEntriesCollection);
 
         const entries = querySnapshot.docs.map((doc) => ({
@@ -16,10 +19,6 @@ export const fetchJournalEntriesFromFirebase = async () => {
             Title: doc.data().Title,
             uid: doc.data().uid,
         }));
-
-        for (entry in entries) {
-            console.log("loop date", entry.Date);
-        }
 
         return entries;
     } catch (error) {
