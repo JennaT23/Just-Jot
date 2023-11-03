@@ -7,6 +7,10 @@ export const appstyle = theme => StyleSheet.create({
         alignItems: 'center',
         backgroundColor: theme.colors.BACKGROUND,
     },
+    settingsContainer: {
+        backgroundColor: theme.colors.BACKGROUND,
+        flex: 1,
+    },
     input: {
         backgroundColor: '#fceae3',
         paddingHorizontal: 15,
@@ -33,6 +37,13 @@ export const appstyle = theme => StyleSheet.create({
     // },
     text: {
         color: theme.colors.TEXT,
+    },
+
+    headerText: {
+        fontSize: 13,
+        fontWeight: '500',
+        color: theme.colors.TEXT,
+        textTransform: 'uppercase',
     },
 
     clickableText: {
