@@ -10,7 +10,7 @@ import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'rea
 import { fetchMemoriesFromFirebase } from '../../firebase/fetchMemoriesFromFirebase'
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
-import { appJournalStyle as appJournal_style } from '../appJournal/appJournal.style'
+import { appJournalStyle as appJournal_style } from '../appJournal/journal.style'
 import { GeoPoint } from "firebase/firestore";
 import { getLocation } from '../../location/getLocation';
 
@@ -26,18 +26,24 @@ export const Memories = ({ navigation }) => {
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
     const [journalEntries, setJournalEntries] = useState([]);
+    const [refreshData, setRefreshData] = useState(0);
 
     useEffect(() => {
         if (user) {
             setUsername(user.displayName)
         }
         fetchMemories();
-    }, [user])
+    }, [refreshData]);
+
+    const handleExitView = () => {
+        navigation.navigate('NavBar');
+        setRefreshData((prev) => prev + 1);
+    };
 
     const moveNewMemory = () => {
         const memory = { Text: '', Title: '', Location: null, DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
         console.log('memory in move:', memory)
-        navigation.navigate('NewMemory', { memory });
+        navigation.navigate('NewMemory', { memory, handleExitView });
     }
 
     const fetchMemories = async () => {
@@ -76,10 +82,10 @@ export const Memories = ({ navigation }) => {
         return formattedDate;
     }
 
-    const handleView = (entry) => {
-        console.log("Journal entry: ", entry);
-        console.log("Journal date: ", entry.Date);
-        navigation.navigate('ViewEntry', { entry });
+    const handleView = (memory) => {
+        console.log("Journal entry: ", memory);
+        console.log("Journal date: ", memory.Date);
+        navigation.navigate('ViewMemory', { memory });
     };
 
     const formatGeoPoint = (geopoint) => {

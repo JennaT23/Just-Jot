@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
 import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
-import { Journal } from './app/screens/appJournal/appJournal.screen'
+import { Journal } from './app/screens/appJournal/journal.screen'
 import { NewEntry } from './app/screens/newEntry/newEntry.screen'
 import { ViewEntry } from './app/screens/viewEntry/viewEntry'
 import { EditEntry } from './app/screens/editEntry/editEntry'

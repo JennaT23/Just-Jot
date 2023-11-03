@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { appJournalStyle as appJournal_style } from './appJournal.style'
+import { appJournalStyle as appJournal_style } from './journal.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
@@ -25,17 +25,23 @@ export const Journal = ({ navigation }) => {
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
     const [journalEntries, setJournalEntries] = useState([]);
+    const [refreshData, setRefreshData] = useState(0);
 
     useEffect(() => {
         if (user) {
             setUsername(user.displayName)
         }
         fetchJournalEntries();
-    }, [user])
+    }, [refreshData])
+
+    const handleExitView = () => {
+        navigation.navigate('NavBar');
+        setRefreshData((prev) => prev + 1);
+    };
 
     const moveNewEntry = () => {
         const entry = { Text: '', Title: '', Location: null, Date: new Date(), uid: user.uid };
-        navigation.navigate('NewEntry', { entry });
+        navigation.navigate('NewEntry', { entry, handleExitView });
     }
 
     const fetchJournalEntries = async () => {

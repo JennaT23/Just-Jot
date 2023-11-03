@@ -12,7 +12,7 @@ export const NewMemory = ({ navigation, route }) => {
     const memory = route.params.memory;
     console.log('memory in newmemory:', memory);
     const displayDate = new Date().toDateString();
-    location = getLocation();
+    const location = getLocation();
     if (location === null) {
         return <View><Text>Loading...</Text></View>;
     }
@@ -20,6 +20,6 @@ export const NewMemory = ({ navigation, route }) => {
     memory.Location = loc;
 
     return (
-        <MemoryTemplate navigation={navigation} memory={memory} pickerDisplayDate={displayDate} writeToFirebase={writeMemoryToFirebase} />
+        <MemoryTemplate navigation={navigation} memory={memory} pickerDisplayDate={displayDate} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />
     )
 }

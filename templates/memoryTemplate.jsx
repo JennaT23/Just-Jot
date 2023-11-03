@@ -25,7 +25,7 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 
-export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
+export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExitView }) => {
     console.log("template memory: ", memory);
 
     const theme = useTheme();
@@ -41,9 +41,11 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
     const [timeCreated, setTimeCreated] = useState(memory.DateCreated);
     const [timeMarked, setTimeMarked] = useState(memory.DateMarked);
     const [showDateCreatedPicker, setShowDateCreatedPicker] = useState(false);
-    const [showDateMarkedPicker, setShowDateMarkedPicker] = useState(false);
     const [showTimeCreatedPicker, setShowTimeCreatedPicker] = useState(false);
+    const [showDateMarkedPicker, setShowDateMarkedPicker] = useState(false);
     const [showTimeMarkedPicker, setShowTimeMarkedPicker] = useState(false);
+
+    console.log('dateCreated', dateCreated, 'dateMarked', dateMarked);
 
     // camera and camera roll hooks
     const [selectedImageUri, setSelectedImageUri] = useState(null);
@@ -52,38 +54,33 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
     const [cameraRef, setCameraRef] = useState(null);
     const [showCamera, setShowCamera] = useState(false);
 
-
     const auth = getAuth()
     const user = auth.currentUser;
 
     const handleDateCreatedChange = (event, selectedDate) => {
-        if (selectedDate) {
+        if (selectedDate || event.type === 'dismissed') {
             setDateCreated(selectedDate);
+
+            setShowDateCreatedPicker(false);
+            setShowTimeCreatedPicker(true);
         }
-        setShowDateCreatedPicker(false);
-        setShowTimeCreatedPicker(true);
     };
 
     const handleDateMarkedChange = (event, selectedDate) => {
-        if (selectedDate) {
+        if (selectedDate || event.type === 'dismissed') {
             setDateMarked(selectedDate);
+
+            setShowDateMarkedPicker(false);
+            setShowTimeMarkedPicker(true);
         }
-        setShowDateMarkedPicker(false);
-        setShowTimeMarkedPicker(true);
     };
 
-    const handleTimeCreatedChange = (event, selectedTime) => {
-        if (selectedTime) {
-            setEntryCreatedTime(selectedTime);
-        }
-        setShowTimeCreatedPicker(false);
-    };
+    const handleTimeMarkedChange = (event, selectedDate) => {
+        if (selectedDate || event.type === 'dismissed') {
+            setDateMarked(selectedDate);
 
-    const handleTimeMarkedChange = (event, selectedTime) => {
-        if (selectedTime) {
-            setEntryMarkedTime(selectedTime);
+            setShowTimeMarkedPicker(false);
         }
-        setShowTimeMarkedPicker(false);
     };
 
     const pickImage = async () => {
@@ -126,7 +123,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
         })();
     }, []);
 
-
     const takePicture = async () => {
         setShowCamera(true);
         if (cameraRef) {
@@ -148,10 +144,10 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, uid: uid, id: memory.id };
 
         console.log("hello firebase1");
+        console.log('newMemory', newMemory);
         writeToFirebase(newMemory);
         console.log("hello firebase2");
-
-        navigation.navigate('ViewMemory', { memory });
+        navigation.navigate('ViewMemory', { newMemory, handleExitView });
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {
@@ -213,7 +209,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
             <View style={newEntrystyle.container}>
                 <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
                 <View style={entryTemplatestyle.date}>
-                    <Text style={entryTemplatestyle.dateText}>Date Created: {dateCreated.toDateString()}</Text>
+                    <Text style={entryTemplatestyle.dateText}>Created: {formatCustomDateTime(dateCreated)}</Text>
                     <TouchableOpacity onPress={() => { setShowDateCreatedPicker(true) && setShowTimeCreatedPicker(false) }}>
                         <IconButton
                             icon='calendar-edit'
@@ -232,24 +228,28 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
                             is24Hour={false}
                             display='spinner'
                             onChange={handleDateCreatedChange}
+                        //onChange='dismissed'
+                        //onBlur={handleDateCreatedOnBlur}
                         />
                     </View>
                 )}
-                {!showDateCreatedPicker && showTimeCreatedPicker && (
+                {/* {showTimeCreatedPicker && (
                     <View>
                         <DateTimePicker
                             testID='timePicker'
-                            value={timeCreated}
+                            value={dateCreated}
                             mode='time'
                             is24Hour={false}
                             display='clock'
-                            onChange={handleTimeCreatedChange}
+                            // onChange={handleTimeCreatedChange}
+                            onChange='dismissed'
+                        //onBlur={handleTimeCreatedOnBlur}
                         />
                     </View>
-                )}
+                )} */}
 
                 <View style={entryTemplatestyle.date}>
-                    <Text style={entryTemplatestyle.dateText}>Date Marked: {dateMarked.toDateString()}</Text>
+                    <Text style={entryTemplatestyle.dateText}>Marked: {formatCustomDateTime(dateMarked)}</Text>
                     <TouchableOpacity onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
                         <IconButton
                             icon='calendar-edit'
@@ -268,18 +268,20 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
                             is24Hour={false}
                             display='spinner'
                             onChange={handleDateMarkedChange}
+                        //onBlur={handleDateMarkedOnBlur}
                         />
                     </View>
                 )}
-                {!showDateMarkedPicker && showTimeMarkedPicker && (
+                {showTimeMarkedPicker && (
                     <View>
                         <DateTimePicker
                             testID='timePicker'
-                            value={timeMarked}
+                            value={dateMarked}
                             mode='time'
                             is24Hour={false}
                             display='clock'
                             onChange={handleTimeMarkedChange}
+                        // onBlur={handleTimeMarkedOnBlur}
                         />
                     </View>
                 )}
@@ -299,7 +301,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
 
                         {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={newEntrystyle.selectedImage} />}
 
-                        {hasCameraPermission && showCamera ? (
+                        {hasCameraPermission && showCamera && (
                             <Camera
                                 style={{ flex: 1 }}
                                 type={Camera.Constants.Type.back}
@@ -307,10 +309,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
                                     setCameraRef(ref);
                                 }}
                             />
-                        ) : (
-                            <View style={newEntrystyle.noCameraAccessContainer}>
-                                <Text>Error!</Text>
-                            </View>
                         )}
                     </View>
 

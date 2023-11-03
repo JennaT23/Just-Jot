@@ -10,7 +10,7 @@ import { GeoPoint } from "firebase/firestore";
 export const NewEntry = ({ navigation, route }) => {
     const entry = route.params.entry;
     const displayDate = new Date().toDateString();
-    location = getLocation();
+    const location = getLocation();
     if (location === null) {
         return <View><Text>Loading...</Text></View>;
     }
@@ -18,6 +18,6 @@ export const NewEntry = ({ navigation, route }) => {
     entry.Location = loc;
 
     return (
-        <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase} />
+        <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase} handleExitView={route.params.handleExitView} />
     )
 }

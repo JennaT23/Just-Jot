@@ -25,7 +25,7 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 
-export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
+export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase, handleExitView }) => {
     // console.log("template entry: ", entryData);
 
     const theme = useTheme();
@@ -132,7 +132,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         writeToFirebase(entry);
         console.log("hello firebase2");
 
-        navigation.navigate('ViewEntry', { entry });
+        navigation.navigate('ViewEntry', { entry, handleExitView });
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {
@@ -230,7 +230,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
                         {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={newEntrystyle.selectedImage} />}
 
-                        {hasCameraPermission && showCamera ? (
+                        {hasCameraPermission && showCamera && (
                             <Camera
                                 style={{ flex: 1 }}
                                 type={Camera.Constants.Type.back}
@@ -238,10 +238,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                                     setCameraRef(ref);
                                 }}
                             />
-                        ) : (
-                            <View style={newEntrystyle.noCameraAccessContainer}>
-                                <Text>Error!</Text>
-                            </View>
                         )}
                     </View>
 

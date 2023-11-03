@@ -2,6 +2,7 @@ import { Paragraph, Subheading, Title, IconButton } from "react-native-paper";
 import { appstyle } from "../../../appStyles/appstyle";
 import Text from "../../../appStyles/customStyle";
 import React from 'react';
+import { useEffect } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { viewEntryStyle } from "./viewEntry.style";
 import useThemedStyles from "../../../appStyles/useThemedStyles";
@@ -16,6 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 export const ViewEntry = ({ navigation, route }) => {
     const viewstyle = useThemedStyles(viewEntryStyle);
     const newEntrystyle = useThemedStyles(newEntry_style);
+    const handleExitView = route.params.handleExitView;
 
     const theme = useTheme();
     // const navigation = useNavigation();
@@ -48,6 +50,23 @@ export const ViewEntry = ({ navigation, route }) => {
         navigation.navigate('EditEntry', { entry });
     }
 
+    const formatGeoPoint = (geopoint) => {
+        const lat = geopoint.latitude.toString();
+        const lng = geopoint.longitude.toString();
+
+        const formattedLocation = "[" + lat + ", " + lng + "]";
+        return formattedLocation;
+    }
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <HeaderBackButton onPress={() => { handleExitView(); navigation.navigate('NavBar'); }} title='Memories' />
+            ),
+        });
+
+    }, [navigation]);
+
     return (
         <ScrollView style={viewstyle.container}>
             <View style={newEntrystyle.toolBar}>
@@ -62,21 +81,22 @@ export const ViewEntry = ({ navigation, route }) => {
             <View style={viewstyle.view}>
                 <Title style={viewstyle.title}>{entry.Title}</Title>
                 <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(new Date(entry.Date))}</Subheading>
+                <Subheading style={viewstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
             </View>
             <View style={viewstyle.view}>
-                <Paragraph>{entry.Text}</Paragraph>
+                <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
             </View>
         </ScrollView>
     );
 };
 
-ViewEntry.navigationOptions = ({ navigation }) => {
-    console.log('this sucks');
-    return {
-        headerLeft: () => (
-            <HeaderBackButton
-                onPress={() => { useNavigation().navigate('Journal') }}
-            />
-        )
-    }
-}
+// ViewEntry.navigationOptions = ({ navigation }) => {
+//     console.log('this sucks');
+//     return {
+//         headerLeft: () => (
+//             <HeaderBackButton
+//                 onPress={() => { handleExitView(); navigation.navigate('Journal'); }}
+//             />
+//         )
+//     }
+// }

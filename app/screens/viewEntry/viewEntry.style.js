@@ -9,9 +9,13 @@ export const viewEntryStyle = theme => StyleSheet.create({
         padding: 20,
     },
     title: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 22,
     },
     subheading: {
         color: theme.colors.SUBHEADING,
+    },
+    text: {
+        fontSize: 18,
     },
 })
