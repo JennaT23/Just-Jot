@@ -61,7 +61,7 @@ export const ViewEntry = ({ navigation, route }) => {
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <HeaderBackButton onPress={() => { handleExitView(); navigation.navigate('NavBar'); }} title='Memories' />
+                <HeaderBackButton onPress={() => { handleExitView(); navigation.navigate('NavBar'); }} title='Journal' />
             ),
         });
 

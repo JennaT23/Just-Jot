@@ -91,7 +91,7 @@ export const Journal = ({ navigation }) => {
     const handleView = (entry) => {
         console.log("journal entry: ", entry);
         console.log("journal date: ", entry.Date);
-        navigation.navigate('ViewEntry', { entry });
+        navigation.navigate('ViewEntry', { entry, handleExitView });
     };
 
     return (

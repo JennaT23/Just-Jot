@@ -25,7 +25,7 @@ export const Memories = ({ navigation }) => {
     const auth = getAuth()
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
-    const [journalEntries, setJournalEntries] = useState([]);
+    const [memories, setMemories] = useState([]);
     const [refreshData, setRefreshData] = useState(0);
 
     useEffect(() => {
@@ -49,8 +49,8 @@ export const Memories = ({ navigation }) => {
     const fetchMemories = async () => {
         try {
             const entries = await fetchMemoriesFromFirebase();
-            setJournalEntries(entries);
-            console.log("fetch", journalEntries);
+            setMemories(entries);
+            console.log("fetch", memories);
         } catch (error) {
             console.log('Error fetching', error);
         }
@@ -82,10 +82,10 @@ export const Memories = ({ navigation }) => {
         return formattedDate;
     }
 
-    const handleView = (memory) => {
-        console.log("Journal entry: ", memory);
-        console.log("Journal date: ", memory.Date);
-        navigation.navigate('ViewMemory', { memory });
+    const handleView = (newMemory) => {
+        console.log("Journal entry: ", newMemory);
+        console.log("Journal date: ", newMemory.DateCreated);
+        navigation.navigate('ViewMemory', { newMemory, handleExitView });
     };
 
     const formatGeoPoint = (geopoint) => {
@@ -103,15 +103,15 @@ export const Memories = ({ navigation }) => {
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
             <ScrollView>
-                {journalEntries.map((entry, index) => (
+                {memories.map((memory, index) => (
                     <Card key={index} style={appJournalstyle.card}>
                         <Card.Content>
-                            <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>Created: {entry.DateCreated && formatDate(new Date(entry.DateCreated))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Marked: {entry.DateMarked && formatDate(new Date(entry.DateMarked))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
-                                <Paragraph>{entry.Text}</Paragraph>
+                            <TouchableOpacity onPress={() => handleView(memory)}>
+                                <Title style={appJournalstyle.title}>{memory.Title}</Title>
+                                <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Location: {memory.Location && formatGeoPoint(memory.Location)}</Subheading>
+                                <Paragraph>{memory.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
                                 <TouchableOpacity onPress={() => handleView(entry)}>
