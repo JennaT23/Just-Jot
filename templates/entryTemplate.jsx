@@ -25,7 +25,7 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 
-export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
+export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase, handleExitView }) => {
     // console.log("template entry: ", entryData);
 
     const theme = useTheme();
@@ -71,7 +71,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         setShowTimePicker(false);
     };
 
-    
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -79,13 +78,12 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
             aspect: [4, 3],
             quality: 1,
         });
-    
-    
+
         if (!result.canceled) {
             if (result.assets && result.assets.length > 0) {
                 setImage(result.assets[0].uri);
             }
-        }        
+        }
     };
     
 
@@ -155,7 +153,8 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, uid: uid, id: entryData.id };
 
         writeToFirebase(entry);
-        navigation.navigate('ViewEntry', { entry });
+
+        navigation.navigate('ViewEntry', { entry, handleExitView });
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {
@@ -187,7 +186,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const lat = geopoint.latitude.toString();
         const lng = geopoint.longitude.toString();
 
-        const formattedLocation = "["+lat+", "+lng+"]";
+        const formattedLocation = "[" + lat + ", " + lng + "]";
         return formattedLocation;
     }
 
@@ -246,7 +245,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         iconColor={theme.colors.TEXT}
                     />
                 </TouchableOpacity>
-                
+
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />

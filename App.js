@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
 import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
-import { Home } from './app/screens/appHome/appHome.screen'
+import { Journal } from './app/screens/appJournal/journal.screen'
 import { NewEntry } from './app/screens/newEntry/newEntry.screen'
 import { ViewEntry } from './app/screens/viewEntry/viewEntry'
 import { EditEntry } from './app/screens/editEntry/editEntry'
@@ -14,7 +14,10 @@ import { Map } from './app/screens/map/map.screen';
 import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
-import { Memory } from './app/screens/memory/memory.screen';
+import { Memories } from './app/screens/memory/memory.screen';
+import { NewMemory } from './app/screens/newMemory/newMemory.screen';
+import { MemoryTemplate } from './templates/memoryTemplate';
+import { ViewMemory } from './app/screens/viewMemory/viewMemory';
 import * as Notifications from 'expo-notifications';
 
 
@@ -46,22 +49,22 @@ async function registerForPushNotificationsAsync() {
 function NavBar() {
     return (
         <Tab.Navigator
-            initialRouteName={Home}
+            initialRouteName={Journal}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'Home') {
+                    if (route.name === 'Journal') {
                         iconName = focused
-                            ? 'home-outline'
-                            : 'home-outline';
+                            ? 'book-open-blank-variant'
+                            : 'book-open-blank-variant';
                     }
                     else if (route.name === 'Map') {
                         iconName = focused
                             ? 'map-marker-radius-outline'
                             : 'map-marker-radius-outline';
                     }
-                    else if (route.name === 'Memory') {
+                    else if (route.name === 'Memories') {
                         iconName = focused
                             ? 'star-outline'
                             : 'star-outline';
@@ -77,9 +80,9 @@ function NavBar() {
                 tabBarInactiveTintColor: 'gray',
             })}
         >
-            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Journal" component={Journal} />
             <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Memory" component={Memory} />
+            <Tab.Screen name="Memories" component={Memories} />
             <Tab.Screen name="Settings" component={Settings} />
 
         </Tab.Navigator>
@@ -116,18 +119,28 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen options={{ headerShown: true }} name="Map" component={Map} />
                     <Stack.Screen options={{ headerShown: true }} name="Settings" component={Settings} />
-                    <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+                    <Stack.Screen options={{ headerShown: false }} name="Journal" component={Journal} />
+                    <Stack.Screen options={{ headerShown: false }} name="Memories" component={Memories} />
+                    <Stack.Screen options={{ headerShown: true }} name="NewMemory">
+                        {props => <NewMemory {...props} />}
+                    </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="NewEntry">
                         {props => <NewEntry {...props} />}
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="EntryTemplate">
                         {props => <EntryTemplate {...props} />}
                     </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="MemoryTemplate">
+                        {props => <MemoryTemplate {...props} />}
+                    </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="EditEntry">
                         {props => <EditEntry {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen name="ViewEntry">
+                    <Stack.Screen options={{ headerShown: true }} name="ViewEntry">
                         {props => <ViewEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="ViewMemory">
+                        {props => <ViewMemory {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

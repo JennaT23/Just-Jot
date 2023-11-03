@@ -18,6 +18,6 @@ export const NewEntry = ({ navigation, route }) => {
     entry.Location = loc;
 
     return (
-        <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase} />
+        <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase} handleExitView={route.params.handleExitView} />
     )
 }
