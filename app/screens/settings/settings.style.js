@@ -1,10 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const settingsStyle = theme => StyleSheet.create({
-    container: {
-        backgroundColor: theme.colors.BACKGROUND,
-        flex: 1,
-    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -23,12 +19,6 @@ export const settingsStyle = theme => StyleSheet.create({
     sectionHeader: {
         padding: 8,
         paddingLeft: 12,
-    },
-    sectionHeaderText: {
-        fontSize: 13,
-        fontWeight: '500',
-        color: '#000',
-        textTransform: 'uppercase',
     },
     sectionBody: {
         borderRadius: 12,

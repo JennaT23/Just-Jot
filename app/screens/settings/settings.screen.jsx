@@ -8,8 +8,8 @@ import useThemedStyles from '../../../appStyles/useThemedStyles'
 import useTheme from '../../../appStyles/useTheme'
 import { Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/core'
-import { getAuth } from 'firebase/auth'
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import { getAuth, signOut } from 'firebase/auth'
+// import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export const Settings = ({ navigation }) => {
 
@@ -23,23 +23,35 @@ export const Settings = ({ navigation }) => {
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [notificationEnabled, setNotificationEnabled] = React.useState(true)
+    const [notificationEnabled, setNotificationEnabled] = useState(true)
 
+    // objects instances creatted in an array list of 'sections'
     const SECTIONS = [
         {
             header: 'Preferences',
             items: [
-                { icon: 'bell', label: 'Notifications', value: true, type: 'boolean' },
-                { icon: 'moon', label: 'Dark Mode', value: false, type: 'boolean' },
+                { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => setNotificationEnabled(!notificationEnabled) },
+                { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleTheme },
             ],
         },
         {
             header: 'Options',
             items: [
-                { icon: 'gear', label: 'Sign Out', type: 'link' },
+                { label: 'Sign Out', type: 'link', action: handleSignOut },
             ],
         },
     ]
+
+    // handling logout functionality
+    const handleSignOut = () => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            alert('You have been signed out.');
+        }).catch((error) => {
+            console.log("Error with SignOut", error)
+            alert('An error occurred while signing out.');
+        });
+    };
 
     useEffect(() => {
         if (user) {
@@ -59,11 +71,11 @@ export const Settings = ({ navigation }) => {
         //logout
 
 
-        <SafeAreaView style={settingstyle.container} behavior='padding'>
+        <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
             {/* Profile section */}
             <View style={settingstyle.section}>
                 <View style={settingstyle.sectionHeader}>
-                    <Text style={settingstyle.sectionHeaderText}>Profile</Text>
+                    <Text style={appstyle.headerText}>Profile</Text>
                 </View>
 
                 <View style={settingstyle.profile}>
@@ -81,13 +93,15 @@ export const Settings = ({ navigation }) => {
                 </View>
             </View>
 
+            {/* Displaying section headers of setting options */}
             {SECTIONS.map(({ header, items }) => (
                 <View style={settingstyle.section} key={header}>
                     <View style={settingstyle.sectionHeader}>
-                        <Text style={settingstyle.sectionHeaderText}>{header}</Text>
+                        <Text style={appstyle.headerText}>{header}</Text>
                     </View>
+                    {/* Displaying setting options */}
                     <View style={settingstyle.sectionBody}>
-                        {items.map(({ label, type, value }, index) => {
+                        {items.map(({ label, type, value, action }, index) => {
                             const isFirst = index === 0;
                             const isLast = index === items.length - 1;
                             return (
@@ -99,10 +113,7 @@ export const Settings = ({ navigation }) => {
                                         isFirst && settingstyle.rowFirst,
                                         isLast && settingstyle.rowLast,
                                     ]}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            // handle onPress
-                                        }}>
+                                    <TouchableOpacity onPress={() => { action }}>
                                         <View style={settingstyle.row}>
                                             <Text style={settingstyle.rowLabel}>{label}</Text>
 
@@ -112,15 +123,14 @@ export const Settings = ({ navigation }) => {
                                                 <Text style={settingstyle.rowValue}>{value}</Text>
                                             )}
 
-                                            {type === 'boolean' && <Switch value={value} />}
+                                            {type === 'boolean' && <Switch value={value} onValueChange={action} />}
 
-                                            {(type === 'input' || type === 'link') && (
-                                                <FeatherIcon
-                                                    color="#ababab"
-                                                    name="chevron-right"
-                                                    size={22}
-                                                />
-                                            )}
+
+                                            {(type === 'input' || type === 'link')
+
+
+                                            }
+
                                         </View>
                                     </TouchableOpacity>
                                 </View>
@@ -137,11 +147,6 @@ export const Settings = ({ navigation }) => {
                         value={notificationEnabled}
                         onValueChange={value => setNotificationEnabled(value)}
                     />
-                </View>
-
-                <View style={settingstyle.option}>
-                    <Text>Theme</Text>
-                    <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} />
                 </View> */}
 
         </SafeAreaView>
