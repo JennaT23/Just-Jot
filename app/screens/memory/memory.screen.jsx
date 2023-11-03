@@ -7,10 +7,12 @@ import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
 import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'react-native-paper'
-import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
+import { fetchMemoriesFromFirebase } from '../../firebase/fetchMemoriesFromFirebase'
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
 import { appHomeStyle as appHome_style } from '../appHome/appHome.style'
+import { GeoPoint } from "firebase/firestore";
+import { getLocation } from '../../location/getLocation';
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -29,22 +31,18 @@ export const Memories = ({ navigation }) => {
         if (user) {
             setUsername(user.displayName)
         }
-        fetchJournalEntries();
+        fetchMemories();
     }, [user])
 
-    const moveNewEntry = () => {
-        const entry = { Text: '', Title: '', Location: '', Date: new Date(), uid: user.uid };
-        navigation.navigate('NewEntry', { entry });
-    }
-
     const moveNewMemory = () => {
-        const memory = { Text: '', Title: '', Location: '', MakeDate: new Date(), ShowDate: new Date(), uid: user.uid };
+        const memory = { Text: '', Title: '', Location: null, DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
+        console.log('memory in move:', memory)
         navigation.navigate('NewMemory', { memory });
     }
 
-    const fetchJournalEntries = async () => {
+    const fetchMemories = async () => {
         try {
-            const entries = await fetchJournalEntriesFromFirebase();
+            const entries = await fetchMemoriesFromFirebase();
             setJournalEntries(entries);
             console.log("fetch", journalEntries);
         } catch (error) {
@@ -84,6 +82,14 @@ export const Memories = ({ navigation }) => {
         navigation.navigate('ViewEntry', { entry });
     };
 
+    const formatGeoPoint = (geopoint) => {
+        const lat = geopoint.latitude.toString();
+        const lng = geopoint.longitude.toString();
+
+        const formattedLocation = "[" + lat + ", " + lng + "]";
+        return formattedLocation;
+    };
+
     return (
         // <SafeAreaView style={appstyle.pageContainer}>
         <SafeAreaView style={appHomestyle.container}>
@@ -96,7 +102,9 @@ export const Memories = ({ navigation }) => {
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
                                 <Title style={appHomestyle.title}>{entry.Title}</Title>
-                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                <Subheading style={appHomestyle.subheading}>Created: {entry.DateCreated && formatDate(new Date(entry.DateCreated))}</Subheading>
+                                <Subheading style={appHomestyle.subheading}>Marked: {entry.DateMarked && formatDate(new Date(entry.DateMarked))}</Subheading>
+                                <Subheading style={appHomestyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
@@ -109,7 +117,7 @@ export const Memories = ({ navigation }) => {
                 ))}
             </ScrollView>
             <FAB style={appHomestyle.fab} icon="plus"
-                onPress={moveNewEntry} />
+                onPress={moveNewMemory} />
         </SafeAreaView >
     )
 }

@@ -25,21 +25,25 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 
-export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase }) => {
-    // console.log("template entry: ", entryData);
+export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
+    console.log("template memory: ", memory);
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
     const entryTemplatestyle = useThemedStyles(entryTemplate_style);
 
-    const [title, setTitle] = useState(entryData.Title);
-    const [text, setText] = useState(entryData.Text);
-    const [location, setLocation] = useState(entryData.Location);
-    const [entryDate, setEntryDate] = useState(new Date(entryData.Date));
-    const [entryTime, setEntryTime] = useState(entryData.Date);
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [showTimePicker, setShowTimePicker] = useState(false);
+    const [title, setTitle] = useState(memory.Title);
+    const [text, setText] = useState(memory.Text);
+    const [location, setLocation] = useState(memory.Location);
+    const [dateCreated, setDateCreated] = useState(new Date(memory.DateCreated));
+    const [dateMarked, setDateMarked] = useState(new Date(memory.DateMarked));
+    const [timeCreated, setTimeCreated] = useState(memory.DateCreated);
+    const [timeMarked, setTimeMarked] = useState(memory.DateMarked);
+    const [showDateCreatedPicker, setShowDateCreatedPicker] = useState(false);
+    const [showDateMarkedPicker, setShowDateMarkedPicker] = useState(false);
+    const [showTimeCreatedPicker, setShowTimeCreatedPicker] = useState(false);
+    const [showTimeMarkedPicker, setShowTimeMarkedPicker] = useState(false);
 
     // camera and camera roll hooks
     const [selectedImageUri, setSelectedImageUri] = useState(null);
@@ -51,20 +55,35 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     const auth = getAuth()
     const user = auth.currentUser;
-    const displayDate = new Date(pickerDisplayDate).toDateString();
 
-    const handleDateChange = (event, selectedDate) => {
+    const handleDateCreatedChange = (event, selectedDate) => {
         if (selectedDate) {
-            setEntryDate(selectedDate);
+            setDateCreated(selectedDate);
         }
-        setShowDatePicker(false);
+        setShowDateCreatedPicker(false);
+        setShowTimeCreatedPicker(true);
     };
 
-    const handleTimeChange = (event, selectedTime) => {
-        if (selectedTime) {
-            setEntryTime(selectedTime);
+    const handleDateMarkedChange = (event, selectedDate) => {
+        if (selectedDate) {
+            setDateMarked(selectedDate);
         }
-        setShowTimePicker(false);
+        setShowDateMarkedPicker(false);
+        setShowTimeMarkedPicker(true);
+    };
+
+    const handleTimeCreatedChange = (event, selectedTime) => {
+        if (selectedTime) {
+            setEntryCreatedTime(selectedTime);
+        }
+        setShowTimeCreatedPicker(false);
+    };
+
+    const handleTimeMarkedChange = (event, selectedTime) => {
+        if (selectedTime) {
+            setEntryMarkedTime(selectedTime);
+        }
+        setShowTimeMarkedPicker(false);
     };
 
     const pickImage = async () => {
@@ -126,10 +145,10 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const geopoint = new GeoPoint(location.latitude, location.longitude);
 
         const uid = user.uid;
-        const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, uid: uid, id: entryData.id };
+        const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, uid: uid, id: memory.id };
 
         console.log("hello firebase1");
-        writeToFirebase(entry);
+        writeToFirebase(newMemory);
         console.log("hello firebase2");
 
         navigation.navigate('ViewEntry', { entry });
@@ -193,24 +212,74 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
             </View>
             <View style={newEntrystyle.container}>
                 <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
-                <TouchableOpacity onPress={() => setShowDatePicker(true)} style={entryTemplatestyle.date}>
-                    <Text style={entryTemplatestyle.dateText}>Date: {entryDate.toDateString()}</Text>
-                    <IconButton
-                        icon='calendar-edit'
-                        size={30}
-                        style={entryTemplatestyle.calendarIcon}
-                        iconColor={theme.colors.TEXT}
-                    />
-                </TouchableOpacity>
-                {showDatePicker && (
+                <View style={entryTemplatestyle.date}>
+                    <Text style={entryTemplatestyle.dateText}>Date Created: {dateCreated.toDateString()}</Text>
+                    <TouchableOpacity onPress={() => { setShowDateCreatedPicker(true) && setShowTimeCreatedPicker(false) }}>
+                        <IconButton
+                            icon='calendar-edit'
+                            size={30}
+                            style={entryTemplatestyle.calendarIcon}
+                            iconColor={theme.colors.TEXT}
+                        />
+                    </TouchableOpacity>
+                </View>
+                {showDateCreatedPicker && (
                     <View>
                         <DateTimePicker
                             testID='datePicker'
-                            value={entryDate}
+                            value={dateCreated}
                             mode='date'
                             is24Hour={false}
                             display='spinner'
-                            onChange={handleDateChange}
+                            onChange={handleDateCreatedChange}
+                        />
+                    </View>
+                )}
+                {!showDateCreatedPicker && showTimeCreatedPicker && (
+                    <View>
+                        <DateTimePicker
+                            testID='timePicker'
+                            value={timeCreated}
+                            mode='time'
+                            is24Hour={false}
+                            display='clock'
+                            onChange={handleTimeCreatedChange}
+                        />
+                    </View>
+                )}
+
+                <View style={entryTemplatestyle.date}>
+                    <Text style={entryTemplatestyle.dateText}>Date Marked: {dateMarked.toDateString()}</Text>
+                    <TouchableOpacity onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
+                        <IconButton
+                            icon='calendar-edit'
+                            size={30}
+                            style={entryTemplatestyle.calendarIcon}
+                            iconColor={theme.colors.TEXT}
+                        />
+                    </TouchableOpacity>
+                </View>
+                {showDateMarkedPicker && (
+                    <View>
+                        <DateTimePicker
+                            testID='datePicker'
+                            value={dateMarked}
+                            mode='date'
+                            is24Hour={false}
+                            display='spinner'
+                            onChange={handleDateMarkedChange}
+                        />
+                    </View>
+                )}
+                {!showDateMarkedPicker && showTimeMarkedPicker && (
+                    <View>
+                        <DateTimePicker
+                            testID='timePicker'
+                            value={timeMarked}
+                            mode='time'
+                            is24Hour={false}
+                            display='clock'
+                            onChange={handleTimeMarkedChange}
                         />
                     </View>
                 )}

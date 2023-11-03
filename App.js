@@ -15,6 +15,7 @@ import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
 import { Memories } from './app/screens/memory/memory.screen';
+import { NewMemory } from './app/screens/newMemory/newMemory.screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -76,11 +77,17 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true }} name="Settings" component={Settings} />
                     <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
                     <Stack.Screen options={{ headerShown: false }} name="Memories" component={Memories} />
+                    <Stack.Screen options={{ headerShown: true }} name="NewMemory">
+                        {props => <NewMemory {...props} />}
+                    </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="NewEntry">
                         {props => <NewEntry {...props} />}
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="EntryTemplate">
                         {props => <EntryTemplate {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="MemoryTemplate">
+                        {props => <MemoryTemplate {...props} />}
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="EditEntry">
                         {props => <EditEntry {...props} />}

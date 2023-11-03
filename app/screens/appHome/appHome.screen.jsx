@@ -38,11 +38,6 @@ export const Home = ({ navigation }) => {
         navigation.navigate('NewEntry', { entry });
     }
 
-    const moveNewMemory = () => {
-        const memory = { Text: '', Title: '', Location: '', MakeDate: new Date(), ShowDate: new Date(), uid: user.uid };
-        navigation.navigate('NewMemory', { memory });
-    }
-
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
@@ -83,7 +78,7 @@ export const Home = ({ navigation }) => {
         const lat = geopoint.latitude.toString();
         const lng = geopoint.longitude.toString();
 
-        const formattedLocation = "["+lat+", "+lng+"]";
+        const formattedLocation = "[" + lat + ", " + lng + "]";
         return formattedLocation;
     }
 

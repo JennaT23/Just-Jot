@@ -6,13 +6,12 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         fontSize: 15,
         flex: 1,
         marginBottom: 5,
-        // backgroundColor: '#f5e9c1',
+        //backgroundColor: '#f5e9c1',
     },
     cardText: {
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         margin: 5,
-        padding: 10,
         fontSize: 15,
         //backgroundColor: '#f5e9c1',
     },
@@ -27,7 +26,7 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         flexDirection: "row",
-        alignItems: 'baseline',
+        //alignItems: 'baseline',
     },
     calendarIcon: {
     },
