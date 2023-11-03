@@ -8,7 +8,7 @@ import useThemedStyles from '../../../appStyles/useThemedStyles'
 import useTheme from '../../../appStyles/useTheme'
 import { Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/core'
-import { getAuth } from 'firebase/auth'
+import { getAuth, signOut } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export const Settings = ({ navigation }) => {
@@ -21,25 +21,10 @@ export const Settings = ({ navigation }) => {
 
     const auth = getAuth();
     const user = auth.currentUser;
+    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [notificationEnabled, setNotificationEnabled] = React.useState(true)
-
-    const SECTIONS = [
-        {
-            header: 'Preferences',
-            items: [
-                { icon: 'bell', label: 'Notifications', value: true, type: 'boolean' },
-                { icon: 'moon', label: 'Dark Mode', value: false, type: 'boolean' },
-            ],
-        },
-        {
-            header: 'Options',
-            items: [
-                { icon: 'gear', label: 'Sign Out', type: 'link' },
-            ],
-        },
-    ]
+    const [notificationEnabled, setNotificationEnabled] = useState(true)
 
     useEffect(() => {
         if (user) {
@@ -48,22 +33,43 @@ export const Settings = ({ navigation }) => {
         }
     }, [user])
 
+    // objects instances created in an array list of 'sections'
+    const SECTIONS = [
+        {
+            header: 'Preferences',
+            items: [
+                { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => setNotificationEnabled(!notificationEnabled) },
+                { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleTheme },
+            ],
+        },
+        {
+            header: 'Options',
+            items: [
+                { label: 'Sign Out', type: 'link', action: () => handleSignOut(navigate) },
+            ],
+        },
+    ]
+
+    // handling logout functionality
+    const handleSignOut = (navigate) => {
+        try {
+            signOut(auth)
+            alert('You have been signed out.');
+            navigate("Login")
+
+        } catch (error) {
+            console.log("Error with SignOut", error)
+            alert('An error occurred while signing out.');
+        }
+    };
+
     return (
-        // account info
-        // email info
-        // change info setting
-        // change password
-        // notification settings
-        // theme settings
-        // access permission
-        //logout
 
-
-        <SafeAreaView style={settingstyle.container} behavior='padding'>
+        <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
             {/* Profile section */}
             <View style={settingstyle.section}>
                 <View style={settingstyle.sectionHeader}>
-                    <Text style={settingstyle.sectionHeaderText}>Profile</Text>
+                    <Text style={appstyle.headerText}>Profile</Text>
                 </View>
 
                 <View style={settingstyle.profile}>
@@ -81,13 +87,16 @@ export const Settings = ({ navigation }) => {
                 </View>
             </View>
 
+            
+            {/* Displaying section headers of setting options */}
             {SECTIONS.map(({ header, items }) => (
                 <View style={settingstyle.section} key={header}>
                     <View style={settingstyle.sectionHeader}>
-                        <Text style={settingstyle.sectionHeaderText}>{header}</Text>
+                        <Text style={appstyle.headerText}>{header}</Text>
                     </View>
+                    {/* Displaying setting options */}
                     <View style={settingstyle.sectionBody}>
-                        {items.map(({ label, type, value }, index) => {
+                        {items.map(({ label, type, value, action }, index) => {
                             const isFirst = index === 0;
                             const isLast = index === items.length - 1;
                             return (
@@ -99,51 +108,39 @@ export const Settings = ({ navigation }) => {
                                         isFirst && settingstyle.rowFirst,
                                         isLast && settingstyle.rowLast,
                                     ]}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            // handle onPress
-                                        }}>
-                                        <View style={settingstyle.row}>
-                                            <Text style={settingstyle.rowLabel}>{label}</Text>
 
-                                            <View style={settingstyle.rowSpacer} />
+                                    <View style={settingstyle.row}>
+                                        <Text style={settingstyle.rowLabel}>{label}</Text>
 
-                                            {type === 'input' && (
-                                                <Text style={settingstyle.rowValue}>{value}</Text>
-                                            )}
+                                        <View style={settingstyle.rowSpacer} />
 
-                                            {type === 'boolean' && <Switch value={value} />}
+                                        {/* {type === 'input' && (
+                                            <Text style={settingstyle.rowValue}>{value}</Text>
+                                        )} */}
 
-                                            {(type === 'input' || type === 'link') && (
+                                        {type === 'boolean' && <Switch value={value} onValueChange={action} />}
+
+
+                                        {(type === 'link' &&
+                                            <TouchableOpacity onPress= { action }>
                                                 <FeatherIcon
                                                     color="#ababab"
                                                     name="chevron-right"
-                                                    size={22}
-                                                />
-                                            )}
-                                        </View>
-                                    </TouchableOpacity>
+                                                    size={22} />
+                                            </TouchableOpacity>)
+                                        }
+
+                                    </View>
+
                                 </View>
                             );
                         })}
                     </View>
                 </View>
-            ))}
+            ))
+            }
 
 
-            {/* <View style={settingstyle.option}>
-                    <Text>Enable Notifications</Text>
-                    <Switch
-                        value={notificationEnabled}
-                        onValueChange={value => setNotificationEnabled(value)}
-                    />
-                </View>
-
-                <View style={settingstyle.option}>
-                    <Text>Theme</Text>
-                    <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} />
-                </View> */}
-
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }

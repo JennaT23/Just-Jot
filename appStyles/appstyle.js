@@ -7,6 +7,10 @@ export const appstyle = theme => StyleSheet.create({
         alignItems: 'center',
         backgroundColor: theme.colors.BACKGROUND,
     },
+    settingsContainer: {
+        backgroundColor: theme.colors.BACKGROUND,
+        flex: 1,
+    },
     input: {
         backgroundColor: '#fceae3',
         paddingHorizontal: 15,
@@ -35,6 +39,13 @@ export const appstyle = theme => StyleSheet.create({
         color: theme.colors.TEXT,
     },
 
+    headerText: {
+        fontSize: 13,
+        fontWeight: '500',
+        color: theme.colors.TEXT,
+        textTransform: 'uppercase',
+    },
+
     clickableText: {
         padding: 10,
         textDecorationLine: 'underline',
@@ -42,7 +53,7 @@ export const appstyle = theme => StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginTop: -30,
+        marginTop: -20,
         marginBottom: 15,
         justifyContent: 'center',
         textAlign: 'center'

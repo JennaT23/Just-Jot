@@ -61,7 +61,7 @@ export const Login = ({ n }) => {
         >
 
             {/* KEEP BECAUSE WILL NEED FOR LATER */}
-            <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} />
+            {/* <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} /> */}
 
             {/* <Image
             source={require('../assets/')}                                     // find a logo and replace the source

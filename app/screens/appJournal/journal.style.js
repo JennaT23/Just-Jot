@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const appHomeStyle = theme => StyleSheet.create({
+export const appJournalStyle = theme => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.BACKGROUND,
