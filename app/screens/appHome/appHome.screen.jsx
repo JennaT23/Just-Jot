@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Modal} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appHomeStyle as appHome_style } from './appHome.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/core'
 import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'react-native-paper'
 import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
+import { NewEntry } from '../newEntry/newEntry.screen'
 import useTheme from '../../../appStyles/useTheme'
 import { getLocation } from '../../location/getLocation'
 
@@ -25,6 +26,8 @@ export const Home = ({ navigation }) => {
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
     const [journalEntries, setJournalEntries] = useState([]);
+    const [sortByOldest, setSortByOldest] = useState(true);  // true for oldest to newest, false for newest to oldest
+    const [filterModalVisible, setFilterModalVisible] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -51,6 +54,16 @@ export const Home = ({ navigation }) => {
         } catch (error) {
             console.log('Error fetching', error);
         }
+    };
+
+    const handleFilter = (oldestToNewest) => {
+        const sortedEntries = [...journalEntries].sort((a, b) => {
+            const dateA = new Date(a.Date);
+            const dateB = new Date(b.Date);
+            return oldestToNewest ? dateA - dateB : dateB - dateA;
+        });
+        setJournalEntries(sortedEntries);
+        setFilterModalVisible(false);
     };
 
     function formatDate(date) {
@@ -98,7 +111,30 @@ export const Home = ({ navigation }) => {
         <SafeAreaView style={appHomestyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
+                <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
+                    <FAB style={appHomestyle.iconButton} icon={'filter'} />
+                </TouchableOpacity>
             </View>
+
+            <Modal
+                animationType="slide"
+                // transparent={true}
+                visible={filterModalVisible}
+                onRequestClose={() => setFilterModalVisible(false)}
+            >
+                <View style={appHomestyle.modalContainer}>
+                    <TouchableOpacity style={appHomestyle.modalDropdownOption} onPress={() => handleFilter(true)}>
+                        <Text>Oldest to Newest</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={appHomestyle.modalDropdownOption} onPress={() => handleFilter(false)}>
+                        <Text>Newest to Oldest</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={appHomestyle.modalDropdownOption} onPress={() => setFilterModalVisible(false)}>
+                        <Text>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+
             <ScrollView>
                 {journalEntries.map((entry, index) => (
                     <Card key={index} style={appHomestyle.card}>

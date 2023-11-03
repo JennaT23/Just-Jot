@@ -27,7 +27,27 @@ export const appHomeStyle = theme => StyleSheet.create({
         // flex: 1,
     },
     iconButton: {
-        // marginHorizontal: 5,
-        // marginVertical: 5,
+        position: 'absolute',
+        bottom: 10,
+        right: 20,
+        alignSelf: 'flex-end',
+        margin: -10
     },
+    modalDropdownOption: {
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        textAlign: 'center',
+        fontSize: 22,
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        margin: 'auto',
+        height: 50,
+        // borderTopLeftRadius: 20,
+        // borderTopRightRadius: 20,  will uncomment when i get the modal window size to change
+      },
 })
