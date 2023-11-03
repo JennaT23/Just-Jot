@@ -41,5 +41,18 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    cameraButtonContainer: {
+        flexDirection: 'row',
+        marginBottom: 20,
+        justifyContent: 'center',
+        // backgroundColor: theme.colors.BACKGROUND,
+    },
+    camera: {
+        height: '100%',
+        justifyContent: 'flex-end',
+    },
+    cameraContainer: {
+        display: 'flex',
+    },
 
 })

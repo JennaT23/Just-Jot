@@ -124,19 +124,23 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         
         function camerView(){
           return (
-            <View style={{display: "flex"}} >
-              <Camera style={{height: "100%"}} type={type} ref={camRef} >
-                <View >
-                  <TouchableOpacity  onPress={toggleCameraType}>
-                    <Text >Flip Camera</Text>
-                    <IconButton 
+            <View style={entryTemplatestyle.cameraContainer} >
+              <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
+                <View style={entryTemplatestyle.cameraButtonContainer}>
+                  <IconButton 
+                    icon="camera-flip"
+                    size={40}
+                    onPress={toggleCameraType}
+                    style={newEntrystyle.iconButton}
+                    iconColor={theme.colors.CAPTURE}
+                  />
+                  <IconButton 
                         icon="circle"
-                        size={30}
+                        size={40}
                         onPress={takePicture}
                         style={newEntrystyle.iconButton}
                         iconColor={theme.colors.CAPTURE}
-                    />
-                  </TouchableOpacity>
+                  />
                 </View>
               </Camera>
             </View>
