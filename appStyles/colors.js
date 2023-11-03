@@ -7,6 +7,7 @@ const GRAY = '#696969'
 
 const common = {
     PRIMARY: PURPLE,
+    CAPTURE: WHITE,
 };
 
 const light = {
