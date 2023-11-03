@@ -42,7 +42,7 @@ export const appstyle = theme => StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        marginTop: -30,
+        marginTop: -20,
         marginBottom: 15,
         justifyContent: 'center',
         textAlign: 'center'

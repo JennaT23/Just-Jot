@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { appHomeStyle as appHome_style } from './appHome.style'
+import { appJournalStyle as appJournal_style } from './appJournal.style'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
 import Text from '../../../appStyles/customStyle'
@@ -13,10 +13,10 @@ import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
 import { getLocation } from '../../location/getLocation'
 
-export const Home = ({ navigation }) => {
+export const Journal = ({ navigation }) => {
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
-    const appHomestyle = useThemedStyles(appHome_style);
+    const appJournalstyle = useThemedStyles(appJournal_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
@@ -83,25 +83,25 @@ export const Home = ({ navigation }) => {
     }
 
     const handleView = (entry) => {
-        console.log("home entry: ", entry);
-        console.log("home date: ", entry.Date);
+        console.log("journal entry: ", entry);
+        console.log("journal date: ", entry.Date);
         navigation.navigate('ViewEntry', { entry });
     };
 
     return (
         // <SafeAreaView style={appstyle.pageContainer}>
-        <SafeAreaView style={appHomestyle.container}>
+        <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
             <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <Card key={index} style={appHomestyle.card}>
+                    <Card key={index} style={appJournalstyle.card}>
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appHomestyle.title}>{entry.Title}</Title>
-                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
-                                <Subheading style={appHomestyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
+                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
+                                <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
@@ -113,7 +113,7 @@ export const Home = ({ navigation }) => {
                     </Card>
                 ))}
             </ScrollView>
-            <FAB style={appHomestyle.fab} icon="plus"
+            <FAB style={appJournalstyle.fab} icon="plus"
                 onPress={moveNewEntry} />
         </SafeAreaView >
     )

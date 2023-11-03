@@ -3,7 +3,7 @@ import { appstyle } from "../../../appStyles/appstyle";
 import Text from "../../../appStyles/customStyle";
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { viewEntryStyle } from "./viewEntry.style";
+import { viewEntryStyle } from "../viewEntry/viewEntry.style";
 import useThemedStyles from "../../../appStyles/useThemedStyles";
 import { ScrollView, View } from "react-native";
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 // import { useNavigation } from '@react-navigation/native';
 
 
-export const ViewEntry = ({ navigation, route }) => {
+export const ViewMemory = ({ navigation, route }) => {
     const viewstyle = useThemedStyles(viewEntryStyle);
     const newEntrystyle = useThemedStyles(newEntry_style);
 
@@ -21,7 +21,7 @@ export const ViewEntry = ({ navigation, route }) => {
     // const navigation = useNavigation();
 
     console.log('view entry', route.params.entry);
-    const entry = route.params.entry;
+    const memory = route.params.memory;
     console.log('view entry2', entry);
 
     const formatCustomDateTime = (dateTime) => {
@@ -43,9 +43,9 @@ export const ViewEntry = ({ navigation, route }) => {
         return `${day} ${month} ${date} ${year} ${formattedTime}`;
     };
 
-    const moveToEditEntry = () => {
-        console.log("view entry before send: ", entry);
-        navigation.navigate('EditEntry', { entry });
+    const moveToEditMemory = () => {
+        console.log("view entry before send: ", memory);
+        navigation.navigate('EditMemory', { memory });
     }
 
     return (
@@ -54,23 +54,24 @@ export const ViewEntry = ({ navigation, route }) => {
                 <IconButton
                     icon="pencil"
                     size={30}
-                    onPress={moveToEditEntry}
+                    onPress={moveToEditMemory}
                     style={newEntrystyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
             </View>
             <View style={viewstyle.view}>
-                <Title style={viewstyle.title}>{entry.Title}</Title>
-                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(new Date(entry.Date))}</Subheading>
+                <Title style={viewstyle.title}>{memory.Title}</Title>
+                <Subheading style={viewstyle.subheading}>{memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))}</Subheading>
+                <Subheading style={viewstyle.subheading}>{memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))}</Subheading>
             </View>
             <View style={viewstyle.view}>
-                <Paragraph>{entry.Text}</Paragraph>
+                <Paragraph>{memory.Text}</Paragraph>
             </View>
         </ScrollView>
     );
 };
 
-ViewEntry.navigationOptions = ({ navigation }) => {
+ViewMemory.navigationOptions = ({ navigation }) => {
     console.log('this sucks');
     return {
         headerLeft: () => (

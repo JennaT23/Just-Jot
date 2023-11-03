@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from "react-native-paper";
 import { Memory } from "../memory/memory.screen";
-import { Home } from "../appHome/appHome.screen";
+import { Journal } from "../appJournal/appJournal.screen";
 import { Map } from "../map/map.screen";
 import { Settings } from "../settings/settings.screen";
 
@@ -12,7 +12,7 @@ export const NavBar = () => {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={Home}
+                initialRouteName={Journal}
                 tabBarOptions={{
                     activeTintColor: 'black',
                     inactiveTintColor: 'gray',
@@ -29,8 +29,8 @@ export const NavBar = () => {
                     }}
                 />
                 <Tab.Screen
-                    name="Home"
-                    component={Home}
+                    name="Journal"
+                    component={Journal}
                     options={{
                         tabBarIcon: ({ color, size }) => (
                             <IconButton name="map-marker-radius-outline" color={color} size={size} />

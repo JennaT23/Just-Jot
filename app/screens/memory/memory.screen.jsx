@@ -10,14 +10,14 @@ import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'rea
 import { fetchMemoriesFromFirebase } from '../../firebase/fetchMemoriesFromFirebase'
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../appStyles/useTheme'
-import { appHomeStyle as appHome_style } from '../appHome/appHome.style'
+import { appJournalStyle as appJournal_style } from '../appJournal/appJournal.style'
 import { GeoPoint } from "firebase/firestore";
 import { getLocation } from '../../location/getLocation';
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
-    const appHomestyle = useThemedStyles(appHome_style);
+    const appJournalstyle = useThemedStyles(appJournal_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
@@ -77,8 +77,8 @@ export const Memories = ({ navigation }) => {
     }
 
     const handleView = (entry) => {
-        console.log("home entry: ", entry);
-        console.log("home date: ", entry.Date);
+        console.log("Journal entry: ", entry);
+        console.log("Journal date: ", entry.Date);
         navigation.navigate('ViewEntry', { entry });
     };
 
@@ -92,19 +92,19 @@ export const Memories = ({ navigation }) => {
 
     return (
         // <SafeAreaView style={appstyle.pageContainer}>
-        <SafeAreaView style={appHomestyle.container}>
+        <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
             <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <Card key={index} style={appHomestyle.card}>
+                    <Card key={index} style={appJournalstyle.card}>
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appHomestyle.title}>{entry.Title}</Title>
-                                <Subheading style={appHomestyle.subheading}>Created: {entry.DateCreated && formatDate(new Date(entry.DateCreated))}</Subheading>
-                                <Subheading style={appHomestyle.subheading}>Marked: {entry.DateMarked && formatDate(new Date(entry.DateMarked))}</Subheading>
-                                <Subheading style={appHomestyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
+                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
+                                <Subheading style={appJournalstyle.subheading}>Created: {entry.DateCreated && formatDate(new Date(entry.DateCreated))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Marked: {entry.DateMarked && formatDate(new Date(entry.DateMarked))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
@@ -116,7 +116,7 @@ export const Memories = ({ navigation }) => {
                     </Card>
                 ))}
             </ScrollView>
-            <FAB style={appHomestyle.fab} icon="plus"
+            <FAB style={appJournalstyle.fab} icon="plus"
                 onPress={moveNewMemory} />
         </SafeAreaView >
     )

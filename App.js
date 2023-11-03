@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
 import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
-import { Home } from './app/screens/appHome/appHome.screen'
+import { Journal } from './app/screens/appJournal/appJournal.screen'
 import { NewEntry } from './app/screens/newEntry/newEntry.screen'
 import { ViewEntry } from './app/screens/viewEntry/viewEntry'
 import { EditEntry } from './app/screens/editEntry/editEntry'
@@ -16,6 +16,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
 import { Memories } from './app/screens/memory/memory.screen';
 import { NewMemory } from './app/screens/newMemory/newMemory.screen';
+import { MemoryTemplate } from './templates/memoryTemplate';
+import { ViewMemory } from './app/screens/viewMemory/viewMemory';
 
 
 const Stack = createNativeStackNavigator();
@@ -24,15 +26,15 @@ const Tab = createBottomTabNavigator();
 function NavBar() {
     return (
         <Tab.Navigator
-            initialRouteName={Home}
+            initialRouteName={Journal}
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
 
-                    if (route.name === 'Home') {
+                    if (route.name === 'Journal') {
                         iconName = focused
-                            ? 'home-outline'
-                            : 'home-outline';
+                            ? 'book-open-blank-variant'
+                            : 'book-open-blank-variant';
                     }
                     else if (route.name === 'Map') {
                         iconName = focused
@@ -55,7 +57,7 @@ function NavBar() {
                 tabBarInactiveTintColor: 'gray',
             })}
         >
-            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Journal" component={Journal} />
             <Tab.Screen name="Map" component={Map} />
             <Tab.Screen name="Memories" component={Memories} />
             <Tab.Screen name="Settings" component={Settings} />
@@ -75,7 +77,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: false }} name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen options={{ headerShown: true }} name="Map" component={Map} />
                     <Stack.Screen options={{ headerShown: true }} name="Settings" component={Settings} />
-                    <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+                    <Stack.Screen options={{ headerShown: false }} name="Journal" component={Journal} />
                     <Stack.Screen options={{ headerShown: false }} name="Memories" component={Memories} />
                     <Stack.Screen options={{ headerShown: true }} name="NewMemory">
                         {props => <NewMemory {...props} />}
@@ -94,6 +96,9 @@ const App = () => {
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="ViewEntry">
                         {props => <ViewEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="ViewMemory">
+                        {props => <ViewMemory {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

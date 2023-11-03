@@ -151,7 +151,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase }) => {
         writeToFirebase(newMemory);
         console.log("hello firebase2");
 
-        navigation.navigate('ViewEntry', { entry });
+        navigation.navigate('ViewMemory', { memory });
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {

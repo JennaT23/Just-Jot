@@ -1,10 +1,13 @@
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, whereEqualTo, query, where } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 export const fetchMemoriesFromFirebase = async () => {
     const db = getFirestore();
 
     try {
-        const memoriesCollection = collection(db, 'Memories');
+        const auth = getAuth();
+        const user = auth.currentUser;
+        const memoriesCollection = query(collection(db, 'Memories'), where("uid", "==", user.uid));
         const querySnapshot = await getDocs(memoriesCollection);
 
         const entries = querySnapshot.docs.map((doc) => ({
