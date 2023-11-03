@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
@@ -15,10 +15,33 @@ import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
 import { Memory } from './app/screens/memory/memory.screen';
+import * as Notifications from 'expo-notifications';
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
+async function registerForPushNotificationsAsync() {
+    let token;
+
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log("token:", token);
+
+    return token;
+}
+
 
 function NavBar() {
     return (
@@ -63,7 +86,26 @@ function NavBar() {
     )
 }
 
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true
+    }),
+  });
+
 const App = () => {
+    // let tok = '';
+
+    // useEffect(() => {
+    //     tok = registerForPushNotificationsAsync();
+    // }, []);
+
+    // console.log("token:", tok);
+
+    useEffect(() => {
+        registerForPushNotificationsAsync()
+            .then(token => expoPushTokensApi.register(token));
+    }, []);
+
     return (
         <ThemeProvider>
             <NavigationContainer>
