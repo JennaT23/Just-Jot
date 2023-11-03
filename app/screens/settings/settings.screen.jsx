@@ -9,7 +9,7 @@ import useTheme from '../../../appStyles/useTheme'
 import { Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/core'
 import { getAuth, signOut } from 'firebase/auth'
-// import FeatherIcon from 'react-native-vector-icons/Feather';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 export const Settings = ({ navigation }) => {
 
@@ -21,11 +21,19 @@ export const Settings = ({ navigation }) => {
 
     const auth = getAuth();
     const user = auth.currentUser;
+    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [notificationEnabled, setNotificationEnabled] = useState(true)
 
-    // objects instances creatted in an array list of 'sections'
+    useEffect(() => {
+        if (user) {
+            setUsername(user.displayName)
+            setEmail(user.email)
+        }
+    }, [user])
+
+    // objects instances created in an array list of 'sections'
     const SECTIONS = [
         {
             header: 'Preferences',
@@ -37,39 +45,25 @@ export const Settings = ({ navigation }) => {
         {
             header: 'Options',
             items: [
-                { label: 'Sign Out', type: 'link', action: handleSignOut },
+                { label: 'Sign Out', type: 'link', action: () => handleSignOut(navigate) },
             ],
         },
     ]
 
     // handling logout functionality
-    const handleSignOut = () => {
-        signOut(auth).then(() => {
-            // Sign-out successful.
+    const handleSignOut = (navigate) => {
+        try {
+            signOut(auth)
             alert('You have been signed out.');
-        }).catch((error) => {
+            navigate("Login")
+
+        } catch (error) {
             console.log("Error with SignOut", error)
             alert('An error occurred while signing out.');
-        });
+        }
     };
 
-    useEffect(() => {
-        if (user) {
-            setUsername(user.displayName)
-            setEmail(user.email)
-        }
-    }, [user])
-
     return (
-        // account info
-        // email info
-        // change info setting
-        // change password
-        // notification settings
-        // theme settings
-        // access permission
-        //logout
-
 
         <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
             {/* Profile section */}
@@ -93,6 +87,7 @@ export const Settings = ({ navigation }) => {
                 </View>
             </View>
 
+            
             {/* Displaying section headers of setting options */}
             {SECTIONS.map(({ header, items }) => (
                 <View style={settingstyle.section} key={header}>
@@ -113,42 +108,39 @@ export const Settings = ({ navigation }) => {
                                         isFirst && settingstyle.rowFirst,
                                         isLast && settingstyle.rowLast,
                                     ]}>
-                                    <TouchableOpacity onPress={() => { action }}>
-                                        <View style={settingstyle.row}>
-                                            <Text style={settingstyle.rowLabel}>{label}</Text>
 
-                                            <View style={settingstyle.rowSpacer} />
+                                    <View style={settingstyle.row}>
+                                        <Text style={settingstyle.rowLabel}>{label}</Text>
 
-                                            {type === 'input' && (
-                                                <Text style={settingstyle.rowValue}>{value}</Text>
-                                            )}
+                                        <View style={settingstyle.rowSpacer} />
 
-                                            {type === 'boolean' && <Switch value={value} onValueChange={action} />}
+                                        {/* {type === 'input' && (
+                                            <Text style={settingstyle.rowValue}>{value}</Text>
+                                        )} */}
 
-
-                                            {(type === 'input' || type === 'link')
+                                        {type === 'boolean' && <Switch value={value} onValueChange={action} />}
 
 
-                                            }
+                                        {(type === 'link' &&
+                                            <TouchableOpacity onPress= { action }>
+                                                <FeatherIcon
+                                                    color="#ababab"
+                                                    name="chevron-right"
+                                                    size={22} />
+                                            </TouchableOpacity>)
+                                        }
 
-                                        </View>
-                                    </TouchableOpacity>
+                                    </View>
+
                                 </View>
                             );
                         })}
                     </View>
                 </View>
-            ))}
+            ))
+            }
 
 
-            {/* <View style={settingstyle.option}>
-                    <Text>Enable Notifications</Text>
-                    <Switch
-                        value={notificationEnabled}
-                        onValueChange={value => setNotificationEnabled(value)}
-                    />
-                </View> */}
-
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
