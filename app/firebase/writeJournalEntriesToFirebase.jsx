@@ -10,7 +10,7 @@ export const writeJournalEntryToFirebase = async (entry) => {
         Date: entry.Date,
         Location: entry.Location,
         Title: entry.Title,
-        Text: entry.Text,
+        Text: entry.Text, 
         uid: entry.uid,
       });
 
