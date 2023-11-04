@@ -20,6 +20,6 @@ export const NewMemory = ({ navigation, route }) => {
     memory.Location = loc;
 
     return (
-        <MemoryTemplate navigation={navigation} memory={memory} pickerDisplayDate={displayDate} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />
+        <MemoryTemplate navigation={navigation} memory={memory} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />
     )
 }
