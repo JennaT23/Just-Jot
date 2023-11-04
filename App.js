@@ -18,6 +18,7 @@ import { Memories } from './app/screens/memory/memory.screen';
 import { NewMemory } from './app/screens/newMemory/newMemory.screen';
 import { MemoryTemplate } from './templates/memoryTemplate';
 import { ViewMemory } from './app/screens/viewMemory/viewMemory';
+import { EditMemory } from './app/screens/editMemory/editMemory';
 import * as Notifications from 'expo-notifications';
 
 
@@ -91,9 +92,9 @@ function NavBar() {
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true
+        shouldShowAlert: true
     }),
-  });
+});
 
 const App = () => {
     // let tok = '';
@@ -135,6 +136,9 @@ const App = () => {
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="EditEntry">
                         {props => <EditEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true }} name="EditMemory">
+                        {props => <EditMemory {...props} />}
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true }} name="ViewEntry">
                         {props => <ViewEntry {...props} />}
