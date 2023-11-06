@@ -15,6 +15,7 @@ import useTheme from '../appStyles/useTheme';
 import { PickDate } from '../app/useful/datePicker';
 import { useNavigation } from '@react-navigation/native';
 import { getLocation } from '../app/location/getLocation';
+import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -156,6 +157,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const uid = user.uid;
         const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, uid: uid, id: entryData.id };
 
+        writePicsToFirebase(image);
         writeToFirebase(entry);
 
         navigation.navigate('ViewEntry', { entry, handleExitView });
