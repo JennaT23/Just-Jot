@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Login } from './app/screens/login/login.screen'
-import { Register } from './app/screens/register/register.screen'
-import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
+import { Login } from './app/screens/authentication/login/login.screen'
+import { Register } from './app/screens/authentication/register/register.screen'
+import { ForgotPassword } from './app/screens/authentication/forgotPwd/forgotPwd.screen'
 import { Journal } from './app/screens/journal/appJournal/journal.screen'
 import { NewEntry } from './app/screens/journal/newEntry/newEntry.screen'
 import { ViewEntry } from './app/screens/journal/viewEntry/viewEntry'
