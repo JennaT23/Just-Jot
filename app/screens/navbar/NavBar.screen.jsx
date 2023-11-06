@@ -1,8 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from "react-native-paper";
-import { Memory } from "../memory/memory.screen";
-import { Journal } from "../appJournal/journal.screen";
+import { Memory } from "../memories/memory/memory.screen";
+import { Journal } from "../journal/appJournal/journal.screen";
 import { Map } from "../map/map.screen";
 import { Settings } from "../settings/settings.screen";
 

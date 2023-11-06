@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { writeJournalEntryToFirebase } from '../../firebase/writeJournalEntriesToFirebase'
-import { EntryTemplate } from '../../../templates/entryTemplate'
-import { getLocation } from '../../location/getLocation'
+import { writeJournalEntryToFirebase } from '../../../firebase/writeJournalEntriesToFirebase'
+import { EntryTemplate } from '../../../../templates/entryTemplate'
+import { getLocation } from '../../../location/getLocation'
 import { View } from 'react-native'
-import Text from '../../../appStyles/customStyle'
+import Text from '../../../../appStyles/customStyle'
 import { GeoPoint } from "firebase/firestore";
 
 

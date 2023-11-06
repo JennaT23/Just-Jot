@@ -18,7 +18,7 @@ import { getLocation } from '../app/location/getLocation';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
-import { newEntrystyle as newEntry_style } from '../app/screens/newEntry/newEntry.style';
+import { newEntrystyle as newEntry_style } from '../app/screens/journal/newEntry/newEntry.style';
 import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style';
 
 
@@ -85,65 +85,65 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
             }
         }
     };
-    
 
-      // ask user for access to use camera roll
-      useEffect(() => {
-          (async () => {
+
+    // ask user for access to use camera roll
+    useEffect(() => {
+        (async () => {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
             if (status !== 'granted') {
-              alert('Sorry, we need camera roll permissions to make this work!');
+                alert('Sorry, we need camera roll permissions to make this work!');
             }
-          })();
-        }, []);
+        })();
+    }, []);
 
-        // ask user for access to their camera
-        useEffect(() => {
-            (async () => {
-              const { status } = await Camera.requestCameraPermissionsAsync();
-              setHasCameraPermission(status === 'granted');
-            })();
-          }, []);
+    // ask user for access to their camera
+    useEffect(() => {
+        (async () => {
+            const { status } = await Camera.requestCameraPermissionsAsync();
+            setHasCameraPermission(status === 'granted');
+        })();
+    }, []);
 
 
-        const takePicture = async () => {
-            if(camRef) {
-                console.log("hi3");
-                let photo = await camRef.current.takePictureAsync();
-                setImage(photo.uri);
-                setShowCamera(false);
-            }
+    const takePicture = async () => {
+        if (camRef) {
+            console.log("hi3");
+            let photo = await camRef.current.takePictureAsync();
+            setImage(photo.uri);
+            setShowCamera(false);
         }
-        
+    }
 
-        function toggleCameraType() {
-            setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
-          }
-        
-        function camerView(){
-          return (
+
+    function toggleCameraType() {
+        setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+    }
+
+    function camerView() {
+        return (
             <View style={entryTemplatestyle.cameraContainer} >
-              <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
-                <View style={entryTemplatestyle.cameraButtonContainer}>
-                  <IconButton 
-                    icon="camera-flip"
-                    size={40}
-                    onPress={toggleCameraType}
-                    style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.CAPTURE}
-                  />
-                  <IconButton 
-                        icon="circle"
-                        size={40}
-                        onPress={takePicture}
-                        style={newEntrystyle.iconButton}
-                        iconColor={theme.colors.CAPTURE}
-                  />
-                </View>
-              </Camera>
+                <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
+                    <View style={entryTemplatestyle.cameraButtonContainer}>
+                        <IconButton
+                            icon="camera-flip"
+                            size={40}
+                            onPress={toggleCameraType}
+                            style={newEntrystyle.iconButton}
+                            iconColor={theme.colors.CAPTURE}
+                        />
+                        <IconButton
+                            icon="circle"
+                            size={40}
+                            onPress={takePicture}
+                            style={newEntrystyle.iconButton}
+                            iconColor={theme.colors.CAPTURE}
+                        />
+                    </View>
+                </Camera>
             </View>
-          );
-        }
+        );
+    }
 
     const chooseLocation = () => {
         // code to have user enter an address and map it to a lat/lng location
@@ -253,8 +253,8 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-                            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                            {hasCameraPermission && showCamera ? ( camerView() ) : ( null )}
+                        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                        {hasCameraPermission && showCamera ? (camerView()) : (null)}
                     </View>
                 </ScrollView>
             </View>

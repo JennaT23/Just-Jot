@@ -4,21 +4,21 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/login/login.screen'
 import { Register } from './app/screens/register/register.screen'
 import { ForgotPassword } from './app/screens/forgotPwd/forgotPwd.screen'
-import { Journal } from './app/screens/appJournal/journal.screen'
-import { NewEntry } from './app/screens/newEntry/newEntry.screen'
-import { ViewEntry } from './app/screens/viewEntry/viewEntry'
-import { EditEntry } from './app/screens/editEntry/editEntry'
+import { Journal } from './app/screens/journal/appJournal/journal.screen'
+import { NewEntry } from './app/screens/journal/newEntry/newEntry.screen'
+import { ViewEntry } from './app/screens/journal/viewEntry/viewEntry'
+import { EditEntry } from './app/screens/journal/editEntry/editEntry'
 import ThemeProvider from './appStyles/themeProvider';
 import { EntryTemplate } from './templates/entryTemplate';
 import { Map } from './app/screens/map/map.screen';
 import { Settings } from './app/screens/settings/settings.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { IconButton } from 'react-native-paper'
-import { Memories } from './app/screens/memory/memory.screen';
-import { NewMemory } from './app/screens/newMemory/newMemory.screen';
+import { Memories } from './app/screens/memories/memory/memory.screen';
+import { NewMemory } from './app/screens/memories/newMemory/newMemory.screen';
 import { MemoryTemplate } from './templates/memoryTemplate';
-import { ViewMemory } from './app/screens/viewMemory/viewMemory';
-import { EditMemory } from './app/screens/editMemory/editMemory';
+import { ViewMemory } from './app/screens/memories/viewMemory/viewMemory';
+import { EditMemory } from './app/screens/memories/editMemory/editMemory';
 import * as Notifications from 'expo-notifications';
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { editMemoriesToFirebase } from '../../firebase/editMemoriesToFirebase';
-import { MemoryTemplate } from '../../../templates/memoryTemplate';
+import { editMemoriesToFirebase } from '../../../firebase/editMemoriesToFirebase';
+import { MemoryTemplate } from '../../../../templates/memoryTemplate';
 
 
 export const EditMemory = ({ navigation, route }) => {
