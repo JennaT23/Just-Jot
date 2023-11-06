@@ -1,12 +1,12 @@
 import { TextInput, TouchableOpacity, View, SafeAreaView, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { auth } from '../../../firebase'
-import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { userAuthstyle as userAuth_style } from '../userAuthstyle'
 import { registerstyle as register_style } from './register.style'
 import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
-import Text from '../../../appStyles/customStyle'
-import useThemedStyles from '../../../appStyles/useThemedStyles'
+import Text from '../../../../appStyles/customStyle'
+import useThemedStyles from '../../../../appStyles/useThemedStyles'
 
 export const Register = ({ navigation }) => {
     const appstyle = useThemedStyles(app_style);
@@ -21,15 +21,15 @@ export const Register = ({ navigation }) => {
     const handleRegister = () => {                                  // function to handle creating a new account
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-              // Signed up 
-              const user = userCredential.user;
-            //   console.log("created new user: " + user.email);
+                // Signed up 
+                const user = userCredential.user;
+                //   console.log("created new user: " + user.email);
             })
             .catch((error) => {
                 Alert.alert('Failed to create new user', error.message)
-        });
+            });
 
-        onAuthStateChanged(auth, function(user) {
+        onAuthStateChanged(auth, function (user) {
 
             if (user) {
 
@@ -37,22 +37,22 @@ export const Register = ({ navigation }) => {
 
                 updateProfile(user, { // <-- Update Method here
 
-                displayName: username,
+                    displayName: username,
 
-                }).then(function() {
+                }).then(function () {
 
-                // Profile updated successfully!
+                    // Profile updated successfully!
 
-                var displayName = user.displayName;
+                    var displayName = user.displayName;
 
-                // console.log("displayname: " + displayName);
-                Alert.alert('Account successfully created')
-                navigation.replace('Login');
+                    // console.log("displayname: " + displayName);
+                    Alert.alert('Account successfully created')
+                    navigation.replace('Login');
 
-                }, function(error) {
-                // An error happened.
+                }, function (error) {
+                    // An error happened.
                     Alert.alert('Something went wrong, please check your information and try again', error.message)
-                });     
+                });
 
             }
         });
@@ -70,8 +70,8 @@ export const Register = ({ navigation }) => {
 
     return (
         <SafeAreaView
-                    style={appstyle.pageContainer}
-                    behavior='padding'>
+            style={appstyle.pageContainer}
+            behavior='padding'>
 
 
             <View style={userAuthstyle.inputContainer}>

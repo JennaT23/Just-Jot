@@ -4,12 +4,11 @@ import { useNavigation } from '@react-navigation/core'
 import { auth } from '../../../firebase'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { loginstyle as login_style } from './login.style'
-import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { userAuthstyle as userAuth_style } from '../userAuthstyle'
-import useTheme from '../../../appStyles/useTheme'
-import useThemedStyles from '../../../appStyles/useThemedStyles'
-import Text from '../../../appStyles/customStyle'
-import { NavBar } from '../navbar/NavBar.screen'
+import useTheme from '../../../../appStyles/useTheme'
+import useThemedStyles from '../../../../appStyles/useThemedStyles'
+import Text from '../../../../appStyles/customStyle'
 
 
 export const Login = ({ n }) => {

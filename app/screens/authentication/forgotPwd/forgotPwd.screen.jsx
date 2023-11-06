@@ -2,10 +2,10 @@ import { TextInput, TouchableOpacity, View, SafeAreaView, Alert, Image } from 'r
 import React, { useEffect, useState } from 'react'
 import { auth } from '../../../firebase'
 import { forgotPwdstyle as forgotPwd_style } from './forgotPwd.style'
-import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { userAuthstyle as userAuth_style } from '../userAuthstyle'
-import Text from '../../../appStyles/customStyle'
-import useThemedStyles from '../../../appStyles/useThemedStyles'
+import Text from '../../../../appStyles/customStyle'
+import useThemedStyles from '../../../../appStyles/useThemedStyles'
 import { sendPasswordResetEmail } from 'firebase/auth'
 
 export const ForgotPassword = ({ navigation }) => {
@@ -43,7 +43,7 @@ export const ForgotPassword = ({ navigation }) => {
         <SafeAreaView
             style={appstyle.pageContainer}
             behavior='padding'>
-                      
+
 
             <View style={userAuthstyle.inputContainer}>
 
