@@ -18,7 +18,7 @@ import { getLocation } from '../app/location/getLocation';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
-import { newEntrystyle as newEntry_style } from '../app/screens/newEntry/newEntry.style';
+import { newEntrystyle as newEntry_style } from '../app/screens/journal/newEntry/newEntry.style';
 import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style';
 
 

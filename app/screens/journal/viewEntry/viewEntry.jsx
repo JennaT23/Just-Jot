@@ -1,21 +1,20 @@
 import { Paragraph, Subheading, Title, IconButton } from "react-native-paper";
-import { appstyle } from "../../../appStyles/appstyle";
-import Text from "../../../appStyles/customStyle";
+import { appstyle } from "../../../../appStyles/appstyle";
+import Text from "../../../../appStyles/customStyle";
 import React from 'react';
+import { useEffect } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { viewEntryStyle } from "../viewEntry/viewEntry.style";
-import useThemedStyles from "../../../appStyles/useThemedStyles";
+import { viewEntryStyle } from "./viewEntry.style";
+import useThemedStyles from "../../../../appStyles/useThemedStyles";
 import { ScrollView, View } from "react-native";
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
-import useTheme from '../../../appStyles/useTheme'
+import useTheme from '../../../../appStyles/useTheme'
 import { HeaderBackButton } from '@react-navigation/elements'
 import { useNavigation } from "@react-navigation/native";
-import { useCallback } from "react";
-import { useEffect } from "react";
 // import { useNavigation } from '@react-navigation/native';
 
 
-export const ViewMemory = ({ navigation, route }) => {
+export const ViewEntry = ({ navigation, route }) => {
     const viewstyle = useThemedStyles(viewEntryStyle);
     const newEntrystyle = useThemedStyles(newEntry_style);
     const handleExitView = route.params.handleExitView;
@@ -23,9 +22,9 @@ export const ViewMemory = ({ navigation, route }) => {
     const theme = useTheme();
     // const navigation = useNavigation();
 
-    console.log('view entry', route.params.newMemory);
-    const memory = route.params.newMemory;
-    console.log('view entry2', memory);
+    console.log('view entry', route.params.entry);
+    const entry = route.params.entry;
+    console.log('view entry2', entry);
 
     const formatCustomDateTime = (dateTime) => {
         const months = [
@@ -46,9 +45,9 @@ export const ViewMemory = ({ navigation, route }) => {
         return `${day} ${month} ${date} ${year} ${formattedTime}`;
     };
 
-    const moveToEditMemory = () => {
-        console.log("view entry before send: ", memory);
-        navigation.navigate('EditMemory', { memory });
+    const moveToEditEntry = () => {
+        console.log("view entry before send: ", entry);
+        navigation.navigate('EditEntry', { entry });
     }
 
     const formatGeoPoint = (geopoint) => {
@@ -62,7 +61,7 @@ export const ViewMemory = ({ navigation, route }) => {
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <HeaderBackButton onPress={() => { handleExitView(); navigation.navigate('NavBar'); }} title='Memories' />
+                <HeaderBackButton onPress={() => { handleExitView(); navigation.navigate('NavBar'); }} title='Journal' />
             ),
         });
 
@@ -74,30 +73,29 @@ export const ViewMemory = ({ navigation, route }) => {
                 <IconButton
                     icon="pencil"
                     size={30}
-                    onPress={moveToEditMemory}
+                    onPress={moveToEditEntry}
                     style={newEntrystyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
             </View>
             <View style={viewstyle.view}>
-                <Title style={viewstyle.title}>{memory.Title}</Title>
-                <Subheading style={viewstyle.subheading}>{memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))}</Subheading>
-                <Subheading style={viewstyle.subheading}>{memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))}</Subheading>
-                <Subheading style={viewstyle.subheading}>Location: {memory.Location && formatGeoPoint(memory.Location)}</Subheading>
+                <Title style={viewstyle.title}>{entry.Title}</Title>
+                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(new Date(entry.Date))}</Subheading>
+                <Subheading style={viewstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
             </View>
             <View style={viewstyle.view}>
-                <Paragraph>{memory.Text}</Paragraph>
+                <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
             </View>
         </ScrollView>
     );
 };
 
-// ViewMemory.options = ({ navigation }) => {
+// ViewEntry.navigationOptions = ({ navigation }) => {
 //     console.log('this sucks');
 //     return {
 //         headerLeft: () => (
 //             <HeaderBackButton
-//                 onPress={() => { navigation.navigate('Memories') }}
+//                 onPress={() => { handleExitView(); navigation.navigate('Journal'); }}
 //             />
 //         )
 //     }

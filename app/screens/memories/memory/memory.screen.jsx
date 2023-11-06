@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { appJournalStyle as appJournal_style } from './journal.style'
-import { appstyle as app_style } from '../../../appStyles/appstyle'
+import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
-import Text from '../../../appStyles/customStyle'
-import useThemedStyles from '../../../appStyles/useThemedStyles'
+import Text from '../../../../appStyles/customStyle'
+import useThemedStyles from '../../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
 import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'react-native-paper'
-import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
-import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
-import useTheme from '../../../appStyles/useTheme'
-import { getLocation } from '../../location/getLocation'
+import { fetchMemoriesFromFirebase } from '../../../firebase/fetchMemoriesFromFirebase'
+import { newEntrystyle as newEntry_style } from '../../journal/newEntry/newEntry.style'
+import useTheme from '../../../../appStyles/useTheme'
+import { appJournalStyle as appJournal_style } from '../../journal/appJournal/journal.style'
+import { GeoPoint } from "firebase/firestore";
+import { getLocation } from '../../../location/getLocation';
 
-export const Journal = ({ navigation }) => {
+export const Memories = ({ navigation }) => {
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
     const appJournalstyle = useThemedStyles(appJournal_style);
@@ -24,31 +25,32 @@ export const Journal = ({ navigation }) => {
     const auth = getAuth()
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
-    const [journalEntries, setJournalEntries] = useState([]);
+    const [memories, setMemories] = useState([]);
     const [refreshData, setRefreshData] = useState(0);
 
     useEffect(() => {
         if (user) {
             setUsername(user.displayName)
         }
-        fetchJournalEntries();
-    }, [refreshData])
+        fetchMemories();
+    }, [refreshData]);
 
     const handleExitView = () => {
         navigation.navigate('NavBar');
         setRefreshData((prev) => prev + 1);
     };
 
-    const moveNewEntry = () => {
-        const entry = { Text: '', Title: '', Location: null, Date: new Date(), uid: user.uid };
-        navigation.navigate('NewEntry', { entry, handleExitView });
+    const moveNewMemory = () => {
+        const memory = { Text: '', Title: '', Location: null, DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
+        console.log('memory in move:', memory)
+        navigation.navigate('NewMemory', { memory, handleExitView });
     }
 
-    const fetchJournalEntries = async () => {
+    const fetchMemories = async () => {
         try {
-            const entries = await fetchJournalEntriesFromFirebase();
-            setJournalEntries(entries);
-            console.log("fetch", journalEntries);
+            const entries = await fetchMemoriesFromFirebase();
+            setMemories(entries);
+            console.log("fetch", memories);
         } catch (error) {
             console.log('Error fetching', error);
         }
@@ -80,18 +82,18 @@ export const Journal = ({ navigation }) => {
         return formattedDate;
     }
 
+    const handleView = (newMemory) => {
+        console.log("Journal entry: ", newMemory);
+        console.log("Journal date: ", newMemory.DateCreated);
+        navigation.navigate('ViewMemory', { newMemory, handleExitView });
+    };
+
     const formatGeoPoint = (geopoint) => {
         const lat = geopoint.latitude.toString();
         const lng = geopoint.longitude.toString();
 
         const formattedLocation = "[" + lat + ", " + lng + "]";
         return formattedLocation;
-    }
-
-    const handleView = (entry) => {
-        console.log("journal entry: ", entry);
-        console.log("journal date: ", entry.Date);
-        navigation.navigate('ViewEntry', { entry, handleExitView });
     };
 
     return (
@@ -101,14 +103,15 @@ export const Journal = ({ navigation }) => {
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
             <ScrollView>
-                {journalEntries.map((entry, index) => (
+                {memories.map((memory, index) => (
                     <Card key={index} style={appJournalstyle.card}>
                         <Card.Content>
-                            <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
-                                <Paragraph>{entry.Text}</Paragraph>
+                            <TouchableOpacity onPress={() => handleView(memory)}>
+                                <Title style={appJournalstyle.title}>{memory.Title}</Title>
+                                <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Location: {memory.Location && formatGeoPoint(memory.Location)}</Subheading>
+                                <Paragraph>{memory.Text}</Paragraph>
                             </TouchableOpacity>
                             {/* <Card.Actions>
                                 <TouchableOpacity onPress={() => handleView(entry)}>
@@ -120,7 +123,7 @@ export const Journal = ({ navigation }) => {
                 ))}
             </ScrollView>
             <FAB style={appJournalstyle.fab} icon="plus"
-                onPress={moveNewEntry} />
+                onPress={moveNewMemory} />
         </SafeAreaView >
     )
 }

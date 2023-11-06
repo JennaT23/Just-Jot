@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { editJournalEntriesToFirebase } from '../../firebase/editJournalEntriesToFirebase'
-import { EntryTemplate } from '../../../templates/entryTemplate'
+import { editJournalEntriesToFirebase } from '../../../firebase/editJournalEntriesToFirebase'
+import { EntryTemplate } from '../../../../templates/entryTemplate'
 
 
 export const EditEntry = ({ navigation, route }) => {
