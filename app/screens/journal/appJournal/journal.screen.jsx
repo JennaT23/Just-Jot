@@ -40,7 +40,7 @@ export const Journal = ({ navigation }) => {
     };
 
     const moveNewEntry = () => {
-        const entry = { Text: '', Title: '', Location: null, Date: new Date(), uid: user.uid };
+        const entry = { Text: '', Title: '', Location: null, Images: '', Date: new Date(), uid: user.uid };
         navigation.navigate('NewEntry', { entry, handleExitView });
     }
 

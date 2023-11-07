@@ -27,7 +27,7 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase, handleExitView }) => {
-    console.log("template entry: ", entryData);
+    // console.log("template entry: ", entryData);
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
