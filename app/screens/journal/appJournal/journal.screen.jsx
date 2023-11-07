@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appJournalStyle as appJournal_style } from './journal.style'
 import { appstyle as app_style } from '../../../../appStyles/appstyle'
@@ -110,6 +110,7 @@ export const Journal = ({ navigation }) => {
                                 <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
+                                <Image style={{height: 200, width: 200}} source={{uri: entry.Images}} />
                             </TouchableOpacity>
                             {/* <Card.Actions>
                                 <TouchableOpacity onPress={() => handleView(entry)}>
