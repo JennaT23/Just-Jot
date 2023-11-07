@@ -1,6 +1,6 @@
 import { TextInput, TouchableOpacity, View, SafeAreaView, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { auth } from '../../../firebase'
+import { auth } from '../../../../firebase'
 import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { userAuthstyle as userAuth_style } from '../userAuthstyle'
 import { registerstyle as register_style } from './register.style'

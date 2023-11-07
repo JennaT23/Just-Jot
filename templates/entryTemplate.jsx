@@ -15,6 +15,7 @@ import useTheme from '../appStyles/useTheme';
 import { PickDate } from '../app/useful/datePicker';
 import { useNavigation } from '@react-navigation/native';
 import { getLocation } from '../app/location/getLocation';
+import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -40,6 +41,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const [entryTime, setEntryTime] = useState(entryData.Date);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
+    const [imageUrl, setImageUrl] = useState(entryData.Images);
 
     // camera and camera roll hooks
     const [image, setImage] = useState(null);
@@ -108,7 +110,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     const takePicture = async () => {
         if (camRef) {
-            console.log("hi3");
             let photo = await camRef.current.takePictureAsync();
             setImage(photo.uri);
             setShowCamera(false);
@@ -150,12 +151,12 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     }
 
 
-    const saveEntry = () => {
+    const saveEntry = async () => {
+        const url = await writePicsToFirebase(image);
         const geopoint = new GeoPoint(location.latitude, location.longitude);
-
         const uid = user.uid;
-        const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, uid: uid, id: entryData.id };
-
+        const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: entryData.id };
+        
         writeToFirebase(entry);
 
         navigation.navigate('ViewEntry', { entry, handleExitView });
@@ -253,8 +254,10 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
+                        
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                         {hasCameraPermission && showCamera ? (camerView()) : (null)}
+                        <Image style={{height: 200, width: 200}} source={{uri: imageUrl}} />
                     </View>
                 </ScrollView>
             </View>
