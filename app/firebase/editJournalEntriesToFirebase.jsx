@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 export const editJournalEntriesToFirebase = async (entry) => {
     try {
         const db = getFirestore();
-        console.log("id: ", entry.id);
+        // console.log("id: ", entry.id);
         const entryRef = doc(db, "JournalEntries", entry.id);
 
         await updateDoc(entryRef, {

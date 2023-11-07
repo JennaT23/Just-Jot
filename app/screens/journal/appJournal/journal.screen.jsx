@@ -48,14 +48,14 @@ export const Journal = ({ navigation }) => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
             setJournalEntries(entries);
-            console.log("fetch", journalEntries);
+            // console.log("fetch", journalEntries);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
 
     function formatDate(date) {
-        console.log("date", date);
+        // console.log("date", date);
 
         if (!(date instanceof Date)) {
             throw new Error("Invalid date object");
@@ -89,8 +89,9 @@ export const Journal = ({ navigation }) => {
     }
 
     const handleView = (entry) => {
-        console.log("journal entry: ", entry);
-        console.log("journal date: ", entry.Date);
+        // console.log("journal entry: ", entry);
+        // console.log("journal date: ", entry.Date);
+        console.log(entry.Images);
         navigation.navigate('ViewEntry', { entry, handleExitView });
     };
 
