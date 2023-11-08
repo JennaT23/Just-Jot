@@ -15,8 +15,7 @@ export const ForgotPassword = ({ navigation }) => {
 
     const [email, setEmail] = useState('')
 
-    const handleReset = () => {                                  // function to handle creating a new account
-        console.log('email: ' + email);
+    const handleReset = () => {
 
         sendPasswordResetEmail(auth, email)
             .then(() => {

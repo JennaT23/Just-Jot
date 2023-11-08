@@ -26,7 +26,6 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExitView }) => {
-    console.log("template memory: ", memory);
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
@@ -44,8 +43,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     const [showTimeCreatedPicker, setShowTimeCreatedPicker] = useState(false);
     const [showDateMarkedPicker, setShowDateMarkedPicker] = useState(false);
     const [showTimeMarkedPicker, setShowTimeMarkedPicker] = useState(false);
-
-    console.log('dateCreated', dateCreated, 'dateMarked', dateMarked);
 
     // camera and camera roll hooks
     const [selectedImageUri, setSelectedImageUri] = useState(null);
@@ -91,8 +88,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
             quality: 1,
         });
 
-        console.log("Image Picker Result:", result); // to test, remove later
-
         if (!result.canceled) {
             if (result.assets && result.assets.length > 0) {
                 setSelectedImageUri(result.assets[0].uri);
@@ -100,9 +95,9 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         }
     };
 
-    useEffect(() => {
-        console.log("Selected Image URI:", selectedImageUri);
-    }, [selectedImageUri]);
+    // useEffect(() => {
+    //     console.log("Selected Image URI:", selectedImageUri);
+    // }, [selectedImageUri]);
 
 
     // supposed to ask user for access to use camera roll
@@ -127,7 +122,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         setShowCamera(true);
         if (cameraRef) {
             let photo = await cameraRef.takePictureAsync();
-            console.log(photo);
             setSelectedImageUri(photo.uri);
         }
     };
@@ -137,17 +131,17 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     }
 
 
-    const saveEntry = () => {
+    const saveEntry = async () => {
         const geopoint = new GeoPoint(location.latitude, location.longitude);
 
         const uid = user.uid;
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, uid: uid, id: memory.id };
 
-        console.log("hello firebase1");
-        console.log('newMemory', newMemory);
         writeToFirebase(newMemory);
-        console.log("hello firebase2");
         navigation.navigate('ViewMemory', { newMemory, handleExitView });
+
+        console.log(dateMarked);
+        await schedulePushNotification({ title: 'Look back', body: { title } }, new Date(dateMarked));
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {

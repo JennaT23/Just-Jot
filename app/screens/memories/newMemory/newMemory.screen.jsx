@@ -10,7 +10,6 @@ import { MemoryTemplate } from '../../../../templates/memoryTemplate'
 
 export const NewMemory = ({ navigation, route }) => {
     const memory = route.params.memory;
-    console.log('memory in newmemory:', memory);
     const displayDate = new Date().toDateString();
     const location = getLocation();
     if (location === null) {

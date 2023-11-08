@@ -34,7 +34,6 @@ export const Login = ({ n }) => {
                 replace('NavBar')
             })
             .catch((error) => {
-                console.log("Error", error)
                 Alert.alert('Login failed', error.message)
             })
     }
