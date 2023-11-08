@@ -23,9 +23,7 @@ export const ViewMemory = ({ navigation, route }) => {
     const theme = useTheme();
     // const navigation = useNavigation();
 
-    console.log('view entry', route.params.newMemory);
     const memory = route.params.newMemory;
-    console.log('view entry2', memory);
 
     const formatCustomDateTime = (dateTime) => {
         const months = [
@@ -47,7 +45,6 @@ export const ViewMemory = ({ navigation, route }) => {
     };
 
     const moveToEditMemory = () => {
-        console.log("view entry before send: ", memory);
         navigation.navigate('EditMemory', { memory });
     }
 
@@ -93,7 +90,6 @@ export const ViewMemory = ({ navigation, route }) => {
 };
 
 // ViewMemory.options = ({ navigation }) => {
-//     console.log('this sucks');
 //     return {
 //         headerLeft: () => (
 //             <HeaderBackButton

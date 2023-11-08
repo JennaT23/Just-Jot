@@ -48,15 +48,12 @@ export const Journal = ({ navigation }) => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
             setJournalEntries(entries);
-            // console.log("fetch", journalEntries);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
 
     function formatDate(date) {
-        // console.log("date", date);
-
         if (!(date instanceof Date)) {
             throw new Error("Invalid date object");
         }
@@ -89,9 +86,6 @@ export const Journal = ({ navigation }) => {
     }
 
     const handleView = (entry) => {
-        // console.log("journal entry: ", entry);
-        // console.log("journal date: ", entry.Date);
-        console.log(entry.Images);
         navigation.navigate('ViewEntry', { entry, handleExitView });
     };
 
@@ -110,7 +104,7 @@ export const Journal = ({ navigation }) => {
                                 <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
-                                <Image style={{height: 200, width: 200}} source={{uri: entry.Images}} />
+                                <Image style={{ height: 200, width: 200 }} source={{ uri: entry.Images }} />
                             </TouchableOpacity>
                             {/* <Card.Actions>
                                 <TouchableOpacity onPress={() => handleView(entry)}>

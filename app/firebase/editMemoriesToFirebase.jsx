@@ -4,7 +4,6 @@ import { Alert } from "react-native";
 export const editMemoriesToFirebase = async (memory) => {
     try {
         const db = getFirestore();
-        console.log("id: ", memory.id);
         const memoryRef = doc(db, "Memories", memory.id);
 
         await updateDoc(memoryRef, {

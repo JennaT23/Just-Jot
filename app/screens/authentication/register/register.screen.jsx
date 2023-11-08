@@ -23,7 +23,6 @@ export const Register = ({ navigation }) => {
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                //   console.log("created new user: " + user.email);
             })
             .catch((error) => {
                 Alert.alert('Failed to create new user', error.message)
@@ -45,7 +44,6 @@ export const Register = ({ navigation }) => {
 
                     var displayName = user.displayName;
 
-                    // console.log("displayname: " + displayName);
                     Alert.alert('Account successfully created')
                     navigation.replace('Login');
 

@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Marker } from "react-native-maps";
 
 export const mapMarkers = () => {
@@ -6,30 +6,27 @@ export const mapMarkers = () => {
     const [journalEntries, setJournalEntries] = useState([]);
 
     useEffect(() => {
-      fetchEntryLocations();
-  }, [])
+        fetchEntryLocations();
+    }, [])
 
-  const fetchEntryLocations = async () => {
-    try {
-        const entries = await fetchJournalEntriesFromFirebase();
-        setJournalEntries(entries);
-        console.log("fetch", journalEntries);
-        markers = journalEntries.map((entry, index) => (
-          entry.Location
-        )
-        )
-        console.log("markers: ", markers);
+    const fetchEntryLocations = async () => {
+        try {
+            const entries = await fetchJournalEntriesFromFirebase();
+            setJournalEntries(entries);
+            markers = journalEntries.map((entry, index) => (
+                entry.Location
+            ));
 
-    } catch (error) {
-        console.log('Error fetching', error);
-    }
-};
+        } catch (error) {
+            console.log('Error fetching', error);
+        }
+    };
 
     return markers.map((marker) => <Marker
-    //   key={report.id}
-      coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
-      title={marker.location}
+        //   key={report.id}
+        coordinate={{ latitude: marker.latitude, longitude: marker.longitude }}
+        title={marker.location}
     //   description={report.comments}
     >
     </Marker >)
-  }
+}

@@ -18,11 +18,8 @@ export const ViewEntry = ({ navigation, route }) => {
     const handleExitView = route.params.handleExitView;
 
     const theme = useTheme();
-    // const navigation = useNavigation();
 
-    console.log('view entry', route.params.entry);
     const entry = route.params.entry;
-    console.log('view entry2', entry);
 
     const formatCustomDateTime = (dateTime) => {
         const months = [
@@ -44,7 +41,6 @@ export const ViewEntry = ({ navigation, route }) => {
     };
 
     const moveToEditEntry = () => {
-        console.log("view entry before send: ", entry);
         navigation.navigate('EditEntry', { entry });
     }
 
@@ -83,14 +79,13 @@ export const ViewEntry = ({ navigation, route }) => {
             </View>
             <View style={viewstyle.view}>
                 <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
-                <Image style={{height: 200, width: 200}} source={{uri: entry.Images}} />
+                <Image style={{ height: 200, width: 200 }} source={{ uri: entry.Images }} />
             </View>
         </ScrollView>
     );
 };
 
 // ViewEntry.navigationOptions = ({ navigation }) => {
-//     console.log('this sucks');
 //     return {
 //         headerLeft: () => (
 //             <HeaderBackButton

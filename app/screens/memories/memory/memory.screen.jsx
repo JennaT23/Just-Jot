@@ -42,7 +42,6 @@ export const Memories = ({ navigation }) => {
 
     const moveNewMemory = () => {
         const memory = { Text: '', Title: '', Location: null, DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
-        console.log('memory in move:', memory)
         navigation.navigate('NewMemory', { memory, handleExitView });
     }
 
@@ -50,15 +49,12 @@ export const Memories = ({ navigation }) => {
         try {
             const entries = await fetchMemoriesFromFirebase();
             setMemories(entries);
-            console.log("fetch", memories);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
 
     function formatDate(date) {
-        console.log("date", date);
-
         if (!(date instanceof Date)) {
             throw new Error("Invalid date object");
         }
@@ -83,8 +79,6 @@ export const Memories = ({ navigation }) => {
     }
 
     const handleView = (newMemory) => {
-        console.log("Journal entry: ", newMemory);
-        console.log("Journal date: ", newMemory.DateCreated);
         navigation.navigate('ViewMemory', { newMemory, handleExitView });
     };
 

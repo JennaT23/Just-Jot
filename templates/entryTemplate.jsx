@@ -16,6 +16,7 @@ import { PickDate } from '../app/useful/datePicker';
 import { useNavigation } from '@react-navigation/native';
 import { getLocation } from '../app/location/getLocation';
 import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
+import { schedulePushNotification } from '../App';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -27,7 +28,6 @@ import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style
 
 
 export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeToFirebase, handleExitView }) => {
-    // console.log("template entry: ", entryData);
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
@@ -156,7 +156,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const geopoint = new GeoPoint(location.latitude, location.longitude);
         const uid = user.uid;
         const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: entryData.id };
-        
+
         writeToFirebase(entry);
 
         navigation.navigate('ViewEntry', { entry, handleExitView });
@@ -254,10 +254,10 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-                        
+
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                         {hasCameraPermission && showCamera ? (camerView()) : (null)}
-                        <Image style={{height: 200, width: 200}} source={{uri: imageUrl}} />
+                        <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
                     </View>
                 </ScrollView>
             </View>

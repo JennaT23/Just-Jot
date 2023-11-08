@@ -14,18 +14,14 @@ export const PickDate = ({ displayDate, sendDate }) => {
     minDate = moment(minDate).subtract(10, 'year');
     let maxDate = new Date();
     maxDate = moment(maxDate).add(5, 'year');
-    console.log(minDate);
 
     const setChosenDate = ({ type }, selectedDate) => {
-        console.log("selectedDate: " + selectedDate);
         // if(type == 'set' || type == 'dismissed') {
         //     const currentDate = selectedDate;
         //     // setDate(currentDate);
-        //     console.log(currentDate);
         // }
         // const currentDate = selectedDate;
         // // setDate(currentDate);
-        // console.log(currentDate);
 
 
         // if(type == 'set' || type == 'dismissed')
@@ -41,7 +37,6 @@ export const PickDate = ({ displayDate, sendDate }) => {
     }
 
     const funct = () => {
-        console.log('fjkm,');
         sendDate('Wed Oct 19 2023');
     }
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './app/screens/authentication/login/login.screen'
@@ -20,31 +20,11 @@ import { MemoryTemplate } from './templates/memoryTemplate';
 import { ViewMemory } from './app/screens/memories/viewMemory/viewMemory';
 import { EditMemory } from './app/screens/memories/editMemory/editMemory';
 import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device'
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-
-async function registerForPushNotificationsAsync() {
-    let token;
-
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-
-    if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
-        return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log("token:", token);
-
-    return token;
-}
 
 
 function NavBar() {
@@ -90,24 +70,78 @@ function NavBar() {
     )
 }
 
+export async function schedulePushNotification(content, trigger) {
+    trigger.setSeconds(0);
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: content.title,
+            body: content.body,
+            data: { data: 'goes here' },
+        },
+        trigger,
+    });
+}
+
+export async function registerForPushNotificationsAsync() {
+    let token;
+
+    if (Platform.OS === 'android') {
+        await Notifications.setNotificationChannelAsync('default', {
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+        });
+    }
+
+    if (Device.isDevice) {
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+        let finalStatus = existingStatus;
+        if (existingStatus !== 'granted') {
+            const { status } = await Notifications.requestPermissionsAsync();
+            let finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            alert('Failed to get push token for push notifications!');
+            return;
+        }
+        token = (await Notifications.getExpoPushTokenAsync({ projectId: Constants.expoConfig.extra.eas.projectId })).data;
+    } else {
+        alert('Must use physical device for Push Notifications');
+    }
+
+    return token;
+}
+
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
-        shouldShowAlert: true
+        shouldShowAlert: true,
+        shouldPlaySound: true,
     }),
 });
 
 const App = () => {
-    // let tok = '';
 
-    // useEffect(() => {
-    //     tok = registerForPushNotificationsAsync();
-    // }, []);
-
-    // console.log("token:", tok);
+    const [expoPushToken, setExpoPushToken] = useState('');
+    const [notification, setNotification] = useState(false);
+    const notificationListener = useRef();
+    const responseListener = useRef();
 
     useEffect(() => {
         registerForPushNotificationsAsync()
-            .then(token => expoPushTokensApi.register(token));
+            .then(token => setExpoPushToken(token));
+
+        notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification);
+        });
+
+        responseListener.current = Notifications.addNotificationReceivedListener(response => {
+            console.log(response);
+        });
+
+        return () => {
+            Notifications.removeNotificationSubscription(notificationListener.current);
+            Notifications.removeNotificationSubscription(responseListener.current);
+        };
     }, []);
 
     return (

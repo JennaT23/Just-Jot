@@ -10,6 +10,8 @@ import { Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/core'
 import { getAuth, signOut } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import * as Notifications from 'expo-notifications';
+import { schedulePushNotification } from "../../../App"
 
 export const Settings = ({ navigation }) => {
 
@@ -33,12 +35,20 @@ export const Settings = ({ navigation }) => {
         }
     }, [user])
 
+    const handleNotifications = async () => {
+        setNotificationEnabled(!notificationEnabled);
+
+        if (!notificationEnabled) {
+            await schedulePushNotification({ title: 'Notifications!', body: 'You have enabled notifications' }, null);
+        }
+    };
+
     // objects instances created in an array list of 'sections'
     const SECTIONS = [
         {
             header: 'Preferences',
             items: [
-                { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => setNotificationEnabled(!notificationEnabled) },
+                { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => handleNotifications() },
                 { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleTheme },
             ],
         },
@@ -58,7 +68,6 @@ export const Settings = ({ navigation }) => {
             navigate("Login")
 
         } catch (error) {
-            console.log("Error with SignOut", error)
             alert('An error occurred while signing out.');
         }
     };
@@ -87,7 +96,7 @@ export const Settings = ({ navigation }) => {
                 </View>
             </View>
 
-            
+
             {/* Displaying section headers of setting options */}
             {SECTIONS.map(({ header, items }) => (
                 <View style={settingstyle.section} key={header}>
@@ -122,7 +131,7 @@ export const Settings = ({ navigation }) => {
 
 
                                         {(type === 'link' &&
-                                            <TouchableOpacity onPress= { action }>
+                                            <TouchableOpacity onPress={action}>
                                                 <FeatherIcon
                                                     color="#ababab"
                                                     name="chevron-right"
