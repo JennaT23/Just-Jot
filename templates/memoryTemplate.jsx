@@ -15,6 +15,7 @@ import useTheme from '../appStyles/useTheme';
 import { PickDate } from '../app/useful/datePicker';
 import { useNavigation } from '@react-navigation/native';
 import { getLocation } from '../app/location/getLocation';
+import { schedulePushNotification } from '../App';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -137,11 +138,11 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         const uid = user.uid;
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, uid: uid, id: memory.id };
 
-        writeToFirebase(newMemory);
-        navigation.navigate('ViewMemory', { newMemory, handleExitView });
-
         console.log(dateMarked);
         await schedulePushNotification({ title: 'Look back', body: { title } }, new Date(dateMarked));
+
+        writeToFirebase(newMemory);
+        navigation.navigate('ViewMemory', { newMemory, handleExitView });
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {

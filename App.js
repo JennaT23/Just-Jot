@@ -71,7 +71,7 @@ function NavBar() {
 }
 
 export async function schedulePushNotification(content, trigger) {
-    console.log("inside notif", trigger);
+    trigger.setSeconds(0);
     await Notifications.scheduleNotificationAsync({
         content: {
             title: content.title,
@@ -80,7 +80,6 @@ export async function schedulePushNotification(content, trigger) {
         },
         trigger,
     });
-    console.log('Sent notification');
 }
 
 export async function registerForPushNotificationsAsync() {
