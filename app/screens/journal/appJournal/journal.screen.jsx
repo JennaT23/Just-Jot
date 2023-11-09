@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView, Image, Modal } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Image, Modal, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appJournalStyle, appJournalStyle as appJournal_style } from './journal.style'
 import { appstyle as app_style } from '../../../../appStyles/appstyle'
@@ -12,6 +12,7 @@ import { fetchJournalEntriesFromFirebase } from '../../../firebase/fetchJournalE
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
 import useTheme from '../../../../appStyles/useTheme'
 import { getLocation } from '../../../location/getLocation'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 export const Journal = ({ navigation }) => {
     const theme = useTheme();
@@ -20,14 +21,18 @@ export const Journal = ({ navigation }) => {
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
-
     const auth = getAuth()
     const user = auth.currentUser;
+
+    // react hooks
     const [username, setUsername] = useState('');
     const [journalEntries, setJournalEntries] = useState([]);
     const [sortByOldest, setSortByOldest] = useState(true);  // true for oldest to newest, false for newest to oldest
     const [refreshData, setRefreshData] = useState(0);
     const [filterModalVisible, setFilterModalVisible] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
+
 
     useEffect(() => {
         if (user) {
@@ -46,6 +51,7 @@ export const Journal = ({ navigation }) => {
         navigation.navigate('NewEntry', { entry, handleExitView });
     }
 
+    // grab journal entries from firebase and display them on login
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
@@ -55,6 +61,7 @@ export const Journal = ({ navigation }) => {
         }
     };
 
+    // to handle filtering certain journal entries
     const handleFilter = (oldestToNewest) => {
         const sortedEntries = [...journalEntries].sort((a, b) => {
             const dateA = new Date(a.Date);
@@ -64,6 +71,19 @@ export const Journal = ({ navigation }) => {
         setJournalEntries(sortedEntries);
         setFilterModalVisible(false);
     };
+
+    // to handle searching through the entries
+    const handleSearch = () => {
+        const filteredEntries = journalEntries.filter((entry) => {
+            const entryTitle = entry.Title.toLowerCase();
+            const entryText = entry.Text.toLowerCase();
+            const query = searchQuery.toLowerCase();
+            return entryTitle.includes(query) || entryText.includes(query);
+        });
+        setJournalEntries(filteredEntries);
+        setIsSearching(false);
+    };
+    
 
     function formatDate(date) {
         if (!(date instanceof Date)) {
@@ -88,7 +108,7 @@ export const Journal = ({ navigation }) => {
 
         return formattedDate;
     }
-
+    
     const formatGeoPoint = (geopoint) => {
         const lat = geopoint.latitude.toString();
         const lng = geopoint.longitude.toString();
@@ -108,6 +128,9 @@ export const Journal = ({ navigation }) => {
                 <Text style={appstyle.title}>Hello {username}!</Text>
                 <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
                     <FAB style={appJournalStyle.iconButton} icon={'filter'} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setIsSearching(true)}>
+                    <FAB style={appJournalstyle.iconButton} icon={() => <MaterialCommunityIcons name="magnify" size={24} />} />
                 </TouchableOpacity>
             </View>
 
@@ -141,11 +164,6 @@ export const Journal = ({ navigation }) => {
                                 <Paragraph>{entry.Text}</Paragraph>
                                 <Image style={{ height: 200, width: 200 }} source={{ uri: entry.Images }} />
                             </TouchableOpacity>
-                            {/* <Card.Actions>
-                                <TouchableOpacity onPress={() => handleView(entry)}>
-                                    <Text>View</Text>
-                                </TouchableOpacity>
-                            </Card.Actions> */}
                         </Card.Content>
                     </Card>
                 ))}
