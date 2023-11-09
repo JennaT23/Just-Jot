@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, ScrollView, Image, Modal, TextInput } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Modal,
+  TextInput,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { appJournalStyle, appJournalStyle as appJournal_style, } from "./journal.style";
+import {
+  appJournalStyle,
+  appJournalStyle as appJournal_style,
+} from "./journal.style";
 import { appstyle as app_style } from "../../../../appStyles/appstyle";
 import { getAuth } from "firebase/auth";
 import Text from "../../../../appStyles/customStyle";
 import useThemedStyles from "../../../../appStyles/useThemedStyles";
 import { useNavigation } from "@react-navigation/core";
-import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton, } from "react-native-paper";
+import {
+  Card,
+  Title,
+  Paragraph,
+  Button,
+  FAB,
+  Subheading,
+  IconButton,
+} from "react-native-paper";
 import { fetchJournalEntriesFromFirebase } from "../../../firebase/fetchJournalEntriesFromFirebase";
 import { newEntrystyle as newEntry_style } from "../newEntry/newEntry.style";
 import useTheme from "../../../../appStyles/useTheme";
@@ -80,14 +98,26 @@ export const Journal = ({ navigation }) => {
 
   // to handle searching through the entries
   const handleSearch = () => {
-    const filteredEntries = journalEntries.filter((entry) => {
-      const entryTitle = entry.Title.toLowerCase();
-      const entryText = entry.Text.toLowerCase();
-      const query = searchQuery.toLowerCase();
-      return entryTitle.includes(query) || entryText.includes(query);
-    });
-    setJournalEntries(filteredEntries);
-    setIsSearching(false);
+    if (searchQuery.trim() === "") {
+      setIsSearching(false);    // if query is empty, make sure it's not searching still
+      fetchJournalEntries();
+    } else {
+      setIsSearching(true);     // if query isn't empty, make sure it performs the search
+      const filteredEntries = journalEntries.filter((entry) => {                              // so far it searches for the word in entry title and entry contents, can change later
+        const entryTitle = entry.Title.toLowerCase();
+        const entryText = entry.Text.toLowerCase();
+        const query = searchQuery.toLowerCase();
+        return entryTitle.includes(query) || entryText.includes(query);
+      });
+      setJournalEntries(filteredEntries);
+    }
+  };
+
+  // handle what happens when the search textfield is cleared
+  const handleClearSearch = () => {
+    setSearchQuery("");       // clear search query
+    setIsSearching(false);    // stop searching when false
+    fetchJournalEntries();    // reset journal entsries
   };
 
   function formatDate(date) {
@@ -162,25 +192,17 @@ export const Journal = ({ navigation }) => {
           >
             <MaterialCommunityIcons name="magnify" size={24} />
           </TouchableOpacity>
+
+          {searchQuery.length > 0 && (
+            <TouchableOpacity onPress={handleClearSearch}>
+              <Text>Clear</Text>
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
           <FAB style={appJournalstyle.iconButton} icon={"filter"} />
         </TouchableOpacity>
       </View>
-
-      {isSearching && (
-        <View style={appJournalstyle.searchBarContainer}>
-          <TextInput
-            style={appJournalstyle.searchBar}
-            placeholder="Search..."
-            value={searchQuery}
-            onChangeText={(text) => setSearchQuery(text)}
-          />
-          <TouchableOpacity onPress={handleSearch}>
-            <Text>Search</Text>
-          </TouchableOpacity>
-        </View>
-      )}
 
       <Modal
         animationType="slide"

@@ -111,12 +111,12 @@ export const Home = ({ navigation }) => {
         <SafeAreaView style={appHomestyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
-                {/* <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
+                <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
                     <FAB style={appHomestyle.iconButton} icon={'filter'} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
             </View>
 
-            {/* <Modal
+            <Modal
                 animationType="slide"
                 // transparent={true}
                 visible={filterModalVisible}
@@ -133,7 +133,7 @@ export const Home = ({ navigation }) => {
                         <Text>Cancel</Text>
                     </TouchableOpacity>
                 </View>
-            </Modal> */}
+            </Modal>
 
             <ScrollView>
                 {journalEntries.map((entry, index) => (
