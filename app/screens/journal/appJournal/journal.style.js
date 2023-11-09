@@ -30,4 +30,21 @@ export const appJournalStyle = theme => StyleSheet.create({
         // marginHorizontal: 5,
         // marginVertical: 5,
     },
+    modalDropdownOption: {
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        textAlign: 'center',
+        fontSize: 22,
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: theme.colors.BACKGROUND,
+        margin: 'auto',
+        height: 50,
+        // borderTopLeftRadius: 20,
+        // borderTopRightRadius: 20,  will uncomment when i get the modal window size to change
+      },
 })

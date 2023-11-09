@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView, Image, Modal } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Modal} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { appJournalStyle, appJournalStyle as appJournal_style } from './journal.style'
-import { appstyle as app_style } from '../../../../appStyles/appstyle'
+import { appHomeStyle as appHome_style } from './appHome.style'
+import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
-import Text from '../../../../appStyles/customStyle'
-import useThemedStyles from '../../../../appStyles/useThemedStyles'
+import Text from '../../../appStyles/customStyle'
+import useThemedStyles from '../../../appStyles/useThemedStyles'
 import { useNavigation } from '@react-navigation/core'
 import { Card, Title, Paragraph, Button, FAB, Subheading, IconButton } from 'react-native-paper'
-import { fetchJournalEntriesFromFirebase } from '../../../firebase/fetchJournalEntriesFromFirebase'
+import { fetchJournalEntriesFromFirebase } from '../../firebase/fetchJournalEntriesFromFirebase'
 import { newEntrystyle as newEntry_style } from '../newEntry/newEntry.style'
-import useTheme from '../../../../appStyles/useTheme'
-import { getLocation } from '../../../location/getLocation'
+import { NewEntry } from '../newEntry/newEntry.screen'
+import useTheme from '../../../appStyles/useTheme'
+import { getLocation } from '../../location/getLocation'
 
-export const Journal = ({ navigation }) => {
+export const Home = ({ navigation }) => {
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
-    const appJournalstyle = useThemedStyles(appJournal_style);
+    const appHomestyle = useThemedStyles(appHome_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
@@ -26,7 +27,6 @@ export const Journal = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [journalEntries, setJournalEntries] = useState([]);
     const [sortByOldest, setSortByOldest] = useState(true);  // true for oldest to newest, false for newest to oldest
-    const [refreshData, setRefreshData] = useState(0);
     const [filterModalVisible, setFilterModalVisible] = useState(false);
 
     useEffect(() => {
@@ -34,22 +34,23 @@ export const Journal = ({ navigation }) => {
             setUsername(user.displayName)
         }
         fetchJournalEntries();
-    }, [refreshData])
-
-    const handleExitView = () => {
-        navigation.navigate('NavBar');
-        setRefreshData((prev) => prev + 1);
-    };
+    }, [user])
 
     const moveNewEntry = () => {
-        const entry = { Text: '', Title: '', Location: null, Images: '', Date: new Date(), uid: user.uid };
-        navigation.navigate('NewEntry', { entry, handleExitView });
+        const entry = { Text: '', Title: '', Location: null, Date: new Date(), uid: user.uid };
+        navigation.navigate('NewEntry', { entry });
+    }
+
+    const moveNewMemory = () => {
+        const memory = { Text: '', Title: '', Location: '', MakeDate: new Date(), ShowDate: new Date(), uid: user.uid };
+        navigation.navigate('NewMemory', { memory });
     }
 
     const fetchJournalEntries = async () => {
         try {
             const entries = await fetchJournalEntriesFromFirebase();
             setJournalEntries(entries);
+            console.log("fetch", journalEntries);
         } catch (error) {
             console.log('Error fetching', error);
         }
@@ -66,6 +67,8 @@ export const Journal = ({ navigation }) => {
     };
 
     function formatDate(date) {
+        console.log("date", date);
+
         if (!(date instanceof Date)) {
             throw new Error("Invalid date object");
         }
@@ -93,53 +96,54 @@ export const Journal = ({ navigation }) => {
         const lat = geopoint.latitude.toString();
         const lng = geopoint.longitude.toString();
 
-        const formattedLocation = "[" + lat + ", " + lng + "]";
+        const formattedLocation = "["+lat+", "+lng+"]";
         return formattedLocation;
     }
 
     const handleView = (entry) => {
-        navigation.navigate('ViewEntry', { entry, handleExitView });
+        console.log("home entry: ", entry);
+        console.log("home date: ", entry.Date);
+        navigation.navigate('ViewEntry', { entry });
     };
 
     return (
         // <SafeAreaView style={appstyle.pageContainer}>
-        <SafeAreaView style={appJournalstyle.container}>
+        <SafeAreaView style={appHomestyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
-                <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
-                    <FAB style={appJournalStyle.iconButton} icon={'filter'} />
-                </TouchableOpacity>
+                {/* <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
+                    <FAB style={appHomestyle.iconButton} icon={'filter'} />
+                </TouchableOpacity> */}
             </View>
 
-            <Modal
+            {/* <Modal
                 animationType="slide"
                 // transparent={true}
                 visible={filterModalVisible}
                 onRequestClose={() => setFilterModalVisible(false)}
             >
-                <View style={appJournalstyle.modalContainer}>
-                    <TouchableOpacity style={appJournalstyle.modalDropdownOption} onPress={() => handleFilter(true)}>
+                <View style={appHomestyle.modalContainer}>
+                    <TouchableOpacity style={appHomestyle.modalDropdownOption} onPress={() => handleFilter(true)}>
                         <Text>Oldest to Newest</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={appJournalstyle.modalDropdownOption} onPress={() => handleFilter(false)}>
+                    <TouchableOpacity style={appHomestyle.modalDropdownOption} onPress={() => handleFilter(false)}>
                         <Text>Newest to Oldest</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={appJournalstyle.modalDropdownOption} onPress={() => setFilterModalVisible(false)}>
+                    <TouchableOpacity style={appHomestyle.modalDropdownOption} onPress={() => setFilterModalVisible(false)}>
                         <Text>Cancel</Text>
                     </TouchableOpacity>
                 </View>
-            </Modal>
+            </Modal> */}
 
             <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <Card key={index} style={appJournalstyle.card}>
+                    <Card key={index} style={appHomestyle.card}>
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
+                                <Title style={appHomestyle.title}>{entry.Title}</Title>
+                                <Subheading style={appHomestyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                <Subheading style={appHomestyle.subheading}>Location: {entry.Location && formatGeoPoint(entry.Location)}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
-                                <Image style={{ height: 200, width: 200 }} source={{ uri: entry.Images }} />
                             </TouchableOpacity>
                             {/* <Card.Actions>
                                 <TouchableOpacity onPress={() => handleView(entry)}>
@@ -150,7 +154,7 @@ export const Journal = ({ navigation }) => {
                     </Card>
                 ))}
             </ScrollView>
-            <FAB style={appJournalstyle.fab} icon="plus"
+            <FAB style={appHomestyle.fab} icon="plus"
                 onPress={moveNewEntry} />
         </SafeAreaView >
     )
