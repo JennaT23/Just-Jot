@@ -44,12 +44,12 @@
 
 // export default ThemeProvider;
 
-import React, { useState, createContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { themes } from './themeColors';
 
-export const ThemeContext = createContext(colorTheme);
+export const ThemeContext = createContext(themes.purple.light);
 
-export const DarkModeContext = createContext(isDarkTheme);
+export const DarkModeContext = createContext(false);
 
 const ThemeProvider = ({ children }) => {
   const [colorTheme, setColorTheme] = useState(themes.purple.light);
@@ -69,14 +69,22 @@ const ThemeProvider = ({ children }) => {
 
   // }
 
-  const toggleLightDark = () => {
-    setDarkTheme(isDarkTheme === themes[color].light ? themes[color].dark : themes[color].light);
-  };
+  // const toggleLightDark = () => {
+  //   setDarkTheme(isDarkTheme === themes[color].light ? themes[color].dark : themes[color].light);
+  // };
+
+const toggleLightDark = () => { setDarkTheme((prevDarkTheme) => !prevDarkTheme) };
 
   // UseEffect to switch between light and dark themes when the mode changes
-  React.useEffect(() => {
+  useEffect(() => {
     setColorTheme(isDarkTheme ? themes.purple.dark : themes.purple.light);
   }, [isDarkTheme]);
+
+  const theme = {
+    colorTheme,
+    toggleLightDark,
+    changeThemeColor,
+  };
 
   return (
     <ThemeContext.Provider value={colorTheme}>
