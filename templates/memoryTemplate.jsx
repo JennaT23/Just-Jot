@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import { Camera, CameraType, onCameraReady } from 'expo-camera';
 import { GeoPoint } from "firebase/firestore";
+import * as Location from 'expo-location';
 
 // Custom imports
 import Text from '../appStyles/customStyle';
@@ -14,12 +15,12 @@ import useThemedStyles from '../appStyles/useThemedStyles';
 import useTheme from '../appStyles/useTheme';
 import { schedulePushNotification } from '../App';
 import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
+import { getNotificationPreference } from '../app/notifications/notificationPreferences';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
 import { newEntrystyle as newEntry_style } from '../app/screens/journal/newEntry/newEntry.style';
 import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style';
-import { getNotificationPreference } from '../app/notifications/notificationPreferences';
 
 
 
@@ -32,7 +33,10 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
 
     const [title, setTitle] = useState(memory.Title);
     const [text, setText] = useState(memory.Text);
-    const [location, setLocation] = useState(memory.Location);
+    const [coordinates, setCoordinates] = useState(memory.Location);
+    const [searchText, setSearchText] = useState('');
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
     const [dateCreated, setDateCreated] = useState(new Date(memory.DateCreated));
     const [dateMarked, setDateMarked] = useState(new Date(memory.DateMarked));
     const [showDateCreatedPicker, setShowDateCreatedPicker] = useState(false);
@@ -155,13 +159,13 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
 
 
     const chooseLocation = () => {
-        // code to have user enter an address and map it to a lat/lng location
+
     }
 
 
     const saveEntry = async () => {
-        const url = await writePicsToFirebase(image, 'Memories');
-        const geopoint = new GeoPoint(location.latitude, location.longitude);
+        const url = image ? await writePicsToFirebase(image, 'JournalEntries') : '';
+        const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: memory.id };
 
@@ -213,6 +217,32 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         return formattedLocation;
     }
 
+    const handleSearch = async () => {
+        try {
+            let location = await Location.geocodeAsync(searchText);
+
+            if (location && location.length > 0) {
+                setSearchResults(prevResults => [...prevResults, ...location]);
+                console.log('Search results:', location);
+            } else {
+                console.warn('No results found for the given address');
+                setSearchResults([]);
+            }
+        } catch (error) {
+            console.error('Error during geocoding:', error);
+        }
+    };
+
+    const selectLocation = (selected) => {
+        setSelectedLocation(selected.name || '');
+        setCoordinates({ latitude: selected.latitude, longitude: selected.longitude });
+        setSearchResults([]); // Clear search results after selecting a location
+    };
+
+    const handleSaveLocation = () => {
+        console.log(coordinates);
+    };
+
     return (
         <SafeAreaView style={[newEntrystyle.container, newEntrystyle.entryContainer]}>
             <View style={newEntrystyle.toolBar}>
@@ -258,25 +288,9 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                             is24Hour={false}
                             display='spinner'
                             onChange={handleDateCreatedChange}
-                        //onChange='dismissed'
-                        //onBlur={handleDateCreatedOnBlur}
                         />
                     </View>
                 )}
-                {/* {showTimeCreatedPicker && (
-                    <View>
-                        <DateTimePicker
-                            testID='timePicker'
-                            value={dateCreated}
-                            mode='time'
-                            is24Hour={false}
-                            display='clock'
-                            // onChange={handleTimeCreatedChange}
-                            onChange='dismissed'
-                        //onBlur={handleTimeCreatedOnBlur}
-                        />
-                    </View>
-                )} */}
 
                 <View style={entryTemplatestyle.date}>
                     <Text style={entryTemplatestyle.dateText}>Marked: {formatCustomDateTime(dateMarked)}</Text>
@@ -298,7 +312,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                             is24Hour={false}
                             display='spinner'
                             onChange={handleDateMarkedChange}
-                        //onBlur={handleDateMarkedOnBlur}
                         />
                     </View>
                 )}
@@ -311,28 +324,53 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                             is24Hour={false}
                             display='clock'
                             onChange={handleTimeMarkedChange}
-                        // onBlur={handleTimeMarkedOnBlur}
                         />
                     </View>
                 )}
 
-                <TouchableOpacity style={entryTemplatestyle.date} onPress={() => chooseLocation()}>
+                {/* <TouchableOpacity style={entryTemplatestyle.date} onPress={() => chooseLocation()}>
                     <Text style={entryTemplatestyle.dateText}>Location: {formatGeoPoint(location)}</Text>
                     <IconButton
                         icon='map-marker-outline'
                         size={30}
                         iconColor={theme.colors.TEXT}
                     />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+                <View>
+                    <TextInput
+                        placeholder="Enter address"
+                        value={searchText}
+                        onChangeText={(text) => setSearchText(text)}
+                    />
+                    <TouchableOpacity style={entryTemplatestyle.date} title="Search" onPress={handleSearch}>
+                        <Text>Search</Text>
+                    </TouchableOpacity>
+                    <ScrollView style={entryTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 100 }}>
+                        {searchResults.map((result, index) => {
+                            console.log(`Rendering result ${index}:`, result);
+                            const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
+                            return (
+                                <Pressable
+                                    key={index}
+                                    onPress={() => selectLocation(result)}
+                                    style={entryTemplatestyle.searchResultItem}
+                                >
+                                    <Text>{infoText}</Text>
+                                </Pressable>
+                            );
+                        })}
+                    </ScrollView>
+                </View>
 
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-                        
+
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                        {hasCameraPermission && showCamera ? (camerView()) : (null)}
-                        <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
+                        {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />}
                     </View>
+
                 </ScrollView>
             </View>
         </SafeAreaView>

@@ -12,7 +12,7 @@ import { newEntrystyle as newEntry_style } from '../../journal/newEntry/newEntry
 import useTheme from '../../../../appStyles/useTheme'
 import { appJournalStyle as appJournal_style } from '../../journal/appJournal/journal.style'
 import { GeoPoint } from "firebase/firestore";
-import { getLocation } from '../../../location/getLocation';
+import { displayAddress } from '../../../location/geocode'
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -27,6 +27,16 @@ export const Memories = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [memories, setMemories] = useState([]);
     const [refreshData, setRefreshData] = useState(0);
+    const [displayedAddresses, setDisplayedAddresses] = useState([]);
+
+    const fetchMemories = async () => {
+        try {
+            const entries = await fetchMemoriesFromFirebase();
+            setMemories(entries);
+        } catch (error) {
+            console.log('Error fetching', error);
+        }
+    };
 
     useEffect(() => {
         if (user) {
@@ -34,6 +44,23 @@ export const Memories = ({ navigation }) => {
         }
         fetchMemories();
     }, [refreshData]);
+
+    const fetchAndDisplayAddresses = async () => {
+        const addresses = await Promise.all(
+            memories.map(async (memory) => {
+                console.log('memory', memory);
+                const address = await displayAddress(memory.Location);
+                console.log('address', address);
+                return address;
+            })
+        );
+        setDisplayedAddresses(addresses);
+        console.log('displayedAddresses', displayedAddresses);
+    };
+
+    useEffect(() => {
+        fetchAndDisplayAddresses();
+    }, [memories]);
 
     const handleExitView = () => {
         navigation.navigate('NavBar');
@@ -44,15 +71,6 @@ export const Memories = ({ navigation }) => {
         const memory = { Text: '', Title: '', Location: null, Images: "", DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
         navigation.navigate('NewMemory', { memory, handleExitView });
     }
-
-    const fetchMemories = async () => {
-        try {
-            const entries = await fetchMemoriesFromFirebase();
-            setMemories(entries);
-        } catch (error) {
-            console.log('Error fetching', error);
-        }
-    };
 
     function formatDate(date) {
         if (!(date instanceof Date)) {
@@ -104,7 +122,7 @@ export const Memories = ({ navigation }) => {
                                 <Title style={appJournalstyle.title}>{memory.Title}</Title>
                                 <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {memory.Location && formatGeoPoint(memory.Location)}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
                                 <Paragraph>{memory.Text}</Paragraph>
                                 <Image
                                     style={{ height: 200, width: 200 }}
