@@ -81,6 +81,9 @@ export const ViewEntry = ({ navigation, route }) => {
                 <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
                 <Image style={{ height: 200, width: 200 }} source={{ uri: entry.Images }} />
             </View>
+            <View style={viewstyle.deleteButton}>
+                
+            </View>
         </ScrollView>
     );
 };

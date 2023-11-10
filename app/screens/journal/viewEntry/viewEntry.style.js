@@ -18,4 +18,7 @@ export const viewEntryStyle = theme => StyleSheet.create({
     text: {
         fontSize: 18,
     },
+    deleteButton: {
+
+    },
 })
