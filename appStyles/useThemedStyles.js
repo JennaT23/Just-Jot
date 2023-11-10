@@ -1,8 +1,8 @@
 import useTheme from './useTheme';
 
 const useThemedStyles = (styles) => {
-    const { colorTheme } = useTheme();
-    return styles(colorTheme);
+    const theme = useTheme();
+    return styles(theme);
 };
 
 export default useThemedStyles;

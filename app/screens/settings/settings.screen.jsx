@@ -34,7 +34,7 @@ export const Settings = ({ navigation }) => {
                 header: 'Preferences',
                 items: [
                     { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => handleNotifications() },
-                    { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleTheme },
+                    { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleLightDark },
                     { label: 'Theme Colors', type:'link', action:  () => handleThemeChange(navigate) }
                 ],
             },

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native"
 
-const appStyle = theme => StyleSheet.create({
+export const appstyle = theme => StyleSheet.create({
     pageContainer: {
         flex: 1,
         justifyContent: 'center',
