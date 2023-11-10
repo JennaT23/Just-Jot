@@ -87,8 +87,8 @@ export const ViewEntry = ({ navigation, route }) => {
             try {
               await deleteJournalEntryFromFirebase(entryId);
 
-              fetchJournalEntriesFromFirebase();            // refresh journal entries after deleting
-
+              // fetchJournalEntriesFromFirebase();            // refresh journal entries after deleting
+              handleExitView();
               navigation.navigate("Journal");               // go back to main page of journal
             } catch (error) {
               console.error("Error deleting entry:", error);

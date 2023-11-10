@@ -41,13 +41,13 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const [entryTime, setEntryTime] = useState(entryData.Date);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
-    const [imageUrl, setImageUrl] = useState(entryData.Images);
 
     // camera and camera roll hooks
     const [image, setImage] = useState(null);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [showCamera, setShowCamera] = useState(false);
     const [type, setType] = useState(CameraType.back);
+    const [imageUrl, setImageUrl] = useState(entryData.Images);
 
 
     const camRef = useRef();
@@ -121,10 +121,17 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
     }
 
+    const closeCamera = () => {
+        setShowCamera(false);
+    }
+
     function camerView() {
         return (
             <View style={entryTemplatestyle.cameraContainer} >
                 <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
+                    <TouchableOpacity style={entryTemplatestyle.cancelContainer} onPress={closeCamera}>
+                        <Text style={entryTemplatestyle.cancelButton}>X</Text>
+                    </TouchableOpacity>
                     <View style={entryTemplatestyle.cameraButtonContainer}>
                         <IconButton
                             icon="camera-flip"
@@ -152,7 +159,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
 
     const saveEntry = async () => {
-        const url = await writePicsToFirebase(image);
+        const url = await writePicsToFirebase(image, 'JournalEntries');
         const geopoint = new GeoPoint(location.latitude, location.longitude);
         const uid = user.uid;
         const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: entryData.id };

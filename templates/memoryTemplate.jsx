@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from 'firebase/auth';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType, onCameraReady } from 'expo-camera';
 import { GeoPoint } from "firebase/firestore";
 
 // Custom imports
@@ -16,6 +16,7 @@ import { PickDate } from '../app/useful/datePicker';
 import { useNavigation } from '@react-navigation/native';
 import { getLocation } from '../app/location/getLocation';
 import { schedulePushNotification } from '../App';
+import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -46,14 +47,19 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     const [showTimeMarkedPicker, setShowTimeMarkedPicker] = useState(false);
 
     // camera and camera roll hooks
-    const [selectedImageUri, setSelectedImageUri] = useState(null);
-    const [cameraPermission, setCameraPermission] = useState(null);
+    const [image, setImage] = useState(null);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
-    const [cameraRef, setCameraRef] = useState(null);
     const [showCamera, setShowCamera] = useState(false);
+    const [type, setType] = useState(CameraType.back);
+    const [imageUrl, setImageUrl] = useState(memory.Images);
 
+    const camRef = useRef();
     const auth = getAuth()
     const user = auth.currentUser;
+
+    const showCameraScreen = () => {
+        setShowCamera(true);
+    }
 
     const handleDateCreatedChange = (event, selectedDate) => {
         if (selectedDate || event.type === 'dismissed') {
@@ -91,17 +97,12 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
 
         if (!result.canceled) {
             if (result.assets && result.assets.length > 0) {
-                setSelectedImageUri(result.assets[0].uri);
+                setImage(result.assets[0].uri);
             }
         }
     };
 
-    // useEffect(() => {
-    //     console.log("Selected Image URI:", selectedImageUri);
-    // }, [selectedImageUri]);
-
-
-    // supposed to ask user for access to use camera roll
+    // ask user for access to use camera roll
     useEffect(() => {
         (async () => {
             const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -111,7 +112,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         })();
     }, []);
 
-    // supposed to ask user for access to their camera
+    // ask user for access to their camera
     useEffect(() => {
         (async () => {
             const { status } = await Camera.requestCameraPermissionsAsync();
@@ -119,13 +120,45 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         })();
     }, []);
 
+
     const takePicture = async () => {
-        setShowCamera(true);
-        if (cameraRef) {
-            let photo = await cameraRef.takePictureAsync();
-            setSelectedImageUri(photo.uri);
+        if (camRef) {
+            let photo = await camRef.current.takePictureAsync();
+            setImage(photo.uri);
+            setShowCamera(false);
         }
-    };
+    }
+
+
+    function toggleCameraType() {
+        setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+    }
+
+    function camerView() {
+        return (
+            <View style={entryTemplatestyle.cameraContainer} >
+                <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
+                    <View style={entryTemplatestyle.cameraButtonContainer}>
+                        <IconButton
+                            icon="camera-flip"
+                            size={40}
+                            onPress={toggleCameraType}
+                            style={newEntrystyle.iconButton}
+                            iconColor={theme.colors.CAPTURE}
+                        />
+                        <IconButton
+                            icon="circle"
+                            size={40}
+                            onPress={takePicture}
+                            style={newEntrystyle.iconButton}
+                            iconColor={theme.colors.CAPTURE}
+                        />
+                    </View>
+                </Camera>
+            </View>
+        );
+    }
+
 
     const chooseLocation = () => {
         // code to have user enter an address and map it to a lat/lng location
@@ -133,10 +166,10 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
 
 
     const saveEntry = async () => {
+        const url = await writePicsToFirebase(image, 'Memories');
         const geopoint = new GeoPoint(location.latitude, location.longitude);
-
         const uid = user.uid;
-        const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, uid: uid, id: memory.id };
+        const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: memory.id };
 
         console.log(dateMarked);
         await schedulePushNotification({ title: 'Look back', body: { title } }, new Date(dateMarked));
@@ -192,7 +225,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                     icon="camera"
                     size={30}
                     iconColor={theme.colors.TEXT}
-                    onPress={takePicture}
+                    onPress={showCameraScreen}
                     style={newEntrystyle.iconButton}
                 />
                 <TouchableOpacity
@@ -293,21 +326,11 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-
-                        {selectedImageUri && <Image source={{ uri: selectedImageUri }} style={newEntrystyle.selectedImage} />}
-
-                        {hasCameraPermission && showCamera && (
-                            <Camera
-                                style={{ flex: 1 }}
-                                type={Camera.Constants.Type.back}
-                                ref={(ref) => {
-                                    setCameraRef(ref);
-                                }}
-                            />
-                        )}
+                        
+                        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                        {hasCameraPermission && showCamera ? (camerView()) : (null)}
+                        <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
                     </View>
-
-
                 </ScrollView>
             </View>
         </SafeAreaView>
