@@ -12,9 +12,6 @@ import { GeoPoint } from "firebase/firestore";
 import Text from '../appStyles/customStyle';
 import useThemedStyles from '../appStyles/useThemedStyles';
 import useTheme from '../appStyles/useTheme';
-import { PickDate } from '../app/useful/datePicker';
-import { useNavigation } from '@react-navigation/native';
-import { getLocation } from '../app/location/getLocation';
 import { schedulePushNotification } from '../App';
 import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
 
@@ -22,8 +19,7 @@ import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
 import { appstyle as app_style } from '../appStyles/appstyle';
 import { newEntrystyle as newEntry_style } from '../app/screens/journal/newEntry/newEntry.style';
 import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style';
-
-
+import { getNotificationPreference } from '../app/notifications/notificationPreferences';
 
 
 
@@ -39,8 +35,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     const [location, setLocation] = useState(memory.Location);
     const [dateCreated, setDateCreated] = useState(new Date(memory.DateCreated));
     const [dateMarked, setDateMarked] = useState(new Date(memory.DateMarked));
-    const [timeCreated, setTimeCreated] = useState(memory.DateCreated);
-    const [timeMarked, setTimeMarked] = useState(memory.DateMarked);
     const [showDateCreatedPicker, setShowDateCreatedPicker] = useState(false);
     const [showTimeCreatedPicker, setShowTimeCreatedPicker] = useState(false);
     const [showDateMarkedPicker, setShowDateMarkedPicker] = useState(false);
@@ -172,7 +166,15 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: memory.id };
 
         console.log(dateMarked);
-        await schedulePushNotification({ title: 'Look back', body: { title } }, new Date(dateMarked));
+        const notificationPreference = await getNotificationPreference();
+        if (notificationPreference === 'enabled') {
+            const content = {
+                title: 'Look back',
+                body: title,
+            };
+            const trigger = new Date(dateMarked);
+            await schedulePushNotification(content, trigger);
+        }
 
         writeToFirebase(newMemory);
         navigation.navigate('ViewMemory', { newMemory, handleExitView });
