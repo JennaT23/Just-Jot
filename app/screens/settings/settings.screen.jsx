@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { SafeAreaView, View, Switch, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
+import ModalDropdown from 'react-native-modal-dropdown';
 import { TabView } from 'react-native-paper'
 import Text from '../../../appStyles/customStyle'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -9,13 +10,20 @@ import useTheme from '../../../appStyles/useTheme'
 import { useNavigation } from '@react-navigation/core'
 import { getAuth, signOut } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import { schedulePushNotification } from "../../../App"
+import { schedulePushNotification } from "../../../App";
+import { colors } from '../../../appStyles/themeColors'
+
 
 export const Settings = ({ navigation }) => {
 
     const theme = useTheme();
+    const color = colors;
+    const [selectedColor, setSelectedColor] = useState('purple'); // New state to track the selected color
+    const colorOptions = Object.keys(colors); // Get an array of color theme names
     const appstyle = useThemedStyles(app_style);
     const settingstyle = useThemedStyles(settings_style);
+
+
 
     const { navigate } = useNavigation();
 
@@ -25,6 +33,7 @@ export const Settings = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [notificationEnabled, setNotificationEnabled] = useState(true);
+
 
     // objects instances created in an array list of 'sections'
     const SECTIONS = [
@@ -154,10 +163,24 @@ export const Settings = ({ navigation }) => {
                                             </TouchableOpacity>)
                                         }
 
-                                        {type === 'picker' &&
-
-                                            <ThemePicker/>
-                                        }
+                                        {type === 'picker' && (
+                                            <ModalDropdown
+                                            options={colorOptions} // Adding a 'Select a color' option
+                                            onSelect={(idx, color) => {
+                                              if (color !== 'Select a color') {
+                                                theme.changeThemeColor(color);
+                                                setSelectedColor(color); // Update the selected color state
+                                              }
+                                            }}
+                                            dropdownTextStyle={settingstyle.dropdownTextStyle}
+                                            style={settingstyle.dropdown}
+                                          >
+                                            <View style={settingstyle.selectedColor}>
+                                              <Text style={settingstyle.selectedColor}>{selectedColor ? ` ${selectedColor}` : 'Select a color'}</Text>
+                                              
+                                            </View>
+                                          </ModalDropdown>
+                                        )}
 
                                     </View>
 

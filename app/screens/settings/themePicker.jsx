@@ -35,6 +35,7 @@ export const ThemePicker = ({ navigation }) => {
                     {/* <Text style={settingstyle.rowLabel}>Choose a Theme Color</Text> */}
 
                     {colorOptions.map((color, index) => (
+                        // <View>
                         <TouchableOpacity
                             key={index}
                             style={[settingstyle.colorOption, { backgroundColor: colors[color].light.BACKGROUND }]}

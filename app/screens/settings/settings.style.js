@@ -38,7 +38,7 @@ export const settingsStyle = theme => StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex',
     },
-    profileAvatar: { 
+    profileAvatar: {
         width: 60,
         height: 60,
         borderRadius: 9999,
@@ -106,5 +106,20 @@ export const settingsStyle = theme => StyleSheet.create({
         flexGrow: 1,
         flexShrink: 1,
         flexBasis: 0,
+    },
+    dropdown: {
+        borderWidth: 1,
+        padding: 8,
+        marginTop: 5,
+        borderRadius: 5,
+        borderBlockColor:"transparent"
+    },
+    dropdownTextStyle: {
+        fontSize: 18,
+        margin: 1
+    },
+    selectedColor: {
+        fontSize: 16,
+        color:"#999DA0"
     },
 })

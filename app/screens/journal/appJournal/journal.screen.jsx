@@ -209,6 +209,7 @@ export const Journal = ({ navigation }) => {
         // transparent={true}
         visible={filterModalVisible}
         onRequestClose={() => setFilterModalVisible(false)}
+        
       >
         <View style={appJournalstyle.modalContainer}>
           <TouchableOpacity
