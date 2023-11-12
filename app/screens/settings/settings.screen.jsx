@@ -12,6 +12,9 @@ import { getAuth, signOut } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import * as Notifications from 'expo-notifications';
 import { schedulePushNotification } from "../../../App"
+// import { themePicker } from "./themePicker.screen"
+import { Picker } from "@react-native-picker/picker"
+import { ThemePicker } from "./themePicker"
 
 export const Settings = ({ navigation }) => {
 
@@ -28,23 +31,24 @@ export const Settings = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [notificationEnabled, setNotificationEnabled] = useState(true);
 
-        // objects instances created in an array list of 'sections'
-        const SECTIONS = [
-            {
-                header: 'Preferences',
-                items: [
-                    { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => handleNotifications() },
-                    { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleLightDark },
-                    { label: 'Theme Colors', type:'link', action:  () => handleThemeChange(navigate) }
-                ],
-            },
-            {
-                header: 'Options',
-                items: [
-                    { label: 'Sign Out', type: 'link', action: () => handleSignOut(navigate) },
-                ],
-            },
-        ]
+    // objects instances created in an array list of 'sections'
+    const SECTIONS = [
+        {
+            header: 'Preferences',
+            items: [
+                { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => handleNotifications() },
+                { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleLightDark },
+                // { label: 'Theme Colors', type: 'link', action: () => navigate("ThemePicker") },
+                { label: 'Testing', type: 'picker', action: () => theme.changeThemeColor() }
+            ],
+        },
+        {
+            header: 'Options',
+            items: [
+                { label: 'Sign Out', type: 'link', action: () => handleSignOut(navigate) },
+            ],
+        },
+    ]
 
     useEffect(() => {
         if (user) {
@@ -61,22 +65,21 @@ export const Settings = ({ navigation }) => {
         }
     };
 
-    const handleThemeChange = async () => {
-        navigate()
-    };
-    
-        // handling logout functionality
-        const handleSignOut = (navigate) => {
-            try {
-                signOut(auth)
-                alert('You have been signed out.');
-                navigate("Login")
-    
-            } catch (error) {
-                alert('An error occurred while signing out.');
-            }
-        };
+    // handling logout functionality
+    const handleSignOut = (navigate) => {
+        try {
+            signOut(auth)
+            alert('You have been signed out.');
+            navigate("Login")
 
+        } catch (error) {
+            alert('An error occurred while signing out.');
+        }
+    };
+
+    const handleThemeChange = () => {
+
+    }
 
     return (
 
@@ -143,6 +146,11 @@ export const Settings = ({ navigation }) => {
                                                     name="chevron-right"
                                                     size={22} />
                                             </TouchableOpacity>)
+                                        }
+
+                                        {type === 'picker' &&
+
+                                            <ThemePicker/>
                                         }
 
                                     </View>
