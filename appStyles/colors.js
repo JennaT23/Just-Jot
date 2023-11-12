@@ -1,9 +1,9 @@
 const LILAC = '#c8b9e4';
 const PURPLE = '#805dc0';
 const WHITE = '#ffffff';
-const GRAPE = '#53227d';
+const GRAPE = '#652d90';
 const BLACK = '#080808';
-const GRAY = '#696969'
+const GRAY = '#696969';
 
 const common = {
     PRIMARY: PURPLE,

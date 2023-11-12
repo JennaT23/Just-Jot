@@ -15,6 +15,9 @@ export const appJournalStyle = theme => StyleSheet.create({
     card: {
         padding: 5,
         margin: 5,
+        elevation: 1,
+        backgroundColor: theme.colors.CARD_BACKGROUND,
+        
     },
     journalTitle: {
         fontWeight: 'bold',
@@ -34,6 +37,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         bottom: 10,
         right: 20,
         alignSelf: 'flex-end',
+        backgroundColor: theme.colors.PRIMARY,
     },
     menu: {
         flexDirection: 'row',
@@ -43,6 +47,7 @@ export const appJournalStyle = theme => StyleSheet.create({
     iconButton: {
         // marginHorizontal: 5,
         // marginVertical: 5,
+        backgroundColor: theme.colors.PRIMARY,
     },
     modalDropdownOption: {
         padding: 15,
@@ -58,6 +63,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         backgroundColor: theme.colors.BACKGROUND,
         margin: 'auto',
         height: 50,
+        
         // borderTopLeftRadius: 20,
         // borderTopRightRadius: 20,  will uncomment when i get the modal window size to change
       },
