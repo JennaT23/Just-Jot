@@ -58,13 +58,16 @@ export const Login = ({ n }) => {
             behavior='padding'
         >
 
-            {/* KEEP BECAUSE WILL NEED FOR LATER */}
-            {/* <Switch onValueChange={theme.toggleTheme} value={theme.isLightTheme} /> */}
+            <View style={loginstyle.logoContainer}>
+                <View style={loginstyle.logoImgContainer}>
+                    <Image
+                        source={require('../../../../assets/blackPen.png')}                                     // find a logo and replace the source
+                        style={loginstyle.logoImg}
+                    />
+                </View>
+                <Text style={loginstyle.appName}>Just Jot</Text>
+            </View>
 
-            {/* <Image
-            source={require('../assets/')}                                     // find a logo and replace the source
-            style={styles.logo}
-        /> */}
 
             <View style={userAuthstyle.inputContainer}>
 
