@@ -18,6 +18,7 @@ export const fetchMemoriesFromFirebase = async () => {
             Title: doc.data().Title,
             Text: doc.data().Text,
             Title: doc.data().Title,
+            Images: doc.data().Images,
             uid: doc.data().uid,
         }));
 

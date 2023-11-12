@@ -5,7 +5,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { viewEntryStyle } from "../../journal/viewEntry/viewEntry.style";
 import useThemedStyles from "../../../../appStyles/useThemedStyles";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Image } from "react-native";
 import { newEntrystyle as newEntry_style } from '../../journal/newEntry/newEntry.style'
 import useTheme from '../../../../appStyles/useTheme'
 import { HeaderBackButton } from '@react-navigation/elements'
@@ -84,6 +84,10 @@ export const ViewMemory = ({ navigation, route }) => {
             </View>
             <View style={viewstyle.view}>
                 <Paragraph>{memory.Text}</Paragraph>
+                <Image
+                    style={{ height: 200, width: 200 }}
+                    source={{ uri: memory.Images }}
+                />
             </View>
         </ScrollView>
     );

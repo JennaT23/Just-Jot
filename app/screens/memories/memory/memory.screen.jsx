@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
@@ -41,7 +41,7 @@ export const Memories = ({ navigation }) => {
     };
 
     const moveNewMemory = () => {
-        const memory = { Text: '', Title: '', Location: null, DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
+        const memory = { Text: '', Title: '', Location: null, Images: "", DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
         navigation.navigate('NewMemory', { memory, handleExitView });
     }
 
@@ -106,6 +106,10 @@ export const Memories = ({ navigation }) => {
                                 <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Location: {memory.Location && formatGeoPoint(memory.Location)}</Subheading>
                                 <Paragraph>{memory.Text}</Paragraph>
+                                <Image
+                                    style={{ height: 200, width: 200 }}
+                                    source={{ uri: memory.Images }}
+                                />
                             </TouchableOpacity>
                             {/* <Card.Actions>
                                 <TouchableOpacity onPress={() => handleView(entry)}>

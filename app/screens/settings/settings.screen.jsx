@@ -6,15 +6,10 @@ import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { settingsStyle as settings_style } from './settings.style'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import useTheme from '../../../appStyles/useTheme'
-import { Button } from "react-native-paper"
 import { useNavigation } from '@react-navigation/core'
 import { getAuth, signOut } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import * as Notifications from 'expo-notifications';
 import { schedulePushNotification } from "../../../App"
-// import { themePicker } from "./themePicker.screen"
-import { Picker } from "@react-native-picker/picker"
-import { ThemePicker } from "./themePicker"
 
 export const Settings = ({ navigation }) => {
 
@@ -57,8 +52,19 @@ export const Settings = ({ navigation }) => {
         }
     }, [user])
 
+    useEffect(() => {
+        loadNotificationPreference();
+    }, []);
+
+    const loadNotificationPreference = async () => {
+        const preference = await getNotificationPreference();
+        setNotificationEnabled(preference === 'enabled');
+    };
+
     const handleNotifications = async () => {
         setNotificationEnabled(!notificationEnabled);
+        const newPreference = notificationEnabled ? 'disabled' : 'enabled';
+        await setNotificationPreference(newPreference);
 
         if (!notificationEnabled) {
             await schedulePushNotification({ title: 'Notifications!', body: 'You have enabled notifications' }, null);

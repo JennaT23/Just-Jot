@@ -71,13 +71,12 @@ function NavBar() {
 }
 
 export async function schedulePushNotification(content, trigger) {
-    trigger.setSeconds(0);
+    if (trigger !== null) {
+        trigger.setSeconds(0);
+    }
+
     await Notifications.scheduleNotificationAsync({
-        content: {
-            title: content.title,
-            body: content.body,
-            data: { data: 'goes here' },
-        },
+        content,
         trigger,
     });
 }

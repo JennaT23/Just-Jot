@@ -44,14 +44,27 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
         justifyContent: 'center',
+        // alignSelf: 'flex-end',
+        // justifyContent: 'flex-end',
         // backgroundColor: theme.colors.BACKGROUND,
     },
     camera: {
         height: '100%',
-        justifyContent: 'flex-end',
+        display: 'flex',
+        justifyContent: 'space-between',
     },
     cameraContainer: {
         display: 'flex',
+    },
+    cancelContainer: {
+        // position: 'absolute',
+        marginTop: 5,
+        marginRight: 10,
+    },
+    cancelButton: {
+        color: theme.colors.CAPTURE,
+        fontSize: 26,
+        alignSelf: 'flex-end',
     },
 
 })

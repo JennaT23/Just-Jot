@@ -3,12 +3,12 @@ import { Alert } from 'react-native';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { app } from '../../firebase'
 
-export const writePicsToFirebase = async (image) => {
+export const writePicsToFirebase = async (image, folder) => {
     let imgUrl = null;
     const uri = image;
     let filename = uri.substring(uri.lastIndexOf('/') + 1);
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
-    filename = 'JournalEntries/' + filename; // save to JournalEntries folder in Firebase storage
+    filename = folder + '/' + filename; // save to JournalEntries folder in Firebase storage
 
     try {
         const response = await fetch(uploadUri);
