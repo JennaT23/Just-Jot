@@ -132,10 +132,17 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
     }
 
+    const closeCamera = () => {
+        setShowCamera(false);
+    }
+
     function camerView() {
         return (
             <View style={entryTemplatestyle.cameraContainer} >
                 <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
+                    <TouchableOpacity style={entryTemplatestyle.cancelContainer} onPress={closeCamera}>
+                        <Text style={entryTemplatestyle.cancelButton}>X</Text>
+                    </TouchableOpacity>
                     <View style={entryTemplatestyle.cameraButtonContainer}>
                         <IconButton
                             icon="camera-flip"
