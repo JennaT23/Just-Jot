@@ -159,7 +159,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
 
     const saveEntry = async () => {
-        const url = await writePicsToFirebase(image, 'JournalEntries');
+        const url = image ? await writePicsToFirebase(image, 'JournalEntries') : '';
         const geopoint = new GeoPoint(location.latitude, location.longitude);
         const uid = user.uid;
         const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: entryData.id };

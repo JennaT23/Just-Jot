@@ -1,7 +1,7 @@
 import { Paragraph, Subheading, Title, IconButton } from "react-native-paper";
 import { appstyle } from "../../../../appStyles/appstyle";
 import Text from "../../../../appStyles/customStyle";
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { viewEntryStyle } from "../../journal/viewEntry/viewEntry.style";
 import useThemedStyles from "../../../../appStyles/useThemedStyles";
@@ -12,6 +12,8 @@ import { HeaderBackButton } from '@react-navigation/elements'
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useEffect } from "react";
+import * as Location from 'expo-location';
+import { displayAddress } from "../../../location/geocode";
 // import { useNavigation } from '@react-navigation/native';
 
 
@@ -19,11 +21,19 @@ export const ViewMemory = ({ navigation, route }) => {
     const viewstyle = useThemedStyles(viewEntryStyle);
     const newEntrystyle = useThemedStyles(newEntry_style);
     const handleExitView = route.params.handleExitView;
+    const memory = route.params.newMemory;
+    const [displayLocation, setDisplayLocation] = useState('');
+
+    useEffect(() => {
+        const fetchDisplayAddress = async () => {
+            const address = await displayAddress(memory.Location);
+            setDisplayLocation(address || '');
+        };
+
+        fetchDisplayAddress();
+    }, [memory.Location]);
 
     const theme = useTheme();
-    // const navigation = useNavigation();
-
-    const memory = route.params.newMemory;
 
     const formatCustomDateTime = (dateTime) => {
         const months = [
@@ -80,7 +90,7 @@ export const ViewMemory = ({ navigation, route }) => {
                 <Title style={viewstyle.title}>{memory.Title}</Title>
                 <Subheading style={viewstyle.subheading}>{memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))}</Subheading>
                 <Subheading style={viewstyle.subheading}>{memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))}</Subheading>
-                <Subheading style={viewstyle.subheading}>Location: {memory.Location && formatGeoPoint(memory.Location)}</Subheading>
+                <Subheading style={viewstyle.subheading}>Location: {displayLocation}</Subheading>
             </View>
             <View style={viewstyle.view}>
                 <Paragraph>{memory.Text}</Paragraph>
