@@ -1,39 +1,24 @@
-// import React, { useState } from 'react';
-// import { colors } from './colors';
+import React, { createContext, useState } from 'react';
+import { colors } from './themeColors';
 
-// export const ThemeContext = React.createContext();
+export const ThemeContext = createContext();
 
-// const ThemeProvider = ({children}) => {
-//   // const isLightTheme = true; // this is temporary, we will get back to it later
-//   const [isLightTheme, setLightTheme] = useState(true);
-//   const toggleTheme = () => setLightTheme(previousState => !previousState);
+const ThemeProvider = ({ children }) => {
+  const [isDarkTheme, setDarkTheme] = useState(false);
+  const [themeColor, setThemeColor] = useState('purple');
 
-//   const theme = {
-//     colors: isLightTheme ? colors.light : colors.dark,
-//     toggleTheme,
-//     isLightTheme,
-//   };
+  const changeThemeColor = (color) => {
+    setThemeColor(color);
+  };
 
-//   return (
-//     <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
-//   );
-// };
-
-// export default ThemeProvider;
-
-import React, { useState } from 'react';
-import { colors } from './colors';
-
-export const ThemeContext = React.createContext();
-
-const ThemeProvider = ({children}) => {
-  const [isDarkTheme, setDarkTheme] = useState(false); // default to light theme
-  const toggleTheme = () => setDarkTheme(previousState => !previousState);
+const toggleLightDark = () => { setDarkTheme((prevDarkTheme) => !prevDarkTheme) };
 
   const theme = {
-    colors: isDarkTheme ? colors.dark : colors.light,
-    toggleTheme,
+    colors: isDarkTheme ? colors[themeColor].dark : colors[themeColor].light,
     isDarkTheme,
+    themeColor,
+    toggleLightDark,
+    changeThemeColor,
   };
 
   return (

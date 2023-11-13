@@ -32,6 +32,8 @@ import useTheme from "../../../../appStyles/useTheme";
 import { getLocation } from "../../../location/getLocation";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { displayAddress } from "../../../location/geocode";
+import ModalDropdown from "react-native-modal-dropdown";
+import DropDownPicker from "react-native-dropdown-picker";
 
 export const Journal = ({ navigation }) => {
     const theme = useTheme();
@@ -46,12 +48,13 @@ export const Journal = ({ navigation }) => {
     // react hooks
     const [username, setUsername] = useState("");
     const [journalEntries, setJournalEntries] = useState([]);
-    const [sortByOldest, setSortByOldest] = useState(true); // true for oldest to newest, false for newest to oldest
+    const [sortByOldest, setSortByOldest] = useState(true);
     const [refreshData, setRefreshData] = useState(0);
-    const [filterModalVisible, setFilterModalVisible] = useState(false);
+    const [selectedFilterIndex, setSelectedFilterIndex] = useState(0);
     const [searchQuery, setSearchQuery] = useState("");
     const [isSearching, setIsSearching] = useState(false);
     const [displayedAddresses, setDisplayedAddresses] = useState([]);
+    const [filterModalVisible, setFilterModalVisible] = useState(false);
 
     // grab journal entries from firebase and display them on login
     const fetchJournalEntries = async () => {
@@ -112,6 +115,7 @@ export const Journal = ({ navigation }) => {
             return oldestToNewest ? dateA - dateB : dateB - dateA;
         });
         setJournalEntries(sortedEntries);
+        setSelectedFilterIndex(oldestToNewest ? 0 : 1);
         setFilterModalVisible(false);
     };
 
@@ -218,38 +222,24 @@ export const Journal = ({ navigation }) => {
                         </TouchableOpacity>
                     )}
                 </View>
-                <TouchableOpacity onPress={() => setFilterModalVisible(true)}>
-                    <FAB style={appJournalstyle.iconButton} icon={"filter"} />
-                </TouchableOpacity>
+                <ModalDropdown
+                    options={["Oldest to Newest", "Newest to Oldest"]}
+                    defaultValue="Sort By"
+                    textStyle={{ fontSize: 16 }}
+                    dropdownStyle={{ width: 150, marginTop: 8 }}
+                    dropdownTextStyle={{ fontSize: 16 }}
+                    onSelect={(index, value) => handleFilter(index === 0)}
+                    showsVerticalScrollIndicator={false}
+                    onDropdownWillShow={() => setFilterModalVisible(true)}
+                    onDropdownWillHide={() => setFilterModalVisible(false)}
+                >
+                    <IconButton
+                        icon="filter"
+                        size={24}
+                        style={appJournalstyle.iconButton}
+                    />
+                </ModalDropdown>
             </View>
-
-            <Modal
-                animationType="slide"
-                // transparent={true}
-                visible={filterModalVisible}
-                onRequestClose={() => setFilterModalVisible(false)}
-            >
-                <View style={appJournalstyle.modalContainer}>
-                    <TouchableOpacity
-                        style={appJournalstyle.modalDropdownOption}
-                        onPress={() => handleFilter(true)}
-                    >
-                        <Text>Oldest to Newest</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={appJournalstyle.modalDropdownOption}
-                        onPress={() => handleFilter(false)}
-                    >
-                        <Text>Newest to Oldest</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={appJournalstyle.modalDropdownOption}
-                        onPress={() => setFilterModalVisible(false)}
-                    >
-                        <Text>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            </Modal>
 
             <ScrollView>
                 {journalEntries.map((entry, index) => (
