@@ -15,8 +15,8 @@ export const loginstyle = theme => StyleSheet.create({
         transform: [{rotate: '25deg'}],
     },
     logoImgContainer: {
-        height: 120,
-        paddingLeft: 50,
+        height: 90,
+        paddingLeft: 20,
     },
     appName: {
         fontSize: 30,
