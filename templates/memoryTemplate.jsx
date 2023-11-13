@@ -34,7 +34,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     const [title, setTitle] = useState(memory.Title);
     const [text, setText] = useState(memory.Text);
     const [coordinates, setCoordinates] = useState(memory.Location);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState(memory.Location);
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
     const [dateCreated, setDateCreated] = useState(new Date(memory.DateCreated));
@@ -236,12 +236,14 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     const selectLocation = (selected) => {
         setSelectedLocation(selected.name || '');
         setCoordinates({ latitude: selected.latitude, longitude: selected.longitude });
-        setSearchResults([]); // Clear search results after selecting a location
+        setSearchResults([]);
+        setSearchText(`${selected.latitude}, ${selected.longitude}`);
     };
 
-    const handleSaveLocation = () => {
-        console.log(coordinates);
-    };
+    const handleTextChange = (text) => {
+        setSearchText(text);
+        setSelectedLocation(null);
+    }
 
     return (
         <SafeAreaView style={[newEntrystyle.container, newEntrystyle.entryContainer]}>
@@ -338,29 +340,38 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                 </TouchableOpacity> */}
 
                 <View>
-                    <TextInput
-                        placeholder="Enter address"
-                        value={searchText}
-                        onChangeText={(text) => setSearchText(text)}
-                    />
-                    <TouchableOpacity style={entryTemplatestyle.date} title="Search" onPress={handleSearch}>
-                        <Text>Search</Text>
-                    </TouchableOpacity>
-                    <ScrollView style={entryTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 100 }}>
-                        {searchResults.map((result, index) => {
-                            console.log(`Rendering result ${index}:`, result);
-                            const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
-                            return (
-                                <Pressable
-                                    key={index}
-                                    onPress={() => selectLocation(result)}
-                                    style={entryTemplatestyle.searchResultItem}
-                                >
-                                    <Text>{infoText}</Text>
-                                </Pressable>
-                            );
-                        })}
-                    </ScrollView>
+                    <View style={entryTemplatestyle.date}>
+                        <TextInput
+                            placeholder="Search address..."
+                            value={searchText}
+                            onChangeText={handleTextChange}
+                            style={entryTemplatestyle.dateText}
+                        />
+                        <IconButton
+                            icon='map-search-outline'
+                            size={30}
+                            iconColor={theme.colors.TEXT}
+                            style={entryTemplatestyle.search}
+                            onPress={handleSearch}
+                        />
+                    </View>
+                    {searchResults.length > 0 && (
+                        <ScrollView style={entryTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
+                            {searchResults.map((result, index) => {
+                                console.log(`Rendering result ${index}:`, result);
+                                const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
+                                return (
+                                    <Pressable
+                                        key={index}
+                                        onPress={() => selectLocation(result)}
+                                        style={entryTemplatestyle.searchItems}
+                                    >
+                                        <Text>{infoText}</Text>
+                                    </Pressable>
+                                );
+                            })}
+                        </ScrollView>
+                    )}
                 </View>
 
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>

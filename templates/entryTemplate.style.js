@@ -28,6 +28,19 @@ export const entryTemplatestyle = theme => StyleSheet.create({
         flexDirection: "row",
         //alignItems: 'baseline',
     },
+    search: {
+        margin: 5,
+        flexDirection: "row",
+        //alignItems: 'baseline',
+    },
+    searchResults: {
+        backgroundColor: '#ccc',
+        margin: 5,
+        marginTop: -5,
+    },
+    searchItems: {
+        margin: 5,
+    },
     calendarIcon: {
     },
     selectedImage: {
