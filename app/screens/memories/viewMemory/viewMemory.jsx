@@ -1,4 +1,4 @@
-import { Paragraph, Subheading, Title, IconButton } from "react-native-paper";
+import { Paragraph, Subheading, Title, IconButton, Card } from "react-native-paper";
 import { appstyle } from "../../../../appStyles/appstyle";
 import Text from "../../../../appStyles/customStyle";
 import React, { useState } from 'react';
@@ -92,7 +92,7 @@ export const ViewMemory = ({ navigation, route }) => {
                     iconColor={theme.colors.TEXT}
                 />
             </View>
-            <View style={viewstyle.view}>
+            <View style={viewstyle.entry}>
                 <Card style={viewstyle.topCard}>
                     <Card.Title
                         title={memory.title}

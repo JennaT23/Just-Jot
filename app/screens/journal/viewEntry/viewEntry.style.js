@@ -57,5 +57,7 @@ export const viewEntryStyle = (theme) =>
       },
     entry: {
       flex: 1,
+      paddingLeft: 10,
+      paddingRight: 10,
     },
   });
