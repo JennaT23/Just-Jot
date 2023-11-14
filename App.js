@@ -63,9 +63,9 @@ function NavBar() {
             })}
         >
             <Tab.Screen name="Journal" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Journal} /> 
-            <Tab.Screen name="Map" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Map} />
-            <Tab.Screen name="Memories" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Memories} />
-            <Tab.Screen name="Settings" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Settings} />
+            <Tab.Screen name="Map" options={{ title: 'Map', headerTitleAlign: 'center', }} component={Map} />
+            <Tab.Screen name="Memories" options={{ title: 'Memories', headerTitleAlign: 'center', }} component={Memories} />
+            <Tab.Screen name="Settings" options={{ title: 'Settings', headerTitleAlign: 'center', }} component={Settings} />
 
         </Tab.Navigator>
     )
