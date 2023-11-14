@@ -56,15 +56,16 @@ function NavBar() {
 
                     // You can return any component that you like here!
                     return <IconButton icon={iconName} size={size} iconColor={color} />;
+                    //options={{ headerShown: false, headerTitleAlign: 'center',  }}
                 },
                 tabBarActiveTintColor: 'black',
                 tabBarInactiveTintColor: 'gray',
             })}
         >
-            <Tab.Screen name="Journal" component={Journal} />
-            <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Memories" component={Memories} />
-            <Tab.Screen name="Settings" component={Settings} />
+            <Tab.Screen name="Journal" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Journal} /> 
+            <Tab.Screen name="Map" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Map} />
+            <Tab.Screen name="Memories" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Memories} />
+            <Tab.Screen name="Settings" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Settings} />
 
         </Tab.Navigator>
     )

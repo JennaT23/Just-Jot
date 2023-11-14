@@ -1,5 +1,15 @@
-import { StyleSheet } from "react-native"
+import { Platform, StyleSheet } from "react-native"
 
+const font = () => {
+    if(Platform.OS === 'android')
+    {
+        return 'serif';
+    }
+    else if(Platform.OS === 'ios')
+    {
+        return 'Georgia';
+    }
+}
 
 export const loginstyle = theme => StyleSheet.create({
     forgotPassword: {
@@ -21,7 +31,7 @@ export const loginstyle = theme => StyleSheet.create({
     appName: {
         fontSize: 30,
         marginTop: -10,
-        fontFamily: 'serif',
+        fontFamily: font(),
     },
     logoContainer: {
         alignItems: 'center',
