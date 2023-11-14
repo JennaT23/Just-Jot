@@ -23,8 +23,15 @@ const NUDE = '#bcb8b1'; // background color light
 const BROWN = '#8a817c';
 const DARKBROWN = '#463f3a'// background color light
 
+const RED = '#e61212';
+
+const common = {
+    DELETE: RED,
+};
+
 const purple = {
     light: {
+        ...common,
         BACKGROUND: LILAC,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -34,6 +41,7 @@ const purple = {
         CARD_BACKGROUND: WHITE,
     },
     dark: {
+        ...common,
         BACKGROUND: GRAPE,
         TEXT: WHITE,
         SUBHEADING: GRAY,
@@ -45,6 +53,7 @@ const purple = {
 
 const blue = {
     light: {
+        ...common,
         BACKGROUND: BLUE,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -54,6 +63,7 @@ const blue = {
         CARD_BACKGROUND: WHITE,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKBLUE,
         TEXT: WHITE,
         SUBHEADING: GRAY,
@@ -65,6 +75,7 @@ const blue = {
 
 const green = {
     light: {
+        ...common,
         BACKGROUND: PALEGREEN,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -74,6 +85,7 @@ const green = {
         CARD_BACKGROUND: WHITE,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKGREEN,
         TEXT: WHITE,
         SUBHEADING: GRAY,
@@ -85,6 +97,7 @@ const green = {
 
 const pink = {
     light: {
+        ...common,
         BACKGROUND: PINK,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -94,6 +107,7 @@ const pink = {
         CARD_BACKGROUND: SEASHELL,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKPINK,
         TEXT: WHITE,
         SUBHEADING: GRAY,
@@ -105,6 +119,7 @@ const pink = {
 
 const brown = {
     light: {
+        ...common,
         BACKGROUND: NUDE,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -114,6 +129,7 @@ const brown = {
         CARD_BACKGROUND: SEASHELL,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKBROWN,
         TEXT: WHITE,
         SUBHEADING: GRAY,
