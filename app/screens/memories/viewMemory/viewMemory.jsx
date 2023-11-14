@@ -23,11 +23,17 @@ export const ViewMemory = ({ navigation, route }) => {
     const handleExitView = route.params.handleExitView;
     const memory = route.params.newMemory;
     const [displayLocation, setDisplayLocation] = useState('');
+    const [displaySubtitle, setDisplaySubtitle] = useState('');
 
     useEffect(() => {
         const fetchDisplayAddress = async () => {
             const address = await displayAddress(memory.Location);
             setDisplayLocation(address || '');
+            setDisplaySubtitle(
+                (memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))) + 
+                "\n" + 
+                (memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))) + 
+                "\nLocation: " + displayLocation);
         };
 
         fetchDisplayAddress();
@@ -87,6 +93,29 @@ export const ViewMemory = ({ navigation, route }) => {
                 />
             </View>
             <View style={viewstyle.view}>
+                <Card style={viewstyle.topCard}>
+                    <Card.Title
+                        title={memory.title}
+                        titleStyle={viewstyle.title}
+                        subtitleNumberOfLines={3}
+                        subtitle={displaySubtitle}
+                        subtitleStyle={viewstyle.subheading}
+                    />
+                </Card>
+                <Card style={viewstyle.bottomCard}>
+                    <Card.Content>
+                        <View style={viewstyle.view}>
+                            <Paragraph>{memory.Text}</Paragraph>
+                            <Image
+                                style={{ height: 200, width: 200 }}
+                                source={{ uri: memory.Images }}
+                            />
+                        </View>
+                    </Card.Content>
+                </Card>
+            </View>
+
+            {/* <View style={viewstyle.view}>
                 <Title style={viewstyle.title}>{memory.Title}</Title>
                 <Subheading style={viewstyle.subheading}>{memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))}</Subheading>
                 <Subheading style={viewstyle.subheading}>{memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))}</Subheading>
@@ -98,7 +127,7 @@ export const ViewMemory = ({ navigation, route }) => {
                     style={{ height: 200, width: 200 }}
                     source={{ uri: memory.Images }}
                 />
-            </View>
+            </View> */}
         </ScrollView>
     );
 };
