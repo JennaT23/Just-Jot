@@ -130,8 +130,15 @@ export const ViewEntry = ({ navigation, route }) => {
         <ScrollView style={viewstyle.container}>
             <View style={newEntrystyle.toolBar}>
                 <IconButton
+                    icon="delete-forever"
+                    size={31}
+                    onPress={() => handleDeleteEntry(entry.id)}
+                    style={newEntrystyle.iconButton}
+                    iconColor={theme.colors.DELETE}
+                />
+                <IconButton
                     icon="pencil"
-                    size={30}
+                    size={31}
                     onPress={moveToEditEntry}
                     style={newEntrystyle.iconButton}
                     iconColor={theme.colors.TEXT}
@@ -156,13 +163,13 @@ export const ViewEntry = ({ navigation, route }) => {
                                 source={{ uri: entry.Images }}
                             />
                         </View>
-                        <View style={viewstyle.deleteButton}>
+                        {/* <View style={viewstyle.deleteButton}>
                             <Button
                                 title="Delete Entry"
                                 onPress={() => handleDeleteEntry(entry.id)}
                                 color="red"
                             />
-                        </View>
+                        </View> */}
                     </Card.Content>
                 </Card>
             </View>

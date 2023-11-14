@@ -85,6 +85,13 @@ export const ViewMemory = ({ navigation, route }) => {
         <ScrollView style={viewstyle.container}>
             <View style={newEntrystyle.toolBar}>
                 <IconButton
+                    icon="delete-forever"
+                    size={31}
+                    onPress={() => handleDeleteEntry(entry.id)}
+                    style={newEntrystyle.iconButton}
+                    iconColor={theme.colors.DELETE}
+                />
+                <IconButton
                     icon="pencil"
                     size={30}
                     onPress={moveToEditMemory}
@@ -95,7 +102,7 @@ export const ViewMemory = ({ navigation, route }) => {
             <View style={viewstyle.entry}>
                 <Card style={viewstyle.topCard}>
                     <Card.Title
-                        title={memory.title}
+                        title={memory.Title}
                         titleStyle={viewstyle.title}
                         subtitleNumberOfLines={3}
                         subtitle={displaySubtitle}

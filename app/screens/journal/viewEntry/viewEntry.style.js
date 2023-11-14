@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, useWindowDimensions } from "react-native";
 // const screenHeight = Dimensions.get("window").height;
 const getHeight = () => {
   const {height, width} = useWindowDimensions();
-  return height*(2/3);
+  return height*(0.6);
 }
 
 export const viewEntryStyle = (theme) =>
