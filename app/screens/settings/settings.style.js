@@ -32,7 +32,7 @@ export const settingsStyle = theme => StyleSheet.create({
     },
     profile: {
         padding: 12,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.SPACE,
         borderRadius: 12,
         flexDirection: 'row',
         alignItems: 'center',
@@ -47,13 +47,13 @@ export const settingsStyle = theme => StyleSheet.create({
     profileName: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#000',
+        color: theme.colors.TEXT,
     },
     profileHandle: {
         marginTop: 2,
         fontSize: 16,
         fontWeight: '400',
-        color: '#858585',
+        color: theme.colors.SUBHEADING,
     },
     profileAction: {
         marginTop: 16,
@@ -69,15 +69,15 @@ export const settingsStyle = theme => StyleSheet.create({
         marginRight: 8,
         fontSize: 15,
         fontWeight: '600',
-        color: '#fff',
+        color: theme.colors.TEXT,
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingTop: 12,
+        paddingTop: 10,
         paddingRight: 12,
-        paddingBottom: 12,
+        paddingBottom: 10,
         paddingLeft: 0,
     },
     rowFirst: {
@@ -90,13 +90,13 @@ export const settingsStyle = theme => StyleSheet.create({
     },
     rowWrapper: {
         paddingLeft: 16,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderColor: '#f0f0f0',
+        backgroundColor: theme.colors.SPACE,
+        borderTopWidth: 0.8,
+        borderColor: theme.colors.BACKGROUND,
     },
     rowLabel: {
         fontSize: 17,
-        color: '#000',
+        color: theme.colors.TEXT,
     },
     rowValue: {
         fontSize: 17,
@@ -116,10 +116,11 @@ export const settingsStyle = theme => StyleSheet.create({
     },
     dropdownTextStyle: {
         fontSize: 18,
-        margin: 1
+        margin: 1,
+        backgroundColor: '#fff'
     },
     selectedColor: {
         fontSize: 16,
-        color:"#999DA0"
+        color: theme.colors.SUBHEADING
     },
 })

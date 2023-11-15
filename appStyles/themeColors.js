@@ -1,21 +1,28 @@
 const BLACK = '#080808';
-const GRAY = '#696969';
 const WHITE = '#ffffff';
-const SEASHELL = '#FFF5EE';
+const GRAY = '#858585';
+const LIGHTGRAY = '#D1D1D1';
 
+const PALEPURPLE = '#f4f0f9';
 const LILAC = '#c8b9e4';
 const PURPLE = '#805dc0';
-const GRAPE = '#652d90';
+const SPACEPURPLE = '#54447E';
+const DARKPURPLE = '#28194D';
 
-const BLUE = "#bfdbf7"; // background color light
-const MIDBLUE= '#2c7da0';
-const DARKBLUE = '#274c77'; // background color dark
+const PALEBLUE = "#F8FBFF";
+const BLUE = "#bfdbf7";
+const MIDBLUE = '#2c7da0';
+const SPACEBLUE = '#305279';
+const DARKBLUE = '#1B3757';
 
-const PALEGREEN = '#95d5b2'; // background color light
-const GREEN = '#c0f8d1';
-const DARKGREEN = '#426148';// background color light
+const MINTCREAM = '#FCFFFB'; 
+const SAGEGREEN = '#C6E2BA'; 
+const GREEN = '#5E7458';
+const DARKGREEN = '#273822';
+const SPACEGREEN = '#43533E';
 
-const PINK = '#f8c7cc'; // background color light
+const SNOW = '#FFF7F8';
+const PINK = '#f9c8d0';
 const MIDPINK = '#ff4d6d';
 const DARKPINK = '#c95d63';// background color light
 
@@ -23,31 +30,24 @@ const NUDE = '#bcb8b1'; // background color light
 const BROWN = '#8a817c';
 const DARKBROWN = '#463f3a'// background color light
 
-const RED = '#e61212';
-
-const common = {
-    DELETE: RED,
-};
-
 const purple = {
     light: {
         ...common,
         BACKGROUND: LILAC,
         BUTTON_TEXT: WHITE,
+        BUTTON_COLOR: PURPLE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        PRIMARY: PURPLE,
-        CAPTURE: WHITE,
-        CARD_BACKGROUND: WHITE,
+        TEXT_ENTRY: PALEPURPLE,
+        SPACE: PALEPURPLE,
+
     },
     dark: {
-        ...common,
         BACKGROUND: GRAPE,
         TEXT: WHITE,
-        SUBHEADING: GRAY,
-        PRIMARY: PURPLE,
-        CAPTURE: WHITE,
-        CARD_BACKGROUND: WHITE,
+        SUBHEADING: LIGHTGRAY,
+        TEXT_ENTRY: PURPLE,
+        SPACE: SPACEPURPLE,
     }
 };
 
@@ -58,40 +58,42 @@ const blue = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        PRIMARY: MIDBLUE,
+        BUTTON_COLOR: MIDBLUE,
         CAPTURE: WHITE,
-        CARD_BACKGROUND: WHITE,
+        SPACE: PALEBLUE,
     },
     dark: {
         ...common,
         BACKGROUND: DARKBLUE,
+        BUTTON_TEXT: BLACK,
         TEXT: WHITE,
-        SUBHEADING: GRAY,
-        PRIMARY: MIDBLUE,
+        SUBHEADING: LIGHTGRAY,
+        BUTTON_COLOR: MIDBLUE,
         CAPTURE: WHITE,
-        CARD_BACKGROUND: WHITE,
+        SPACE: SPACEBLUE,
     }
 };
 
 const green = {
     light: {
-        ...common,
         BACKGROUND: PALEGREEN,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        PRIMARY: GREEN,
+        BUTTON_COLOR: GREEN,
         CAPTURE: WHITE,
-        CARD_BACKGROUND: WHITE,
+        SPACE: MINTCREAM,
     },
     dark: {
         ...common,
         BACKGROUND: DARKGREEN,
+        BUTTON_TEXT: BLACK,
         TEXT: WHITE,
-        SUBHEADING: GRAY,
-        PRIMARY: GREEN,
+        SUBHEADING: LIGHTGRAY,
+        BUTTON_COLOR: GREEN,
         CAPTURE: WHITE,
-        CARD_BACKGROUND: WHITE,
+        CARD_BACKGROUND: MINTCREAM,
+        SPACE: SPACEGREEN,
     }
 };
 
@@ -102,18 +104,19 @@ const pink = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        PRIMARY: MIDPINK,
+        BUTTON_COLOR: MIDPINK,
         CAPTURE: WHITE,
-        CARD_BACKGROUND: SEASHELL,
+        SPACE: SNOW,
     },
     dark: {
         ...common,
         BACKGROUND: DARKPINK,
+        BUTTON_TEXT: BLACK,
         TEXT: WHITE,
-        SUBHEADING: GRAY,
-        PRIMARY: MIDPINK,
-        CAPTURE: WHITE,
-        CARD_BACKGROUND: SEASHELL,
+        SUBHEADING: LIGHTGRAY,
+        BUTTON_COLOR: MIDPINK,
+        TEXT_ENTRY: WHITE,
+        SPACE: SPACEPINK,
     }
 };
 
@@ -124,18 +127,19 @@ const brown = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        PRIMARY: BROWN,
-        CAPTURE: WHITE,
-        CARD_BACKGROUND: SEASHELL,
+        BUTTON_COLOR: BROWN,
+        TEXT_ENTRY: NUDE,
+        SPACE: WHITESMOKE,
     },
     dark: {
         ...common,
         BACKGROUND: DARKBROWN,
+        BUTTON_TEXT: BLACK,
         TEXT: WHITE,
-        SUBHEADING: GRAY,
-        PRIMARY: BROWN,
-        CAPTURE: WHITE,
-        CARD_BACKGROUND: SEASHELL,
+        SUBHEADING: LIGHTGRAY,
+        BUTTON_COLOR: LIGHTBROWN,
+        TEXT_ENTRY: NUDE,
+        SPACE: BROWN,
     }
 }
 
