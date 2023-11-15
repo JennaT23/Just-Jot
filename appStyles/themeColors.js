@@ -24,15 +24,17 @@ const SPACEGREEN = '#43533E';
 const SNOW = '#FFF7F8';
 const PINK = '#f9c8d0';
 const MIDPINK = '#ff4d6d';
-const DARKPINK = '#c95d63';// background color light
+const SPACEPINK = '#823B50';
+const DARKPINK = '#5B2032';
 
+const WHITESMOKE = '#FAF9F6';
 const NUDE = '#bcb8b1'; // background color light
+const LIGHTBROWN = '#90827A';
 const BROWN = '#8a817c';
 const DARKBROWN = '#463f3a'// background color light
 
 const purple = {
     light: {
-        ...common,
         BACKGROUND: LILAC,
         BUTTON_TEXT: WHITE,
         BUTTON_COLOR: PURPLE,
@@ -43,7 +45,9 @@ const purple = {
 
     },
     dark: {
-        BACKGROUND: GRAPE,
+        BACKGROUND: DARKPURPLE,
+        BUTTON_TEXT: WHITE,
+        BUTTON_COLOR: PURPLE,
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
         TEXT_ENTRY: PURPLE,
@@ -53,8 +57,9 @@ const purple = {
 
 const blue = {
     light: {
-        ...common,
         BACKGROUND: BLUE,
+        BUTTON_TEXT: WHITE,
+        BUTTON_COLOR: PURPLE,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
@@ -63,7 +68,6 @@ const blue = {
         SPACE: PALEBLUE,
     },
     dark: {
-        ...common,
         BACKGROUND: DARKBLUE,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
@@ -76,7 +80,7 @@ const blue = {
 
 const green = {
     light: {
-        BACKGROUND: PALEGREEN,
+        BACKGROUND: SAGEGREEN,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
@@ -85,7 +89,6 @@ const green = {
         SPACE: MINTCREAM,
     },
     dark: {
-        ...common,
         BACKGROUND: DARKGREEN,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
@@ -99,7 +102,6 @@ const green = {
 
 const pink = {
     light: {
-        ...common,
         BACKGROUND: PINK,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -109,7 +111,6 @@ const pink = {
         SPACE: SNOW,
     },
     dark: {
-        ...common,
         BACKGROUND: DARKPINK,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
@@ -122,7 +123,6 @@ const pink = {
 
 const brown = {
     light: {
-        ...common,
         BACKGROUND: NUDE,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -132,7 +132,6 @@ const brown = {
         SPACE: WHITESMOKE,
     },
     dark: {
-        ...common,
         BACKGROUND: DARKBROWN,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
