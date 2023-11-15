@@ -211,7 +211,7 @@ export const Journal = ({ navigation }) => {
                     />
                     <TouchableOpacity
                         onPress={handleSearch}
-                        style={appJournalstyle.iconButton}
+                        style={appJournalstyle.searcIcon}
                     >
                         <MaterialCommunityIcons name="magnify" size={24} />
                     </TouchableOpacity>

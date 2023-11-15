@@ -10,13 +10,13 @@ export const appJournalStyle = theme => StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
-        paddingHorizontal: 16, // padding to adjust space between buttons
+        paddingHorizontal: 12, // padding to adjust space between buttons
       },
     card: {
         padding: 5,
         margin: 5,
         elevation: 1,
-        backgroundColor: theme.colors.CARD_BACKGROUND,
+        backgroundColor: theme.colors.SPACE,
         
     },
     journalTitle: {
@@ -37,17 +37,23 @@ export const appJournalStyle = theme => StyleSheet.create({
         bottom: 10,
         right: 20,
         alignSelf: 'flex-end',
-        backgroundColor: theme.colors.PRIMARY,
+        backgroundColor: theme.colors.BUTTON_COLOR,
     },
     menu: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         // flex: 1,
     },
+    searchIcon: {
+        backgroundColor: theme.colors.BACKGROUND,
+    },
+
     iconButton: {
         // marginHorizontal: 5,
         // marginVertical: 5,
-        backgroundColor: theme.colors.PRIMARY,
+        // color: '#fff',
+        tintColor: '#fff',
+        backgroundColor: theme.colors.BUTTON_COLOR,
     },
     modalDropdownOption: {
         padding: 15,
@@ -73,9 +79,10 @@ export const appJournalStyle = theme => StyleSheet.create({
         flex: 1,
         marginRight: 8,
         borderWidth: 1,
-        borderRadius: 8,
+        borderColor: theme.colors.ACCENT,
+        borderRadius: 9,
         paddingHorizontal: 8,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.SPACE,
       },
       searchBar: {
         flex: 1,

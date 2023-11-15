@@ -42,7 +42,6 @@ export const Settings = ({ navigation }) => {
             items: [
                 { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => handleNotifications() },
                 { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleLightDark },
-                // { label: 'Theme Colors', type: 'link', action: () => navigate("ThemePicker") },
                 { label: 'Testing', type: 'picker', action: () => theme.changeThemeColor() }
             ],
         },
