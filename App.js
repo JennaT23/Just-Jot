@@ -56,15 +56,16 @@ function NavBar() {
 
                     // You can return any component that you like here!
                     return <IconButton icon={iconName} size={size} iconColor={color} />;
+                    //options={{ headerShown: false, headerTitleAlign: 'center',  }}
                 },
                 tabBarActiveTintColor: 'black',
                 tabBarInactiveTintColor: 'gray',
             })}
         >
-            <Tab.Screen name="Journal" component={Journal} />
-            <Tab.Screen name="Map" component={Map} />
-            <Tab.Screen name="Memories" component={Memories} />
-            <Tab.Screen name="Settings" component={Settings} />
+            <Tab.Screen name="Journal" options={{ title: 'Journal', headerTitleAlign: 'center', }} component={Journal} /> 
+            <Tab.Screen name="Map" options={{ title: 'Map', headerTitleAlign: 'center', }} component={Map} />
+            <Tab.Screen name="Memories" options={{ title: 'Memories', headerTitleAlign: 'center', }} component={Memories} />
+            <Tab.Screen name="Settings" options={{ title: 'Settings', headerTitleAlign: 'center', }} component={Settings} />
 
         </Tab.Navigator>
     )
@@ -147,36 +148,36 @@ const App = () => {
         <ThemeProvider>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="Login">
-                    <Stack.Screen options={{ headerShown: false }} name="NavBar" component={NavBar} />
-                    <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
-                    <Stack.Screen options={{ headerShown: true, title: 'Register' }} name="Register" component={Register} />
-                    <Stack.Screen options={{ headerShown: false, title: "Forgot Password" }} name="ForgotPassword" component={ForgotPassword} />
-                    <Stack.Screen options={{ headerShown: true }} name="Map" component={Map} />
-                    <Stack.Screen options={{ headerShown: true }} name="Settings" component={Settings} />
-                    <Stack.Screen options={{ headerShown: false }} name="Journal" component={Journal} />
-                    <Stack.Screen options={{ headerShown: false }} name="Memories" component={Memories} />
-                    <Stack.Screen options={{ headerShown: true, title: "New Memory" }} name="NewMemory">
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="NavBar" component={NavBar} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Login" component={Login} />
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: 'Register' }} name="Register" component={Register} />
+                    <Stack.Screen options={{ headerShown: false,  headerTitleAlign: 'center', title: "Forgot Password" }} name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="Map" component={Map} />
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="Settings" component={Settings} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Journal" component={Journal} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Memories" component={Memories} />
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "New Memory" }} name="NewMemory">
                         {props => <NewMemory {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true, title: "New Entry" }} name="NewEntry">
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "New Entry" }} name="NewEntry">
                         {props => <NewEntry {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true }} name="EntryTemplate">
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="EntryTemplate">
                         {props => <EntryTemplate {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true }} name="MemoryTemplate">
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="MemoryTemplate">
                         {props => <MemoryTemplate {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true, title: "Edit Entry" }} name="EditEntry">
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "Edit Entry" }} name="EditEntry">
                         {props => <EditEntry {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true, title: "Edit Memory" }} name="EditMemory">
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "Edit Memory" }} name="EditMemory">
                         {props => <EditMemory {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true, title: "View Entry" }} name="ViewEntry">
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "View Entry" }} name="ViewEntry">
                         {props => <ViewEntry {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true, title: "View Memory" }} name="ViewMemory">
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "View Memory" }} name="ViewMemory">
                         {props => <ViewMemory {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>

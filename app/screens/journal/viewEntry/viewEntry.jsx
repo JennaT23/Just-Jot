@@ -1,4 +1,4 @@
-import { Paragraph, Subheading, Title, IconButton } from "react-native-paper";
+import { Paragraph, Subheading, Title, IconButton, Card } from "react-native-paper";
 import { appstyle } from "../../../../appStyles/appstyle";
 import Text from "../../../../appStyles/customStyle";
 import React from "react";
@@ -24,11 +24,13 @@ export const ViewEntry = ({ navigation, route }) => {
     const theme = useTheme();
     const entry = route.params.entry;
     const [displayLocation, setDisplayLocation] = useState('');
+    const [displaySubtitle, setDisplaySubtitle] = useState('');
 
     useEffect(() => {
         const fetchDisplayAddress = async () => {
             const address = await displayAddress(entry.Location);
             setDisplayLocation(address || '');
+            setDisplaySubtitle((entry.Date && formatCustomDateTime(new Date(entry.Date))) + "\nLocation: " + displayLocation);
         };
 
         fetchDisplayAddress();
@@ -128,31 +130,48 @@ export const ViewEntry = ({ navigation, route }) => {
         <ScrollView style={viewstyle.container}>
             <View style={newEntrystyle.toolBar}>
                 <IconButton
+                    icon="delete-forever"
+                    size={31}
+                    onPress={() => handleDeleteEntry(entry.id)}
+                    style={newEntrystyle.iconButton}
+                    iconColor={theme.colors.DELETE}
+                />
+                <IconButton
                     icon="pencil"
-                    size={30}
+                    size={31}
                     onPress={moveToEditEntry}
                     style={newEntrystyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
             </View>
-            <View style={viewstyle.view}>
-                <Title style={viewstyle.title}>{entry.Title}</Title>
-                <Subheading style={viewstyle.subheading}>{entry.Date && formatCustomDateTime(new Date(entry.Date))}</Subheading>
-                <Subheading style={viewstyle.subheading}>Location: {displayLocation}</Subheading>
-            </View>
-            <View style={viewstyle.view}>
-                <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
-                <Image
-                    style={{ height: 200, width: 200 }}
-                    source={{ uri: entry.Images }}
-                />
-            </View>
-            <View style={viewstyle.deleteButton}>
-                <Button
-                    title="Delete Entry"
-                    onPress={() => handleDeleteEntry(entry.id)}
-                    color="red"
-                />
+            <View style={viewstyle.entry}>
+                <Card style={viewstyle.topCard}>
+                    <Card.Title
+                        title={entry.Title}
+                        titleStyle={viewstyle.title}
+                        subtitleNumberOfLines={2}
+                        subtitle={displaySubtitle}
+                        subtitleStyle={viewstyle.subheading}
+                    />
+                </Card>
+                <Card style={viewstyle.bottomCard}>
+                    <Card.Content>
+                        <View style={viewstyle.view}>
+                            <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
+                            <Image
+                                style={{ height: 200, width: 200 }}
+                                source={{ uri: entry.Images }}
+                            />
+                        </View>
+                        {/* <View style={viewstyle.deleteButton}>
+                            <Button
+                                title="Delete Entry"
+                                onPress={() => handleDeleteEntry(entry.id)}
+                                color="red"
+                            />
+                        </View> */}
+                    </Card.Content>
+                </Card>
             </View>
         </ScrollView>
     );

@@ -24,8 +24,8 @@ export const Settings = ({ navigation }) => {
     const settingstyle = useThemedStyles(settings_style);
 
 
-
     const { navigate } = useNavigation();
+    const { replace } = useNavigation();
 
     const auth = getAuth();
     const user = auth.currentUser;
@@ -80,11 +80,11 @@ export const Settings = ({ navigation }) => {
     };
 
     // handling logout functionality
-    const handleSignOut = (navigate) => {
+    const handleSignOut = () => {
         try {
-            signOut(auth)
+            signOut(auth);
             alert('You have been signed out.');
-            navigate("Login")
+            replace("Login");
 
         } catch (error) {
             alert('An error occurred while signing out.');
