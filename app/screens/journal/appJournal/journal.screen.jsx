@@ -225,7 +225,7 @@ export const Journal = ({ navigation }) => {
                 <ModalDropdown
                     options={["Oldest to Newest", "Newest to Oldest"]}
                     defaultValue="Sort By"
-                    textStyle={{ fontSize: 16 }}
+                    style={appJournalstyle.ModalDropdownOption}
                     dropdownStyle={{ width: 150, marginTop: 8 }}
                     dropdownTextStyle={{ fontSize: 16 }}
                     onSelect={(index, value) => handleFilter(index === 0)}
@@ -237,6 +237,7 @@ export const Journal = ({ navigation }) => {
                         icon="filter"
                         size={24}
                         style={appJournalstyle.iconButton}
+                        color={theme.colors.TEXT}
                     />
                 </ModalDropdown>
             </View>
@@ -259,7 +260,7 @@ export const Journal = ({ navigation }) => {
                     </Card>
                 ))}
             </ScrollView>
-            <FAB style={appJournalstyle.fab} icon="plus" onPress={moveNewEntry} />
+            <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewEntry} />
         </SafeAreaView>
     );
 };

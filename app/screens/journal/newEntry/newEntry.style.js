@@ -23,6 +23,7 @@ export const newEntrystyle = theme => StyleSheet.create({
     },
     entryContainer: {
         marginTop: -25,
+        backgroundColor: theme.colors.SPACE,
     },
     cardTitle: {
         borderBottomWidth: 1,
@@ -30,8 +31,10 @@ export const newEntrystyle = theme => StyleSheet.create({
         margin: 5,
         padding: 10,
         fontSize: 24,
-        //backgroundColor: '#f5e9c1',
+        // backgroundColor: '#f5e9c1',
         fontWeight: 'bold',
+        color: theme.colors.TEXT,
+        textDecorationColor: theme.colors.TEXT,
     },
     toolBar: {
         flexDirection: "row",
@@ -40,7 +43,7 @@ export const newEntrystyle = theme => StyleSheet.create({
         backgroundColor: theme.colors.BACKGROUND
     },
     saveButton: {
-        backgroundColor: theme.colors.PRIMARY,
+        backgroundColor: theme.colors.SPACE,
         padding: 5,
         borderRadius: 10,
         alignItems: 'center',

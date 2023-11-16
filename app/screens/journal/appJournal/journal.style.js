@@ -38,6 +38,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         right: 20,
         alignSelf: 'flex-end',
         backgroundColor: theme.colors.BUTTON_COLOR,
+        color: theme.colors.TEXT,
     },
     menu: {
         flexDirection: 'row',
@@ -46,13 +47,15 @@ export const appJournalStyle = theme => StyleSheet.create({
     },
     searchIcon: {
         backgroundColor: theme.colors.BACKGROUND,
+        // color: theme.colors.TEXT,
     },
 
     iconButton: {
         // marginHorizontal: 5,
         // marginVertical: 5,
-        // color: '#fff',
-        tintColor: '#fff',
+        color: theme.colors.TEXT,
+        borderRadius: 30,
+        // tintColor: '#fff',
         backgroundColor: theme.colors.BUTTON_COLOR,
     },
     modalDropdownOption: {
@@ -60,7 +63,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 16,
       },
       modalContainer: {
         flex: 1,
