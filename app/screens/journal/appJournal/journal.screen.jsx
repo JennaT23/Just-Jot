@@ -34,6 +34,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { displayAddress } from "../../../location/geocode";
 import ModalDropdown from "react-native-modal-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
+import Pagination from "react-native-pagination";
 
 export const Journal = ({ navigation }) => {
     const theme = useTheme();
@@ -194,6 +195,37 @@ export const Journal = ({ navigation }) => {
         navigation.navigate("ViewEntry", { entry, handleExitView });
     };
 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    const [itemOffset, setItemOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const itemsPerPage = 10;
+
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        setCurrentPage(journalEntries.slice(itemOffset, endOffset));
+        setTotalPages(Math.ceil(journalEntries / itemsPerPage));
+    }, [itemOffset, itemsPerPage, journalEntries]);
+    // const pageCount = Math.ceil(journalEntries.length / itemsPerPage);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % journalEntries.length;
+        setItemOffset(newOffset);
+    }
+
+    // const [currentItems, setCurrentItems] = useState(0);
+    // const [pageCount, setPageCount] = useState(0);
+    // const [itemOffset, setItemOffset] = useState(0);
+    // const itemsPerPage = 10;
+
+    // const handlePageClick = (event) => {
+    //     const newOffset = (event.selected * itemsPerPage) % journalEntries.length;
+    //     setItemOffset(newOffset);
+    // }
+
+
+
     return (
         // <SafeAreaView style={appstyle.pageContainer}>
         <SafeAreaView style={appJournalstyle.container}>
@@ -204,7 +236,7 @@ export const Journal = ({ navigation }) => {
             <View style={appJournalstyle.header}>
                 <View style={appJournalstyle.searchBarContainer}>
                     <TextInput
-                        style={{color: theme.colors.TEXT, textShadowColor: theme.colors.SUBHEADING,...appJournalstyle.searchBar}}
+                        style={{ color: theme.colors.TEXT, textShadowColor: theme.colors.SUBHEADING, ...appJournalstyle.searchBar }}
                         placeholder="Search..."
                         placeholderTextColor={theme.colors.SUBHEADING}
                         value={searchQuery}
@@ -226,7 +258,7 @@ export const Journal = ({ navigation }) => {
                     options={["Oldest to Newest", "Newest to Oldest"]}
                     defaultValue="Sort By"
                     style={appJournalstyle.ModalDropdownOption}
-                    dropdownStyle={{ width: 150, marginTop: -15}}
+                    dropdownStyle={{ width: 150, marginTop: -15 }}
                     dropdownTextStyle={{ fontSize: 16 }}
                     onSelect={(index, value) => handleFilter(index === 0)}
                     showsVerticalScrollIndicator={false}
@@ -241,25 +273,70 @@ export const Journal = ({ navigation }) => {
                     <FAB style={appJournalstyle.iconButton} color={theme.colors.TEXT} icon="filter" onSelect />
                 </ModalDropdown>
             </View>
+            <ScrollView>
+                    {journalEntries
+                        .map((entry, index) => (
+                            <Card key={index} style={appJournalstyle.card}>
+                                <Card.Content>
+                                    <TouchableOpacity onPress={() => handleView(entry)}>
+                                        <Title style={appJournalstyle.title}>{entry.Title}</Title>
+                                        <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                        <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
+                                        <Paragraph style={{ color: theme.colors.TEXT }}>{entry.Text}</Paragraph>
+                                        <Image
+                                            style={{ height: 200, width: 200 }}
+                                            source={{ uri: entry.Images }}
+                                        />
+                                    </TouchableOpacity>
+                                </Card.Content>
+                            </Card>
+                        ))}
+                </ScrollView>
+{/*             
+            <Pagination
+                total={totalPages} // Total number of pages
+                current={currentPage} // Current page
+                display={5} // Number of pages to display in the pagination bar
+                onPageChange={handlePageClick} // Callback when a page is selected
+                containerStyle={{ paddingVertical: 20 }} // Style for the pagination container
+                textStyles={{ color: theme.colors.TEXT }} // Styles for text
+                selectedTextStyles={{ color: theme.colors.BUTTON_COLOR }} // Styles for selected text
+            />
 
             <ScrollView>
-                {journalEntries.map((entry, index) => (
-                    <Card key={index} style={appJournalstyle.card}>
-                        <Card.Content>
-                            <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                                <Paragraph style={{color: theme.colors.TEXT}}>{entry.Text}</Paragraph>
-                                <Image
-                                    style={{ height: 200, width: 200 }}
-                                    source={{ uri: entry.Images }}
-                                />
-                            </TouchableOpacity>
-                        </Card.Content>
-                    </Card>
-                ))}
-            </ScrollView>
+                {journalEntries
+                    .slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+                    .map((entry, index) => (
+                        <Card key={index} style={appJournalstyle.card}>
+                            <Card.Content>
+                                <TouchableOpacity onPress={() => handleView(entry)}>
+                                    <Title style={appJournalstyle.title}>{entry.Title}</Title>
+                                    <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                    <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
+                                    <Paragraph style={{ color: theme.colors.TEXT }}>{entry.Text}</Paragraph>
+                                    <Image
+                                        style={{ height: 200, width: 200 }}
+                                        source={{ uri: entry.Images }}
+                                    />
+                                </TouchableOpacity>
+                            </Card.Content>
+                        </Card>
+                    ))}
+            </ScrollView> */}
+
+            {/* <Pagination
+                breakLabel={<Text>{"..."}</Text>}
+                nextLabel={<Text>{"next >"}</Text>}
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={3}
+                pageCount={pageCount}
+                previousLabel={<Text>{"< previous"}</Text>}
+                renderOnZeroPageCount={null}
+                containerClassName="pagination"
+                pageLinkClassName="page-num"
+                previousLinkClassName="page-num"
+            /> */}
+
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewEntry} />
         </SafeAreaView>
     );

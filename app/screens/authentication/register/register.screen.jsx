@@ -126,7 +126,7 @@ export const Register = ({ navigation }) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={handleLogin}>
-                    <Text style={appstyle.clickableText}>Don't have an account? Signup</Text>
+                    <Text style={appstyle.clickableText}>Have an account? Login</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
