@@ -48,14 +48,11 @@ export const Memories = ({ navigation }) => {
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
             memories.map(async (memory) => {
-                console.log('memory', memory);
                 const address = await displayAddress(memory.Location);
-                console.log('address', address);
                 return address;
             })
         );
         setDisplayedAddresses(addresses);
-        console.log('displayedAddresses', displayedAddresses);
     };
 
     useEffect(() => {
