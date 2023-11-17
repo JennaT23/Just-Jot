@@ -112,7 +112,7 @@ export const ViewMemory = ({ navigation, route }) => {
                 <Card style={viewstyle.bottomCard}>
                     <Card.Content>
                         <View style={viewstyle.view}>
-                            <Paragraph>{memory.Text}</Paragraph>
+                            <Paragraph style={{color: theme.colors.TEXT}}>{memory.Text}</Paragraph>
                             {memory.Images && (
                                 <Image style={{ height: 200, width: 200 }} source={{ uri: memory.Images }} />
                             )}
