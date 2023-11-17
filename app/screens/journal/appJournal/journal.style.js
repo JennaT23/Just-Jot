@@ -28,6 +28,7 @@ export const appJournalStyle = theme => StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 20,
+        color: theme.colors.TEXT
     },
     subheading: {
         color: theme.colors.SUBHEADING,
@@ -38,29 +39,28 @@ export const appJournalStyle = theme => StyleSheet.create({
         right: 20,
         alignSelf: 'flex-end',
         backgroundColor: theme.colors.BUTTON_COLOR,
+        // color: theme.colors.TEXT,
     },
     menu: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         // flex: 1,
     },
-    searchIcon: {
-        backgroundColor: theme.colors.BACKGROUND,
-    },
 
     iconButton: {
         // marginHorizontal: 5,
         // marginVertical: 5,
-        // color: '#fff',
-        tintColor: '#fff',
+        color: theme.colors.TEXT,
+        borderRadius: 30,
+        // tintColor: '#fff',
         backgroundColor: theme.colors.BUTTON_COLOR,
     },
     modalDropdownOption: {
         padding: 15,
-        borderBottomWidth: 1,
+        borderBottomWidth: 2,
         borderBottomColor: '#ccc',
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 16,
       },
       modalContainer: {
         flex: 1,

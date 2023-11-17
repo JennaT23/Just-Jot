@@ -269,7 +269,13 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                 </TouchableOpacity>
             </View>
             <View style={newEntrystyle.container}>
-                <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
+                <TextInput
+                    value={title}
+                    onChangeText={text => setTitle(text)}
+                    style={newEntrystyle.cardTitle}
+                    editable placeholder='Add Title'
+                    placeholderTextColor={theme.colors.SUBHEADING}
+                />
                 <View style={entryTemplatestyle.date}>
                     <Text style={entryTemplatestyle.dateText}>Created: {formatCustomDateTime(dateCreated)}</Text>
                     <TouchableOpacity onPress={() => { setShowDateCreatedPicker(true) && setShowTimeCreatedPicker(false) }}>
@@ -343,6 +349,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                     <View style={entryTemplatestyle.date}>
                         <TextInput
                             placeholder="Search address..."
+                            placeholderTextColor={theme.colors.SUBHEADING}
                             value={searchText}
                             onChangeText={handleTextChange}
                             style={entryTemplatestyle.dateText}
@@ -375,8 +382,13 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
 
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
-                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-
+                        <TextInput
+                            value={text}
+                            onChangeText={text => setText(text)}
+                            style={newEntrystyle.noteBody}
+                            multiline editable placeholder='Start writing...'
+                            placeholderTextColor={theme.colors.SUBHEADING}
+                        />
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                         {hasCameraPermission && showCamera ? (cameraView()) : (null)}
                         <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />

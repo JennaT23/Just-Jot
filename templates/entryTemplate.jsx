@@ -229,7 +229,13 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                     </TouchableOpacity>
                 </View>
                 <View style={newEntrystyle.container}>
-                    <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
+                    <TextInput
+                    value={title}
+                    onChangeText={text => setTitle(text)}
+                    style={newEntrystyle.cardTitle}
+                    editable placeholder='Add title...'
+                    placeholderTextColor={theme.colors.SUBHEADING}
+                />
                     <TouchableOpacity onPress={() => setShowDatePicker(true)} style={entryTemplatestyle.date}>
                         <Text style={entryTemplatestyle.dateText}>Date: {entryDate.toDateString()}</Text>
                         <IconButton
@@ -261,9 +267,16 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         />
                     </TouchableOpacity>
 
-                    <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-                        <View style={entryTemplatestyle.textInput}>
-                            <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
+                <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
+                    <View style={entryTemplatestyle.textInput}>
+                        <TextInput 
+                        value={text} 
+                        onChangeText={text => setText(text)} 
+                        style={newEntrystyle.noteBody} 
+                        multiline editable 
+                        placeholder='Start writing...' 
+                        placeholderTextColor={theme.colors.SUBHEADING}
+                        />
 
                             {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                             {hasCameraPermission && showCamera ? (cameraView()) : (null)}

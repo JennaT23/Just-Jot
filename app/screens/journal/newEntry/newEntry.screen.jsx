@@ -5,14 +5,16 @@ import { getLocation } from '../../../location/getLocation'
 import { View } from 'react-native'
 import Text from '../../../../appStyles/customStyle'
 import { GeoPoint } from "firebase/firestore";
-
+import { appstyle as app_style } from "../../../../appStyles/appstyle";
+import useThemedStyles from '../../../../appStyles/useThemedStyles';
 
 export const NewEntry = ({ navigation, route }) => {
+    const appstyle = useThemedStyles(app_style);
     const entry = route.params.entry;
     const displayDate = new Date().toDateString();
     const location = getLocation();
     if (location === null) {
-        return <View><Text>Loading...</Text></View>;
+        return <View style={appstyle.loadingContainer}><Text style={appstyle.loadingText}>Loading...</Text></View>;
     }
     const loc = new GeoPoint(location.coords.latitude, location.coords.longitude);
     entry.Location = loc;

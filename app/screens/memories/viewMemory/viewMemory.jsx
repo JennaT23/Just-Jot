@@ -89,7 +89,7 @@ export const ViewMemory = ({ navigation, route }) => {
                     size={31}
                     onPress={() => handleDeleteEntry(memory.id)}
                     style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.DELETE}
+                    iconColor={theme.colors.TEXT}
                 />
                 <IconButton
                     icon="pencil"

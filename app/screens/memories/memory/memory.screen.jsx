@@ -148,8 +148,7 @@ export const Memories = ({ navigation }) => {
                     // </Card>
                 ))}
             </ScrollView>
-            <FAB style={appJournalstyle.fab} icon="plus"
-                onPress={moveNewMemory} />
+            <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
         </SafeAreaView >
     )
 }

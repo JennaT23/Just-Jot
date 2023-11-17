@@ -1,37 +1,40 @@
 const BLACK = '#080808';
 const WHITE = '#ffffff';
-const GRAY = '#858585';
-const LIGHTGRAY = '#D1D1D1';
+const GRAY = '#858585';             // Light subheading
+const LIGHTGRAY = '#D1D1D1';        // dark subheading
 
-const PALEPURPLE = '#f4f0f9';
-const LILAC = '#c8b9e4';
-const PURPLE = '#805dc0';
-const SPACEPURPLE = '#54447E';
-const DARKPURPLE = '#28194D';
+const PALEPURPLE = '#f4f0f9';       // Light brown space
+const LILAC = '#c8b9e4';            // light background
+const PURPLE = '#976BC7';           // button
+const SPACEPURPLE = '#54447E';      // dark space
+const DARKPURPLE = '#28194D';       // dark background
 
-const PALEBLUE = "#F8FBFF";
-const BLUE = "#bfdbf7";
-const MIDBLUE = '#2c7da0';
-const SPACEBLUE = '#305279';
-const DARKBLUE = '#1B3757';
+const PALEBLUE = "#F8FBFF";         // Light blue space
+const BLUE = "#bfdbf7";             // light background
+const PICTONBLUE = "#5fa9d3";       // light button
+const MIDBLUE = '#4D90B6';          // dark button
+const SPACEBLUE = '#305279';        // dark space
+const DARKBLUE = '#1B3757';         // dark background
 
-const MINTCREAM = '#FCFFFB'; 
-const SAGEGREEN = '#C6E2BA'; 
-const GREEN = '#5E7458';
-const DARKGREEN = '#273822';
-const SPACEGREEN = '#43533E';
+const MINTCREAM = '#FCFFFB';        // Light green space
+const SAGEGREEN = '#C6E2BA';        // light background
+const DARKSAGEGREEN = '#74a366';    // light button
+const SPACEGREEN = '#43533E';       // dark green space
+const DARKGREEN = '#273822';        // dark background
 
-const SNOW = '#FFF7F8';
-const PINK = '#f9c8d0';
-const MIDPINK = '#ff4d6d';
-const SPACEPINK = '#823B50';
-const DARKPINK = '#5B2032';
 
-const WHITESMOKE = '#FAF9F6';
-const NUDE = '#bcb8b1'; // background color light
-const LIGHTBROWN = '#90827A';
-const BROWN = '#8a817c';
-const DARKBROWN = '#463f3a'// background color light
+const SNOW = '#FFF7F8';             // Light pink space
+const PINK = '#f9c8d0';             // light background
+const BLUSHPINK = '#F08285';         // light button
+const SAGEPINK = '#B34B59';         // dark button
+const SPACEPINK = '#823B50';        // dark space
+const DARKPINK = '#5B2032';         // dark background
+
+const WHITESMOKE = '#FAF9F6';       // Light brown space
+const NUDE = '#bcb8b1';             // light background
+const LIGHTBROWN = '#90827A';       // light button
+const BROWN = '#8a817c';            // dark space
+const DARKBROWN = '#463f3a';        // dark background
 
 const purple = {
     light: {
@@ -63,7 +66,7 @@ const blue = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        BUTTON_COLOR: MIDBLUE,
+        BUTTON_COLOR: PICTONBLUE,
         CAPTURE: WHITE,
         SPACE: PALEBLUE,
     },
@@ -84,7 +87,7 @@ const green = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        BUTTON_COLOR: GREEN,
+        BUTTON_COLOR: DARKSAGEGREEN,
         CAPTURE: WHITE,
         SPACE: MINTCREAM,
     },
@@ -93,7 +96,7 @@ const green = {
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
-        BUTTON_COLOR: GREEN,
+        BUTTON_COLOR: DARKSAGEGREEN,
         CAPTURE: WHITE,
         CARD_BACKGROUND: MINTCREAM,
         SPACE: SPACEGREEN,
@@ -106,7 +109,7 @@ const pink = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        BUTTON_COLOR: MIDPINK,
+        BUTTON_COLOR: BLUSHPINK,
         CAPTURE: WHITE,
         SPACE: SNOW,
     },
@@ -115,7 +118,7 @@ const pink = {
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
-        BUTTON_COLOR: MIDPINK,
+        BUTTON_COLOR: SAGEPINK,
         TEXT_ENTRY: WHITE,
         SPACE: SPACEPINK,
     }
@@ -127,7 +130,7 @@ const brown = {
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
-        BUTTON_COLOR: BROWN,
+        BUTTON_COLOR: LIGHTBROWN,
         TEXT_ENTRY: NUDE,
         SPACE: WHITESMOKE,
     },
