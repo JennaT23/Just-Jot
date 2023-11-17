@@ -59,4 +59,13 @@ export const appstyle = theme => StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center'
     },
+    loadingContainer: {
+        width: "100%",
+        height:"100%",
+        backgroundColor: theme.colors.BACKGROUND,
+    },
+
+    loadingText: {
+        color: theme.colors.TEXT
+    }
 });

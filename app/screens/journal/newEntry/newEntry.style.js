@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native"
+import spacingInstance from "react-native-ui-lib/src/style/spacings"
 
 export const newEntrystyle = theme => StyleSheet.create({
     noteBodyContainer: {
@@ -8,9 +9,10 @@ export const newEntrystyle = theme => StyleSheet.create({
     },
     noteBody: {
         textAlignVertical: 'top',
-        //backgroundColor: '#fcf6e1',
+        // backgroundColor: '#fcf6e1',
         flex: 1,
         fontSize: 18,
+        color: theme.colors.TEXT,
     },
     scroll: {
         flex: 1,
@@ -34,13 +36,13 @@ export const newEntrystyle = theme => StyleSheet.create({
         // backgroundColor: '#f5e9c1',
         fontWeight: 'bold',
         color: theme.colors.TEXT,
-        textDecorationColor: theme.colors.TEXT,
     },
     toolBar: {
         flexDirection: "row",
         justifyContent: "flex-end",
         columnGap: -20,
-        backgroundColor: theme.colors.BACKGROUND
+        backgroundColor: theme.colors.BACKGROUND,
+        alignContent: "space-between"
     },
     saveButton: {
         backgroundColor: theme.colors.SPACE,
@@ -53,8 +55,10 @@ export const newEntrystyle = theme => StyleSheet.create({
     },
     buttonText: {
         fontSize: 18,
+        color: theme.colors.TEXT,
     },
     iconButton: {
         marginHorizontal: 5,
     },
+    
 })

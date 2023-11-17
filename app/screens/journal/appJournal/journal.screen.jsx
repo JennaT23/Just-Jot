@@ -204,16 +204,16 @@ export const Journal = ({ navigation }) => {
             <View style={appJournalstyle.header}>
                 <View style={appJournalstyle.searchBarContainer}>
                     <TextInput
-                        style={appJournalstyle.searchBar}
+                        style={{color: theme.colors.TEXT, textShadowColor: theme.colors.SUBHEADING,...appJournalstyle.searchBar}}
                         placeholder="Search..."
+                        placeholderTextColor={theme.colors.SUBHEADING}
                         value={searchQuery}
                         onChangeText={(text) => setSearchQuery(text)}
                     />
                     <TouchableOpacity
                         onPress={handleSearch}
-                        style={appJournalstyle.searcIcon}
                     >
-                        <MaterialCommunityIcons name="magnify" size={24} />
+                        <MaterialCommunityIcons name="magnify" size={24} color={theme.colors.TEXT} />
                     </TouchableOpacity>
 
                     {searchQuery.length > 0 && (
@@ -226,19 +226,19 @@ export const Journal = ({ navigation }) => {
                     options={["Oldest to Newest", "Newest to Oldest"]}
                     defaultValue="Sort By"
                     style={appJournalstyle.ModalDropdownOption}
-                    dropdownStyle={{ width: 150, marginTop: 8 }}
+                    dropdownStyle={{ width: 150, marginTop: -15}}
                     dropdownTextStyle={{ fontSize: 16 }}
                     onSelect={(index, value) => handleFilter(index === 0)}
                     showsVerticalScrollIndicator={false}
                     onDropdownWillShow={() => setFilterModalVisible(true)}
                     onDropdownWillHide={() => setFilterModalVisible(false)}
                 >
-                    <IconButton
+                    {/* <IconButton
                         icon="filter"
-                        size={24}
-                        style={appJournalstyle.iconButton}
-                        color={theme.colors.TEXT}
-                    />
+                        style={{color: theme.colors.TEXT, ...appJournalstyle.iconButton}}
+                        // color={theme.colors.TEXT}
+                    /> */}
+                    <FAB style={appJournalstyle.iconButton} color={theme.colors.TEXT} icon="filter" onSelect />
                 </ModalDropdown>
             </View>
 
@@ -250,7 +250,7 @@ export const Journal = ({ navigation }) => {
                                 <Title style={appJournalstyle.title}>{entry.Title}</Title>
                                 <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                                <Paragraph>{entry.Text}</Paragraph>
+                                <Paragraph style={{color: theme.colors.TEXT}}>{entry.Text}</Paragraph>
                                 <Image
                                     style={{ height: 200, width: 200 }}
                                     source={{ uri: entry.Images }}

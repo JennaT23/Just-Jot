@@ -89,7 +89,7 @@ export const ViewMemory = ({ navigation, route }) => {
                     size={31}
                     onPress={() => handleDeleteEntry(entry.id)}
                     style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.DELETE}
+                    iconColor={theme.colors.TEXT}
                 />
                 <IconButton
                     icon="pencil"
@@ -112,7 +112,7 @@ export const ViewMemory = ({ navigation, route }) => {
                 <Card style={viewstyle.bottomCard}>
                     <Card.Content>
                         <View style={viewstyle.view}>
-                            <Paragraph>{memory.Text}</Paragraph>
+                            <Paragraph style={{color: theme.colors.TEXT}}>{memory.Text}</Paragraph>
                             <Image
                                 style={{ height: 200, width: 200 }}
                                 source={{ uri: memory.Images }}

@@ -123,7 +123,7 @@ export const Memories = ({ navigation }) => {
                                 <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                                <Paragraph>{memory.Text}</Paragraph>
+                                <Paragraph style={{color: theme.colors.TEXT}}>{memory.Text}</Paragraph>
                                 <Image
                                     style={{ height: 200, width: 200 }}
                                     source={{ uri: memory.Images }}
@@ -138,8 +138,7 @@ export const Memories = ({ navigation }) => {
                     </Card>
                 ))}
             </ScrollView>
-            <FAB style={appJournalstyle.fab} icon="plus"
-                onPress={moveNewMemory} />
+            <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
         </SafeAreaView >
     )
 }

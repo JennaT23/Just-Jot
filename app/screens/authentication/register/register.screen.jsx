@@ -6,13 +6,17 @@ import { userAuthstyle as userAuth_style } from '../userAuthstyle'
 import { registerstyle as register_style } from './register.style'
 import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
 import Text from '../../../../appStyles/customStyle'
+import { useNavigation } from '@react-navigation/core'
 import useThemedStyles from '../../../../appStyles/useThemedStyles'
+import useTheme from '../../../../appStyles/useTheme'
 
 export const Register = ({ navigation }) => {
+    const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
     const registerstyle = useThemedStyles(register_style);
     const userAuthstyle = useThemedStyles(userAuth_style);
 
+    const { navigate } = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
@@ -56,6 +60,10 @@ export const Register = ({ navigation }) => {
         });
     }
 
+    const handleLogin = () => {          
+       navigate("Login")
+    }
+
     // useEffect(() => {                                               // checks if a user is already logged in
     //     const unsubscribe = auth.onAuthStateChanged(user => {
     //         if (user) {
@@ -78,28 +86,32 @@ export const Register = ({ navigation }) => {
 
                 <TextInput
                     placeholder='Name'
+                    placeholderTextColor={theme.colors.SUBHEADING}
                     value={name}
                     onChangeText={text => setName(text)}
-                    style={appstyle.input}
+                    style={{color: theme.colors.TEXT, ...appstyle.input}}
                 />
                 <TextInput
                     placeholder='Email'
+                    placeholderTextColor={theme.colors.SUBHEADING}
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    style={appstyle.input}
+                    style={{color: theme.colors.TEXT, ...appstyle.input}}
                     inputMode='email'
                 />
                 <TextInput
                     placeholder='Username'
+                    placeholderTextColor={theme.colors.SUBHEADING}
                     value={username}
                     onChangeText={text => setUsername(text)}
-                    style={appstyle.input}
+                    style={{color: theme.colors.TEXT, ...appstyle.input}}
                 />
                 <TextInput
                     placeholder='Password'
+                    placeholderTextColor={theme.colors.SUBHEADING}
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    style={appstyle.input}
+                    style={{color: theme.colors.TEXT, ...appstyle.input}}
                     secureTextEntry
                 />
             </View>
@@ -113,6 +125,9 @@ export const Register = ({ navigation }) => {
                     <Text style={appstyle.buttonText}>Register</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={handleLogin}>
+                    <Text style={appstyle.clickableText}>Don't have an account? Signup</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )

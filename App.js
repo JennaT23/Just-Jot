@@ -150,8 +150,8 @@ const App = () => {
                 <Stack.Navigator initialRouteName="Login">
                     <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="NavBar" component={NavBar} />
                     <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Login" component={Login} />
-                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: 'Register' }} name="Register" component={Register} />
-                    <Stack.Screen options={{ headerShown: false,  headerTitleAlign: 'center', title: "Forgot Password" }} name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen options={{ headerShown: false,  headerTitleAlign: 'center', title: 'Register' }} name="Register" component={Register} />
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "Forgot Password" }} name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="Map" component={Map} />
                     <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="Settings" component={Settings} />
                     <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Journal" component={Journal} />
