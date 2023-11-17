@@ -19,6 +19,7 @@ import { NewMemory } from './app/screens/memories/newMemory/newMemory.screen';
 import { MemoryTemplate } from './templates/memoryTemplate';
 import { ViewMemory } from './app/screens/memories/viewMemory/viewMemory';
 import { EditMemory } from './app/screens/memories/editMemory/editMemory';
+import { EditTemplate as NewEditEntry } from './templates/editTemplate'
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device'
 
@@ -179,6 +180,9 @@ const App = () => {
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "View Memory" }} name="ViewMemory">
                         {props => <ViewMemory {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "Edit Memory" }} name="NewEditEntry">
+                        {props => <NewEditEntry {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

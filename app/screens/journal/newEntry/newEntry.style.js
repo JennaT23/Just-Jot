@@ -37,7 +37,7 @@ export const newEntrystyle = theme => StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         columnGap: -20,
-        backgroundColor: theme.colors.BACKGROUND
+        backgroundColor: theme.colors.BACKGROUND,
     },
     saveButton: {
         backgroundColor: theme.colors.PRIMARY,
