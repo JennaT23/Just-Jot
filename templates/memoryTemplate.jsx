@@ -136,7 +136,7 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
         setShowCamera(false);
     }
 
-    function camerView() {
+    function cameraView() {
         return (
             <View style={entryTemplatestyle.cameraContainer} >
                 <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
@@ -165,18 +165,12 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
     }
 
 
-    const chooseLocation = () => {
-
-    }
-
-
     const saveEntry = async () => {
         const url = image ? await writePicsToFirebase(image, 'JournalEntries') : '';
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: memory.id };
 
-        console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
         if (notificationPreference === 'enabled') {
             const content = {
@@ -230,7 +224,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
 
             if (location && location.length > 0) {
                 setSearchResults(prevResults => [...prevResults, ...location]);
-                console.log('Search results:', location);
             } else {
                 console.warn('No results found for the given address');
                 setSearchResults([]);
@@ -365,7 +358,6 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                     {searchResults.length > 0 && (
                         <ScrollView style={entryTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
                             {searchResults.map((result, index) => {
-                                console.log(`Rendering result ${index}:`, result);
                                 const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
                                 return (
                                     <Pressable
@@ -386,7 +378,8 @@ export const MemoryTemplate = ({ navigation, memory, writeToFirebase, handleExit
                         <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
 
                         {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                        {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />}
+                        {hasCameraPermission && showCamera ? (cameraView()) : (null)}
+                        <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
                     </View>
 
                 </ScrollView>

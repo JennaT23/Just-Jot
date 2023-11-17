@@ -13,6 +13,7 @@ import useTheme from '../../../../appStyles/useTheme'
 import { appJournalStyle as appJournal_style } from '../../journal/appJournal/journal.style'
 import { GeoPoint } from "firebase/firestore";
 import { displayAddress } from '../../../location/geocode'
+import { Memory } from './memory'
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -48,14 +49,11 @@ export const Memories = ({ navigation }) => {
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
             memories.map(async (memory) => {
-                console.log('memory', memory);
                 const address = await displayAddress(memory.Location);
-                console.log('address', address);
                 return address;
             })
         );
         setDisplayedAddresses(addresses);
-        console.log('displayedAddresses', displayedAddresses);
     };
 
     useEffect(() => {
@@ -116,26 +114,38 @@ export const Memories = ({ navigation }) => {
             </View>
             <ScrollView>
                 {memories.map((memory, index) => (
-                    <Card key={index} style={appJournalstyle.card}>
-                        <Card.Content>
-                            <TouchableOpacity onPress={() => handleView(memory)}>
-                                <Title style={appJournalstyle.title}>{memory.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                                <Paragraph>{memory.Text}</Paragraph>
-                                <Image
-                                    style={{ height: 200, width: 200 }}
-                                    source={{ uri: memory.Images }}
-                                />
-                            </TouchableOpacity>
-                            {/* <Card.Actions>
-                                <TouchableOpacity onPress={() => handleView(entry)}>
-                                    <Text>View</Text>
-                                </TouchableOpacity>
-                            </Card.Actions> */}
-                        </Card.Content>
-                    </Card>
+                    <Memory
+                        navigation={navigation}
+                        memory={memory}
+                        index={index}
+                        handleExitView={handleExitView}
+                        title={memory.Title}
+                        dateCreated={formatDate(memory.DateCreated)}
+                        dateMarked={formatDate(memory.DateMarked)}
+                        location={displayedAddresses[index]}
+                        text={memory.Text}
+                        image={memory.Images}
+                    />
+                    // <Card key={index} style={appJournalstyle.card}>
+                    //     <Card.Content>
+                    //         <TouchableOpacity onPress={() => handleView(memory)}>
+                    //             <Title style={appJournalstyle.title}>{memory.Title}</Title>
+                    //             <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
+                    //             <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
+                    //             <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
+                    //             <Paragraph>{memory.Text}</Paragraph>
+                    //             <Image
+                    //                 style={{ height: 200, width: 200 }}
+                    //                 source={{ uri: memory.Images }}
+                    //             />
+                    //         </TouchableOpacity>
+                    //         {/* <Card.Actions>
+                    //             <TouchableOpacity onPress={() => handleView(entry)}>
+                    //                 <Text>View</Text>
+                    //             </TouchableOpacity>
+                    //         </Card.Actions> */}
+                    //     </Card.Content>
+                    // </Card>
                 ))}
             </ScrollView>
             <FAB style={appJournalstyle.fab} icon="plus"
