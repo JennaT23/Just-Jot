@@ -88,7 +88,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         }
     };
 
-
     // ask user for access to use camera roll
     useEffect(() => {
         (async () => {
@@ -125,7 +124,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         setShowCamera(false);
     }
 
-    function camerView() {
+    function cameraView() {
         return (
             <View style={entryTemplatestyle.cameraContainer} >
                 <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
@@ -267,7 +266,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                             <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
 
                             {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                            {hasCameraPermission && showCamera ? (camerView()) : (null)}
+                            {hasCameraPermission && showCamera ? (cameraView()) : (null)}
                             <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
                         </View>
                     </ScrollView>

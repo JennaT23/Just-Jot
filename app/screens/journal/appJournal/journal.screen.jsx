@@ -227,7 +227,7 @@ export const Journal = ({ navigation }) => {
                         date={formatDate(new Date(entry.Date))}
                         location={displayAddress[index]}
                         text={entry.Text}
-                        image={entry.Image}
+                        image={entry.Images}
                     />
                 ))}
             </ScrollView>
