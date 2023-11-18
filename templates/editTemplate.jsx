@@ -25,7 +25,9 @@ import { editTemplatestyle as editTemplate_style } from './editTemplate.style'
 
 
 
-export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitView }) => {
+export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handleExitView }) => {
+
+    console.log("data:", data);
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
@@ -33,26 +35,24 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
     const entryTemplatestyle = useThemedStyles(entryTemplate_style);
     const editTemplatestyle = useThemedStyles(editTemplate_style);
 
-    const [title, setTitle] = useState(memory.Title);
-    const [text, setText] = useState(memory.Text);
-    const [coordinates, setCoordinates] = useState(memory.Location);
-    const [searchText, setSearchText] = useState(memory.Location);
+    const [title, setTitle] = useState(data.Title);
+    const [text, setText] = useState(data.Text);
+    const [coordinates, setCoordinates] = useState(data.Location);
+    const [searchText, setSearchText] = useState(data.Location);
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
-    const [dateCreated, setDateCreated] = useState(new Date(memory.DateCreated));
-    const [dateMarked, setDateMarked] = useState(new Date(memory.DateMarked));
+    const [dateCreated, setDateCreated] = useState(new Date(data.DateCreated));
+    const [dateMarked, setDateMarked] = useState(new Date(data.DateMarked));
     const [showDateCreatedPicker, setShowDateCreatedPicker] = useState(false);
     const [showTimeCreatedPicker, setShowTimeCreatedPicker] = useState(false);
     const [showDateMarkedPicker, setShowDateMarkedPicker] = useState(false);
     const [showTimeMarkedPicker, setShowTimeMarkedPicker] = useState(false);
 
     // camera and camera roll hooks
-    // const [image, setImage] = useState(null);
-    const [image, setImage] = useState(memory.Images);
+    const [image, setImage] = useState(data.Images);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [showCamera, setShowCamera] = useState(false);
     const [type, setType] = useState(CameraType.back);
-    // const [imageUrl, setImageUrl] = useState(memory.Images);
 
     const camRef = useRef();
     const auth = getAuth()
@@ -178,7 +178,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
         const url = image ? await writePicsToFirebase(image, 'Memories') : '';
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
-        const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: memory.id };
+        const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
 
         console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
@@ -280,168 +280,164 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                     <Text style={[appstyle.buttonText, editTemplatestyle.buttonText]}>SAVE</Text>
                 </TouchableOpacity>
             </View>
-            {/* <View style={editTemplatestyle.content}> */}
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.content}>
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true} contentContainerStyle={editTemplatestyle.help}>
-            {/* <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={editTemplatestyle.help}> */}
-                <View style={editTemplatestyle.card}>
-                {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={editTemplatestyle.card}>
-                <ScrollView keyboardShouldPersistTaps="always" keyboardDismissMode="on-drag" contentContainerStyle={editTemplatestyle.help}> */}
-                    {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}> */}
-
-                        <View style={editTemplatestyle.titleContainer}>
-                            <Text style={editTemplatestyle.label}>Title:</Text>
-                            <View style={editTemplatestyle.textBox}>
-                                <TextInput
-                                    placeholder='New Entry'
-                                    value={title}
-                                    onChangeText={text => setTitle(text)}
-                                    style={editTemplatestyle.textInput}
-                                />
-                            </View>
-                        </View>
-                    {/* </KeyboardAvoidingView> */}
-                    {/* <View style={editTemplatestyle.titleContainer}>
-                        <Text style={editTemplatestyle.label}>Title:</Text>
-                        <View style={editTemplatestyle.textBox}>
-                            <TextInput
-                                placeholder='New Entry'
-                                value={title}
-                                onChangeText={text => setTitle(text)}
-                                style={editTemplatestyle.textInput}
-                            />
-                        </View>
-                    </View> */}
-                    <View>
-                        <View style={editTemplatestyle.dateContainer}>
-                            <Text style={editTemplatestyle.label}>Date Created:</Text>
-                            <TouchableOpacity style={editTemplatestyle.textBox} onPress={() => { setShowDateCreatedPicker(true) && setShowTimeCreatedPicker(false) }}>
-                                <TextInput
-                                    value={formatCustomDateTime(dateCreated)}
-                                    style={editTemplatestyle.textInput}
-                                    editable={false}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        {showDateCreatedPicker && (
-                            <View>
-                                <DateTimePicker
-                                    testID='datePicker'
-                                    value={dateCreated}
-                                    mode='date'
-                                    is24Hour={false}
-                                    display='spinner'
-                                    onChange={handleDateCreatedChange}
-                                />
-                            </View>
-                        )}
-                    </View>
-                    <View>
-                        <View style={editTemplatestyle.dateContainer}>
-                            <Text style={editTemplatestyle.label}>Notification Date:</Text>
-                            <TouchableOpacity style={editTemplatestyle.textBox} onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
-                                <TextInput
-                                    value={formatCustomDateTime(dateMarked)}
-                                    style={editTemplatestyle.textInput}
-                                    editable={false}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        {showDateMarkedPicker && (
-                            <View>
-                                <DateTimePicker
-                                    testID='datePicker'
-                                    value={dateMarked}
-                                    mode='date'
-                                    is24Hour={false}
-                                    display='spinner'
-                                    onChange={handleDateMarkedChange}
-                                />
-                            </View>
-                        )}
-                        {showTimeMarkedPicker && (
-                            <View>
-                                <DateTimePicker
-                                    testID='timePicker'
-                                    value={dateMarked}
-                                    mode='time'
-                                    is24Hour={false}
-                                    display='clock'
-                                    onChange={handleTimeMarkedChange}
-                                />
-                            </View>
-                        )}
-                    </View>
-                    <View>
-                    {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}> */}
-                        <View style={editTemplatestyle.dateContainer}>
-                            <Text style={editTemplatestyle.label}>Location:</Text>
-                            <View style={editTemplatestyle.textBox}>
-                                <TextInput
-                                    placeholder="Search address..."
-                                    value={searchText}
-                                    onChangeText={handleTextChange}
-                                    onSubmitEditing={handleSearch}
-                                    style={editTemplatestyle.textInput}
-                                />
-                            </View>
-                        </View>
-                    {/* </KeyboardAvoidingView> */}
-                        {/* <View style={editTemplatestyle.dateContainer}>
-                            <Text style={editTemplatestyle.label}>Location:</Text>
-                            <View style={editTemplatestyle.textBox}>
-                                <TextInput
-                                    placeholder="Search address..."
-                                    value={searchText}
-                                    onChangeText={handleTextChange}
-                                    onSubmitEditing={handleSearch}
-                                    style={editTemplatestyle.textInput}
-                                />
-                            </View>
-                        </View> */}
-                        {searchResults.length > 0 && (
-                            <ScrollView style={editTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
-                                {searchResults.map((result, index) => {
-                                    console.log(`Rendering result ${index}:`, result);
-                                    const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
-                                    return (
-                                        <Pressable
-                                            key={index}
-                                            onPress={() => selectLocation(result)}
-                                            style={editTemplatestyle.searchItems}
-                                        >
-                                            <Text>{infoText}</Text>
-                                        </Pressable>
-                                    );
-                                })}
-                            </ScrollView>
-                        )}
-                    </View>
-                    <View style={editTemplatestyle.entryContainer}>
-                        <Text style={editTemplatestyle.label}>Entry:</Text>
-                        {/* <View style={editTemplatestyle.scrollContainer}> */}
-                        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
-                            <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
-                                <View style={editTemplatestyle.entry}>
-                                    <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' />
-
-                                    {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                                    {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />} */}
-                                    {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
-                                    {/* {hasCameraPermission && showCamera ? (cameraView()) : (null)} */}
-                                    {/* <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} /> */}
+                <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true} contentContainerStyle={editTemplatestyle.help}>
+                    <View style={editTemplatestyle.card}>
+                            <View style={editTemplatestyle.titleContainer}>
+                                <Text style={editTemplatestyle.label}>Title:</Text>
+                                <View style={editTemplatestyle.textBox}>
+                                    <TextInput
+                                        placeholder='New Entry'
+                                        value={title}
+                                        onChangeText={text => setTitle(text)}
+                                        style={editTemplatestyle.textInput}
+                                    />
                                 </View>
-                            </ScrollView>
-                        </KeyboardAvoidingView>
-                        {/* </View> */}
+                            </View>
+                        <View>
+                            <View style={editTemplatestyle.dateContainer}>
+                                <Text style={editTemplatestyle.label}>Date Created:</Text>
+                                <TouchableOpacity style={editTemplatestyle.textBox} onPress={() => { setShowDateCreatedPicker(true) && setShowTimeCreatedPicker(false) }}>
+                                    <TextInput
+                                        value={formatCustomDateTime(dateCreated)}
+                                        style={editTemplatestyle.textInput}
+                                        editable={false}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            {showDateCreatedPicker && (
+                                <View>
+                                    <DateTimePicker
+                                        testID='datePicker'
+                                        value={dateCreated}
+                                        mode='date'
+                                        is24Hour={false}
+                                        display='spinner'
+                                        onChange={handleDateCreatedChange}
+                                    />
+                                </View>
+                            )}
+                        </View>
+                        {screen === 'memories' && (
+                            <View>
+                                <View style={editTemplatestyle.dateContainer}>
+                                    <Text style={editTemplatestyle.label}>Notification Date:</Text>
+                                    <TouchableOpacity style={editTemplatestyle.textBox} onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
+                                        <TextInput
+                                            value={formatCustomDateTime(dateMarked)}
+                                            style={editTemplatestyle.textInput}
+                                            editable={false}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
+                                {showDateMarkedPicker && (
+                                    <View>
+                                        <DateTimePicker
+                                            testID='datePicker'
+                                            value={dateMarked}
+                                            mode='date'
+                                            is24Hour={false}
+                                            display='spinner'
+                                            onChange={handleDateMarkedChange}
+                                        />
+                                    </View>
+                                )}
+                                {showTimeMarkedPicker && (
+                                    <View>
+                                        <DateTimePicker
+                                            testID='timePicker'
+                                            value={dateMarked}
+                                            mode='time'
+                                            is24Hour={false}
+                                            display='clock'
+                                            onChange={handleTimeMarkedChange}
+                                        />
+                                    </View>
+                                )}
+                            </View>
+                        )}
+                        {/* <View>
+                            <View style={editTemplatestyle.dateContainer}>
+                                <Text style={editTemplatestyle.label}>Notification Date:</Text>
+                                <TouchableOpacity style={editTemplatestyle.textBox} onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
+                                    <TextInput
+                                        value={formatCustomDateTime(dateMarked)}
+                                        style={editTemplatestyle.textInput}
+                                        editable={false}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+                            {showDateMarkedPicker && (
+                                <View>
+                                    <DateTimePicker
+                                        testID='datePicker'
+                                        value={dateMarked}
+                                        mode='date'
+                                        is24Hour={false}
+                                        display='spinner'
+                                        onChange={handleDateMarkedChange}
+                                    />
+                                </View>
+                            )}
+                            {showTimeMarkedPicker && (
+                                <View>
+                                    <DateTimePicker
+                                        testID='timePicker'
+                                        value={dateMarked}
+                                        mode='time'
+                                        is24Hour={false}
+                                        display='clock'
+                                        onChange={handleTimeMarkedChange}
+                                    />
+                                </View>
+                            )}
+                        </View> */}
+                        <View>
+                            <View style={editTemplatestyle.dateContainer}>
+                                <Text style={editTemplatestyle.label}>Location:</Text>
+                                <View style={editTemplatestyle.textBox}>
+                                    <TextInput
+                                        placeholder="Search address..."
+                                        value={searchText}
+                                        onChangeText={handleTextChange}
+                                        onSubmitEditing={handleSearch}
+                                        style={editTemplatestyle.textInput}
+                                    />
+                                </View>
+                            </View>
+                            {searchResults.length > 0 && (
+                                <ScrollView style={editTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
+                                    {searchResults.map((result, index) => {
+                                        console.log(`Rendering result ${index}:`, result);
+                                        const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
+                                        return (
+                                            <Pressable
+                                                key={index}
+                                                onPress={() => selectLocation(result)}
+                                                style={editTemplatestyle.searchItems}
+                                            >
+                                                <Text>{infoText}</Text>
+                                            </Pressable>
+                                        );
+                                    })}
+                                </ScrollView>
+                            )}
+                        </View>
+                        <View style={editTemplatestyle.entryContainer}>
+                            <Text style={editTemplatestyle.label}>Entry:</Text>
+                            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
+                                <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
+                                    <View style={editTemplatestyle.entry}>
+                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' />
+
+                                        {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
+                                    </View>
+                                </ScrollView>
+                            </KeyboardAvoidingView>
+                        </View>
                     </View>
-                {/* </ScrollView>
-                </KeyboardAvoidingView> */}
-                </View>
-                {/* </ScrollView> */}
-            </ScrollView>
+                </ScrollView>
             </KeyboardAvoidingView>
-            {/* </View> */}
 
             <Modal
                 visible={hasCameraPermission && showCamera}
@@ -452,146 +448,4 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
 
         </SafeAreaView>
     )
-
-    // return (
-    //     <SafeAreaView style={[newEntrystyle.container, newEntrystyle.entryContainer]}>
-    //         <View style={newEntrystyle.toolBar}>
-    //             <IconButton
-    //                 icon="image-plus"
-    //                 size={30}
-    //                 onPress={pickImage}
-    //                 style={newEntrystyle.iconButton}
-    //                 iconColor={theme.colors.TEXT}
-    //             />
-    //             <IconButton
-    //                 icon="camera"
-    //                 size={30}
-    //                 iconColor={theme.colors.TEXT}
-    //                 onPress={showCameraScreen}
-    //                 style={newEntrystyle.iconButton}
-    //             />
-    //             <TouchableOpacity
-    //                 onPress={saveEntry}
-    //                 style={newEntrystyle.saveButton}>
-    //                 <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
-    //             </TouchableOpacity>
-    //         </View>
-    //         <View style={newEntrystyle.container}>
-    //             <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
-    //             <View style={entryTemplatestyle.date}>
-    //                 <Text style={entryTemplatestyle.dateText}>Created: {formatCustomDateTime(dateCreated)}</Text>
-    //                 <TouchableOpacity onPress={() => { setShowDateCreatedPicker(true) && setShowTimeCreatedPicker(false) }}>
-    //                     <IconButton
-    //                         icon='calendar-edit'
-    //                         size={30}
-    //                         style={entryTemplatestyle.calendarIcon}
-    //                         iconColor={theme.colors.TEXT}
-    //                     />
-    //                 </TouchableOpacity>
-    //             </View>
-    //             {showDateCreatedPicker && (
-    //                 <View>
-    //                     <DateTimePicker
-    //                         testID='datePicker'
-    //                         value={dateCreated}
-    //                         mode='date'
-    //                         is24Hour={false}
-    //                         display='spinner'
-    //                         onChange={handleDateCreatedChange}
-    //                     />
-    //                 </View>
-    //             )}
-
-    //             <View style={entryTemplatestyle.date}>
-    //                 <Text style={entryTemplatestyle.dateText}>Marked: {formatCustomDateTime(dateMarked)}</Text>
-    //                 <TouchableOpacity onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
-    //                     <IconButton
-    //                         icon='calendar-edit'
-    //                         size={30}
-    //                         style={entryTemplatestyle.calendarIcon}
-    //                         iconColor={theme.colors.TEXT}
-    //                     />
-    //                 </TouchableOpacity>
-    //             </View>
-    //             {showDateMarkedPicker && (
-    //                 <View>
-    //                     <DateTimePicker
-    //                         testID='datePicker'
-    //                         value={dateMarked}
-    //                         mode='date'
-    //                         is24Hour={false}
-    //                         display='spinner'
-    //                         onChange={handleDateMarkedChange}
-    //                     />
-    //                 </View>
-    //             )}
-    //             {showTimeMarkedPicker && (
-    //                 <View>
-    //                     <DateTimePicker
-    //                         testID='timePicker'
-    //                         value={dateMarked}
-    //                         mode='time'
-    //                         is24Hour={false}
-    //                         display='clock'
-    //                         onChange={handleTimeMarkedChange}
-    //                     />
-    //                 </View>
-    //             )}
-
-    //             {/* <TouchableOpacity style={entryTemplatestyle.date} onPress={() => chooseLocation()}>
-    //                 <Text style={entryTemplatestyle.dateText}>Location: {formatGeoPoint(location)}</Text>
-    //                 <IconButton
-    //                     icon='map-marker-outline'
-    //                     size={30}
-    //                     iconColor={theme.colors.TEXT}
-    //                 />
-    //             </TouchableOpacity> */}
-
-    //             <View>
-    //                 <View style={entryTemplatestyle.date}>
-    //                     <TextInput
-    //                         placeholder="Search address..."
-    //                         value={searchText}
-    //                         onChangeText={handleTextChange}
-    //                         style={entryTemplatestyle.dateText}
-    //                     />
-    //                     <IconButton
-    //                         icon='map-search-outline'
-    //                         size={30}
-    //                         iconColor={theme.colors.TEXT}
-    //                         style={entryTemplatestyle.search}
-    //                         onPress={handleSearch}
-    //                     />
-    //                 </View>
-    //                 {searchResults.length > 0 && (
-    //                     <ScrollView style={entryTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
-    //                         {searchResults.map((result, index) => {
-    //                             console.log(`Rendering result ${index}:`, result);
-    //                             const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
-    //                             return (
-    //                                 <Pressable
-    //                                     key={index}
-    //                                     onPress={() => selectLocation(result)}
-    //                                     style={entryTemplatestyle.searchItems}
-    //                                 >
-    //                                     <Text>{infoText}</Text>
-    //                                 </Pressable>
-    //                             );
-    //                         })}
-    //                     </ScrollView>
-    //                 )}
-    //             </View>
-
-    //             <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-    //                 <View style={entryTemplatestyle.textInput}>
-    //                     <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
-
-    //                     {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-    //                     {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />}
-    //                 </View>
-
-    //             </ScrollView>
-    //         </View>
-    //     </SafeAreaView>
-    // );
 }

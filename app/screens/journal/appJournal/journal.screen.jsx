@@ -44,6 +44,7 @@ export const Journal = ({ navigation }) => {
     const { navigate } = useNavigation();
     const auth = getAuth();
     const user = auth.currentUser;
+    const screen = "journal";
 
     // react hooks
     const [username, setUsername] = useState("");
@@ -104,7 +105,7 @@ export const Journal = ({ navigation }) => {
             Date: new Date(),
             uid: user.uid,
         };
-        navigation.navigate("NewEntry", { entry, handleExitView });
+        navigation.navigate("NewEntry", { entry, screen, handleExitView });
     };
 
     // to handle filtering certain journal entries
@@ -191,7 +192,7 @@ export const Journal = ({ navigation }) => {
     };
 
     const handleView = (entry) => {
-        navigation.navigate("ViewEntry", { entry, handleExitView });
+        navigation.navigate("ViewEntry", { entry, screen, handleExitView });
     };
 
     return (

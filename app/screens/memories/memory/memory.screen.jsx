@@ -21,6 +21,7 @@ export const Memories = ({ navigation }) => {
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
+    const screen = 'memories';
 
     const auth = getAuth()
     const user = auth.currentUser;
@@ -69,7 +70,7 @@ export const Memories = ({ navigation }) => {
 
     const moveNewMemory = () => {
         const memory = { Text: '', Title: '', Location: null, Images: "", DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
-        navigation.navigate('NewMemory', { memory, handleExitView });
+        navigation.navigate('NewMemory', { memory, screen, handleExitView });
     }
 
     function formatDate(date) {
@@ -97,7 +98,7 @@ export const Memories = ({ navigation }) => {
     }
 
     const handleView = (newMemory) => {
-        navigation.navigate('ViewMemory', { newMemory, handleExitView });
+        navigation.navigate('ViewMemory', { newMemory, screen, handleExitView });
     };
 
     const formatGeoPoint = (geopoint) => {
