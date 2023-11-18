@@ -31,7 +31,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { displayAddress } from "../../../location/geocode";
 import ModalDropdown from "react-native-modal-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
-import Pagination from "react-native-pagination";
+// import Pagination from "react-native-pagination";
 import { JournalEntry } from "./journalEntry";
 
 export const Journal = ({ navigation }) => {
