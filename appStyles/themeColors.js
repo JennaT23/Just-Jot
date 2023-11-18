@@ -26,11 +26,13 @@ const DARKBROWN = '#463f3a'// background color light
 const RED = '#e61212';
 const LIGHTGRAY = '#c9c9c9';
 const VERYLIGHTGRAY = '#f0f0f0' //f0f0f0 dedede
+const DARKGRAY = '#787878';
 
 const common = {
     DELETE: RED,
     TEXTBOXBORDER: LIGHTGRAY,
     TEXTBOXBACKGROUND: VERYLIGHTGRAY,
+    SEPARATIONLINE: DARKGRAY,
 };
 
 const purple = {
