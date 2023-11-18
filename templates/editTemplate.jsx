@@ -47,11 +47,12 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
     const [showTimeMarkedPicker, setShowTimeMarkedPicker] = useState(false);
 
     // camera and camera roll hooks
-    const [image, setImage] = useState(null);
+    // const [image, setImage] = useState(null);
+    const [image, setImage] = useState(memory.Images);
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [showCamera, setShowCamera] = useState(false);
     const [type, setType] = useState(CameraType.back);
-    const [imageUrl, setImageUrl] = useState(memory.Images);
+    // const [imageUrl, setImageUrl] = useState(memory.Images);
 
     const camRef = useRef();
     const auth = getAuth()
@@ -263,7 +264,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                     icon="image-plus"
                     size={30}
                     onPress={pickImage}
-                    style={newEntrystyle.iconButton}
+                    style={editTemplatestyle.iconButton}
                     iconColor={theme.colors.TEXT}
                 />
                 <IconButton
@@ -271,12 +272,12 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                     size={30}
                     iconColor={theme.colors.TEXT}
                     onPress={showCameraScreen}
-                    style={newEntrystyle.iconButton}
+                    style={editTemplatestyle.iconButton}
                 />
                 <TouchableOpacity
                     onPress={saveEntry}
-                    style={newEntrystyle.saveButton}>
-                    <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
+                    style={editTemplatestyle.saveButton}>
+                    <Text style={[appstyle.buttonText, editTemplatestyle.buttonText]}>SAVE</Text>
                 </TouchableOpacity>
             </View>
             {/* <View style={editTemplatestyle.content}> */}
@@ -399,7 +400,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                             </View>
                         </View> */}
                         {searchResults.length > 0 && (
-                            <ScrollView style={entryTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
+                            <ScrollView style={editTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
                                 {searchResults.map((result, index) => {
                                     console.log(`Rendering result ${index}:`, result);
                                     const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
@@ -407,7 +408,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                                         <Pressable
                                             key={index}
                                             onPress={() => selectLocation(result)}
-                                            style={entryTemplatestyle.searchItems}
+                                            style={editTemplatestyle.searchItems}
                                         >
                                             <Text>{infoText}</Text>
                                         </Pressable>
@@ -426,7 +427,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
 
                                     {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                                     {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />} */}
-                                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                                    {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
                                     {/* {hasCameraPermission && showCamera ? (cameraView()) : (null)} */}
                                     {/* <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} /> */}
                                 </View>

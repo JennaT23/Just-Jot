@@ -41,6 +41,7 @@ export const editTemplatestyle = (theme) =>
         // marginBottom: 50,
         marginTop: 30,
         padding: 5,
+        paddingTop: 25,
         // paddingBottom: 60,
         // flex: 1,
         width: '100%',
@@ -121,5 +122,32 @@ export const editTemplatestyle = (theme) =>
     entryText: {
         textAlignVertical: 'top',
         flex: 1,
+    },
+    image: {
+        width: 200,
+        height: 200,
+    },
+    searchResults: {
+        backgroundColor: '#ccc',
+        margin: 5,
+        marginTop: -5,
+    },
+    searchItems: {
+        margin: 5,
+    },
+    iconButton: {
+        marginHorizontal: 5,
+    },
+    saveButton: {
+        backgroundColor: theme.colors.PRIMARY,
+        padding: 5,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 15,
+        alignSelf: 'center',
+    },
+    buttonText: {
+        fontSize: 18,
     },
   })
