@@ -31,9 +31,9 @@ export const ViewMemory = ({ navigation, route }) => {
             const address = await displayAddress(memory.Location);
             setDisplayLocation(address || '');
             setDisplaySubtitle(
-                (memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))) + 
-                "\n" + 
-                (memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))) + 
+                (memory.DateCreated && formatCustomDateTime(new Date(memory.DateCreated))) +
+                "\n" +
+                (memory.DateMarked && formatCustomDateTime(new Date(memory.DateMarked))) +
                 "\nLocation: " + displayLocation);
         };
 
@@ -88,9 +88,9 @@ export const ViewMemory = ({ navigation, route }) => {
                 <IconButton
                     icon="delete-forever"
                     size={31}
-                    onPress={() => handleDeleteEntry(entry.id)}
+                    onPress={() => handleDeleteEntry(memory.id)}
                     style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.DELETE}
+                    iconColor={theme.colors.TEXT}
                 />
                 <IconButton
                     icon="pencil"
@@ -113,11 +113,10 @@ export const ViewMemory = ({ navigation, route }) => {
                 <Card style={viewstyle.bottomCard}>
                     <Card.Content>
                         <View style={viewstyle.view}>
-                            <Paragraph>{memory.Text}</Paragraph>
-                            <Image
-                                style={{ height: 200, width: 200 }}
-                                source={{ uri: memory.Images }}
-                            />
+                            <Paragraph style={{color: theme.colors.TEXT}}>{memory.Text}</Paragraph>
+                            {memory.Images && (
+                                <Image style={{ height: 200, width: 200 }} source={{ uri: memory.Images }} />
+                            )}
                         </View>
                     </Card.Content>
                 </Card>

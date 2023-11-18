@@ -4,14 +4,16 @@ import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { mapMarkers } from "./mapMarkers";
 import { getLocation } from "./getLocation";
-
+import { appstyle as app_style } from "../../appStyles/appstyle";
+import useThemedStyles from '../../appStyles/useThemedStyles';
 
 const MyMap = () => {
     const location = getLocation();
+    const appstyle = useThemedStyles(app_style);
 
     // render a loading indicator
     if (location === null) {
-      return <View><Text>Loading...</Text></View>;
+      return <View style={appstyle.loadingContainer}><Text style={appstyle.loadingText}>Loading...</Text></View>;
     }
 
   const locationCoords = {latitude: location.coords.latitude, longitude: location.coords.longitude};

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Pressable, Image } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from 'firebase/auth';
@@ -88,7 +88,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         }
     };
 
-
     // ask user for access to use camera roll
     useEffect(() => {
         (async () => {
@@ -125,7 +124,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         setShowCamera(false);
     }
 
-    function camerView() {
+    function cameraView() {
         return (
             <View style={entryTemplatestyle.cameraContainer} >
                 <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
@@ -204,70 +203,88 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
 
     return (
         <SafeAreaView style={[newEntrystyle.container, newEntrystyle.entryContainer]}>
-            <View style={newEntrystyle.toolBar}>
-                <IconButton
-                    icon="image-plus"
-                    size={30}
-                    onPress={pickImage}
-                    style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.TEXT}
-                />
-                <IconButton
-                    icon="camera"
-                    size={30}
-                    iconColor={theme.colors.TEXT}
-                    onPress={showCameraScreen}
-                    style={newEntrystyle.iconButton}
-                />
-                <TouchableOpacity
-                    onPress={saveEntry}
-                    style={newEntrystyle.saveButton}>
-                    <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={newEntrystyle.container}>
-                <TextInput value={title} onChangeText={text => setTitle(text)} style={newEntrystyle.cardTitle} editable placeholder='Add Title' />
-                <TouchableOpacity onPress={() => setShowDatePicker(true)} style={entryTemplatestyle.date}>
-                    <Text style={entryTemplatestyle.dateText}>Date: {entryDate.toDateString()}</Text>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={newEntrystyle.container}
+            >
+                <View style={newEntrystyle.toolBar}>
                     <IconButton
-                        icon='calendar-edit'
+                        icon="image-plus"
                         size={30}
-                        style={entryTemplatestyle.calendarIcon}
+                        onPress={pickImage}
+                        style={newEntrystyle.iconButton}
                         iconColor={theme.colors.TEXT}
                     />
-                </TouchableOpacity>
-                {showDatePicker && (
-                    <View>
-                        <DateTimePicker
-                            testID='datePicker'
-                            value={entryDate}
-                            mode='date'
-                            is24Hour={false}
-                            display='spinner'
-                            onChange={handleDateChange}
+                    <IconButton
+                        icon="camera"
+                        size={30}
+                        iconColor={theme.colors.TEXT}
+                        onPress={showCameraScreen}
+                        style={newEntrystyle.iconButton}
+                    />
+                    <TouchableOpacity
+                        onPress={saveEntry}
+                        style={newEntrystyle.saveButton}>
+                        <Text style={[appstyle.buttonText, newEntrystyle.buttonText]}>SAVE</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={newEntrystyle.container}>
+                    <TextInput
+                    value={title}
+                    onChangeText={text => setTitle(text)}
+                    style={newEntrystyle.cardTitle}
+                    editable placeholder='Add title...'
+                    placeholderTextColor={theme.colors.SUBHEADING}
+                />
+                    <TouchableOpacity onPress={() => setShowDatePicker(true)} style={entryTemplatestyle.date}>
+                        <Text style={entryTemplatestyle.dateText}>Date: {entryDate.toDateString()}</Text>
+                        <IconButton
+                            icon='calendar-edit'
+                            size={30}
+                            style={entryTemplatestyle.calendarIcon}
+                            iconColor={theme.colors.TEXT}
                         />
-                    </View>
-                )}
+                    </TouchableOpacity>
+                    {showDatePicker && (
+                        <View>
+                            <DateTimePicker
+                                testID='datePicker'
+                                value={entryDate}
+                                mode='date'
+                                is24Hour={false}
+                                display='spinner'
+                                onChange={handleDateChange}
+                            />
+                        </View>
+                    )}
 
-                <TouchableOpacity style={entryTemplatestyle.date} onPress={() => chooseLocation()}>
-                    <Text style={entryTemplatestyle.dateText}>Location: {formatGeoPoint(location)}</Text>
-                    <IconButton
-                        icon='map-marker-outline'
-                        size={30}
-                        iconColor={theme.colors.TEXT}
-                    />
-                </TouchableOpacity>
+                    <TouchableOpacity style={entryTemplatestyle.date} onPress={() => chooseLocation()}>
+                        <Text style={entryTemplatestyle.dateText}>Location: {formatGeoPoint(location)}</Text>
+                        <IconButton
+                            icon='map-marker-outline'
+                            size={30}
+                            iconColor={theme.colors.TEXT}
+                        />
+                    </TouchableOpacity>
 
                 <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
                     <View style={entryTemplatestyle.textInput}>
-                        <TextInput value={text} onChangeText={text => setText(text)} style={newEntrystyle.noteBody} multiline editable placeholder='Start writing...' />
+                        <TextInput 
+                        value={text} 
+                        onChangeText={text => setText(text)} 
+                        style={newEntrystyle.noteBody} 
+                        multiline editable 
+                        placeholder='Start writing...' 
+                        placeholderTextColor={theme.colors.SUBHEADING}
+                        />
 
-                        {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                        {hasCameraPermission && showCamera ? (camerView()) : (null)}
-                        <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
-                    </View>
-                </ScrollView>
-            </View>
+                            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                            {hasCameraPermission && showCamera ? (cameraView()) : (null)}
+                            <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
+                        </View>
+                    </ScrollView>
+                </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 }

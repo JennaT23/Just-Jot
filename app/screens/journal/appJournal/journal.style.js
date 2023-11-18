@@ -10,13 +10,13 @@ export const appJournalStyle = theme => StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
-        paddingHorizontal: 16, // padding to adjust space between buttons
+        paddingHorizontal: 12, // padding to adjust space between buttons
       },
     card: {
         padding: 5,
         margin: 5,
         elevation: 1,
-        backgroundColor: theme.colors.CARD_BACKGROUND,
+        backgroundColor: theme.colors.SPACE,
         
     },
     journalTitle: {
@@ -28,6 +28,7 @@ export const appJournalStyle = theme => StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 20,
+        color: theme.colors.TEXT
     },
     subheading: {
         color: theme.colors.SUBHEADING,
@@ -37,24 +38,29 @@ export const appJournalStyle = theme => StyleSheet.create({
         bottom: 10,
         right: 20,
         alignSelf: 'flex-end',
-        backgroundColor: theme.colors.PRIMARY,
+        backgroundColor: theme.colors.BUTTON_COLOR,
+        // color: theme.colors.TEXT,
     },
     menu: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         // flex: 1,
     },
+
     iconButton: {
         // marginHorizontal: 5,
         // marginVertical: 5,
-        backgroundColor: theme.colors.PRIMARY,
+        color: theme.colors.TEXT,
+        borderRadius: 30,
+        // tintColor: '#fff',
+        backgroundColor: theme.colors.BUTTON_COLOR,
     },
     modalDropdownOption: {
         padding: 15,
-        borderBottomWidth: 1,
+        borderBottomWidth: 2,
         borderBottomColor: '#ccc',
         textAlign: 'center',
-        fontSize: 22,
+        fontSize: 16,
       },
       modalContainer: {
         flex: 1,
@@ -73,9 +79,10 @@ export const appJournalStyle = theme => StyleSheet.create({
         flex: 1,
         marginRight: 8,
         borderWidth: 1,
-        borderRadius: 8,
+        borderColor: theme.colors.ACCENT,
+        borderRadius: 9,
         paddingHorizontal: 8,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.SPACE,
       },
       searchBar: {
         flex: 1,
