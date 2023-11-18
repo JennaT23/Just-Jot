@@ -35,6 +35,7 @@ export const editTemplatestyle = (theme) =>
         // flex: 1,
         // height: '100%',
         // flexGrow: 1,
+        // minHeight: '55%',
     },
     content: {
         // marginBottom: 50,
@@ -44,11 +45,16 @@ export const editTemplatestyle = (theme) =>
         // flex: 1,
         width: '100%',
         height: '90%',
+        // height: '100%',
+        minHeight: '90%',
     },
     card: {
         // marginBottom: 10,
         // flex: 1,
         height: '90%',
+        // height: '80%',
+        minHeight: 450,
+        // height: '100%',
         padding: 10,
         marginLeft: 10,
         marginRight: 10,
@@ -85,6 +91,7 @@ export const editTemplatestyle = (theme) =>
         // maxHeight: 200,
         // height: '50%',
         // paddingBottom: 30,
+        minHeight: '55%',
     },
     scrollContainer: {
         borderColor: theme.colors.TEXTBOXBORDER,
@@ -97,6 +104,7 @@ export const editTemplatestyle = (theme) =>
         // flex: 1,
         height: '55%',
         // maxHeight: '55%',
+        // minHeight: '55%',
         maxHeight: 200,
         width: '100%',
     },
@@ -104,6 +112,7 @@ export const editTemplatestyle = (theme) =>
         // flex: 1,
         // height: '80%',
         alignItems: 'flex-start',
+        // minHeight: '55%',
         // width: '100%',
     },
     entry: {
