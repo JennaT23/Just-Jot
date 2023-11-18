@@ -7,8 +7,8 @@ import { EditTemplate } from '../../../../templates/editTemplate';
 export const EditEntry = ({ navigation, route }) => {
     const entry1 = route.params.entry;
     const screen = route.params.screen;
-    const displayDate = entry1.Date;
-    const entry = { Date: new Date(entry1.Date), Title: entry1.Title, Location: entry1.Location, Text: entry1.Text, Images: entry1.Images, uid: entry1.uid, id: entry1.id };
+    const displayDate = entry1.DateCreated;
+    const entry = { DateCreated: new Date(entry1.DateCreated), Title: entry1.Title, Location: entry1.Location, Text: entry1.Text, Images: entry1.Images, uid: entry1.uid, id: entry1.id };
 
     return (
         // <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={editJournalEntriesToFirebase} />

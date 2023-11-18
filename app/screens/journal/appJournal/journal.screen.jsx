@@ -102,7 +102,7 @@ export const Journal = ({ navigation }) => {
             Title: "",
             Location: null,
             Images: "",
-            Date: new Date(),
+            DateCreated: new Date(),
             uid: user.uid,
         };
         navigation.navigate("NewEntry", { entry, screen, handleExitView });
@@ -111,8 +111,8 @@ export const Journal = ({ navigation }) => {
     // to handle filtering certain journal entries
     const handleFilter = (oldestToNewest) => {
         const sortedEntries = [...journalEntries].sort((a, b) => {
-            const dateA = new Date(a.Date);
-            const dateB = new Date(b.Date);
+            const dateA = new Date(a.DateCreated);
+            const dateB = new Date(b.DateCreated);
             return oldestToNewest ? dateA - dateB : dateB - dateA;
         });
         setJournalEntries(sortedEntries);
@@ -248,7 +248,7 @@ export const Journal = ({ navigation }) => {
                         <Card.Content>
                             <TouchableOpacity onPress={() => handleView(entry)}>
                                 <Title style={appJournalstyle.title}>{entry.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>{entry.Date && formatDate(new Date(entry.Date))}</Subheading>
+                                <Subheading style={appJournalstyle.subheading}>{entry.DateCreated && formatDate(new Date(entry.DateCreated))}</Subheading>
                                 <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
                                 <Paragraph>{entry.Text}</Paragraph>
                                 <Image

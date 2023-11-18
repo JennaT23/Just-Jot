@@ -31,7 +31,7 @@ export const ViewEntry = ({ navigation, route }) => {
         const fetchDisplayAddress = async () => {
             const address = await displayAddress(entry.Location);
             setDisplayLocation(address || '');
-            setDisplaySubtitle((entry.Date && formatCustomDateTime(new Date(entry.Date))) + "\nLocation: " + displayLocation);
+            setDisplaySubtitle((entry.DateCreated && formatCustomDateTime(new Date(entry.DateCreated))) + "\nLocation: " + displayLocation);
         };
 
         fetchDisplayAddress();

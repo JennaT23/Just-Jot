@@ -7,7 +7,7 @@ export const writeJournalEntryToFirebase = async (entry) => {
     try {
             // Add a new document in collection "JournalEntries"
     const docRef = await addDoc(collection(db, "JournalEntries"), {
-        Date: entry.Date,
+        DateCreated: entry.DateCreated,
         Location: entry.Location,
         Title: entry.Title,
         Text: entry.Text, 
