@@ -12,7 +12,8 @@ export const appstyle = theme => StyleSheet.create({
         flex: 1,
     },
     input: {
-        backgroundColor: '#fceae3',
+        backgroundColor: theme.colors.SPACE,
+        // textShadowColor: theme.colorS.SUBHEADING,
         paddingHorizontal: 15,
         paddingVertical: 15,
         borderRadius: 10,
@@ -20,14 +21,14 @@ export const appstyle = theme => StyleSheet.create({
         marginBottom: 10,
     },
     button: {                                // login button
-        backgroundColor: theme.colors.PRIMARY,
+        backgroundColor: theme.colors.BUTTON_COLOR,
         width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
     },
     buttonText: {                        // text on the button (login button so far)
-        color: '#ffffff',
+        color: theme.colors.BUTTON_TEXT,
         fontWeight: '700',
         fontSize: 20,
     },
@@ -58,4 +59,13 @@ export const appstyle = theme => StyleSheet.create({
         justifyContent: 'center',
         textAlign: 'center'
     },
+    loadingContainer: {
+        width: "100%",
+        height:"100%",
+        backgroundColor: theme.colors.BACKGROUND,
+    },
+
+    loadingText: {
+        color: theme.colors.TEXT
+    }
 });

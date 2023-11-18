@@ -60,7 +60,7 @@ export const editTemplatestyle = (theme) =>
         marginLeft: 10,
         marginRight: 10,
         borderRadius: 10,
-        backgroundColor: theme.colors.CARD_BACKGROUND,
+        backgroundColor: theme.colors.SPACE,
     },
     textBox: {
         borderColor: theme.colors.TEXTBOXBORDER,
@@ -96,7 +96,7 @@ export const editTemplatestyle = (theme) =>
     },
     scrollContainer: {
         borderColor: theme.colors.TEXTBOXBORDER,
-        backgroundColor: theme.colors.CARD_BACKGROUND,
+        backgroundColor: theme.colors.SPACE,
         borderWidth: 2,
         marginLeft: 3,
         paddingLeft: 7,
@@ -139,7 +139,7 @@ export const editTemplatestyle = (theme) =>
         marginHorizontal: 5,
     },
     saveButton: {
-        backgroundColor: theme.colors.PRIMARY,
+        backgroundColor: theme.colors.BUTTON_COLOR,
         padding: 5,
         borderRadius: 10,
         alignItems: 'center',

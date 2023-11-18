@@ -135,7 +135,7 @@ export const ViewEntry = ({ navigation, route }) => {
                     size={31}
                     onPress={() => handleDeleteEntry(entry.id)}
                     style={newEntrystyle.iconButton}
-                    iconColor={theme.colors.DELETE}
+                    iconColor={theme.colors.TEXT}
                 />
                 <IconButton
                     icon="pencil"
@@ -159,10 +159,9 @@ export const ViewEntry = ({ navigation, route }) => {
                     <Card.Content>
                         <View style={viewstyle.view}>
                             <Paragraph style={viewstyle.text}>{entry.Text}</Paragraph>
-                            <Image
-                                style={{ height: 200, width: 200 }}
-                                source={{ uri: entry.Images }}
-                            />
+                            {entry.Images && expanded && (
+                                <Image style={{ height: 200, width: 200 }} source={{ uri: entry.Images }} />
+                            )}
                         </View>
                         {/* <View style={viewstyle.deleteButton}>
                             <Button

@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const setNotificationPreference = async (value) => {
     try {
         await AsyncStorage.setItem('notification_preference', value);
-        console.log('Notification preference set successfully!');
     } catch (error) {
         console.error('Error setting notification preference:', error);
     }

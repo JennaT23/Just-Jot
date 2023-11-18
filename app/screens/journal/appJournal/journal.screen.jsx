@@ -8,10 +8,7 @@ import {
     TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-    appJournalStyle,
-    appJournalStyle as appJournal_style,
-} from "./journal.style";
+import { appJournalStyle as appJournal_style } from "./journal.style";
 import { appstyle as app_style } from "../../../../appStyles/appstyle";
 import { getAuth } from "firebase/auth";
 import Text from "../../../../appStyles/customStyle";
@@ -34,6 +31,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { displayAddress } from "../../../location/geocode";
 import ModalDropdown from "react-native-modal-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
+// import Pagination from "react-native-pagination";
+import { JournalEntry } from "./journalEntry";
 
 export const Journal = ({ navigation }) => {
     const theme = useTheme();
@@ -56,6 +55,7 @@ export const Journal = ({ navigation }) => {
     const [isSearching, setIsSearching] = useState(false);
     const [displayedAddresses, setDisplayedAddresses] = useState([]);
     const [filterModalVisible, setFilterModalVisible] = useState(false);
+    const [expanded, setExpanded] = useState(false);
 
     // grab journal entries from firebase and display them on login
     const fetchJournalEntries = async () => {
@@ -77,14 +77,11 @@ export const Journal = ({ navigation }) => {
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
             journalEntries.map(async (entry) => {
-                console.log('entry', entry);
                 const address = await displayAddress(entry.Location);
-                console.log('address', address);
                 return address;
             })
         );
         setDisplayedAddresses(addresses);
-        console.log('displayedAddresses', displayedAddresses);
     };
 
     useEffect(() => {
@@ -127,7 +124,7 @@ export const Journal = ({ navigation }) => {
             fetchJournalEntries();
         } else {
             setIsSearching(true);     // if query isn't empty, make sure it performs the search
-            const filteredEntries = journalEntries.filter((entry) => {                              // so far it searches for the word in entry title and entry contents, can change later
+            const filteredEntries = journalEntries.filter((entry) => {  // so far it searches for the word in entry title and entry contents, can change later
                 const entryTitle = entry.Title.toLowerCase();
                 const entryText = entry.Text.toLowerCase();
                 const query = searchQuery.toLowerCase();
@@ -150,20 +147,7 @@ export const Journal = ({ navigation }) => {
         }
 
         const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-        const months = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-        ];
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
         const dayOfWeek = daysOfWeek[date.getDay()];
         const month = months[date.getMonth()];
@@ -196,27 +180,24 @@ export const Journal = ({ navigation }) => {
     };
 
     return (
-        // <SafeAreaView style={appstyle.pageContainer}>
         <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appJournalstyle.journalTitle}>Hello {username}!</Text>
             </View>
-
             <View style={appJournalstyle.header}>
                 <View style={appJournalstyle.searchBarContainer}>
                     <TextInput
-                        style={appJournalstyle.searchBar}
+                        style={{ color: theme.colors.TEXT, textShadowColor: theme.colors.SUBHEADING, ...appJournalstyle.searchBar }}
                         placeholder="Search..."
+                        placeholderTextColor={theme.colors.SUBHEADING}
                         value={searchQuery}
                         onChangeText={(text) => setSearchQuery(text)}
                     />
                     <TouchableOpacity
                         onPress={handleSearch}
-                        style={appJournalstyle.iconButton}
                     >
-                        <MaterialCommunityIcons name="magnify" size={24} />
+                        <MaterialCommunityIcons name="magnify" size={24} color={theme.colors.TEXT} />
                     </TouchableOpacity>
-
                     {searchQuery.length > 0 && (
                         <TouchableOpacity onPress={handleClearSearch}>
                             <Text>Clear</Text>
@@ -226,41 +207,38 @@ export const Journal = ({ navigation }) => {
                 <ModalDropdown
                     options={["Oldest to Newest", "Newest to Oldest"]}
                     defaultValue="Sort By"
-                    textStyle={{ fontSize: 16 }}
-                    dropdownStyle={{ width: 150, marginTop: 8 }}
+                    style={appJournalstyle.ModalDropdownOption}
+                    dropdownStyle={{ width: 150, marginTop: -15 }}
                     dropdownTextStyle={{ fontSize: 16 }}
                     onSelect={(index, value) => handleFilter(index === 0)}
                     showsVerticalScrollIndicator={false}
                     onDropdownWillShow={() => setFilterModalVisible(true)}
                     onDropdownWillHide={() => setFilterModalVisible(false)}
                 >
-                    <IconButton
+                    {/* <IconButton
                         icon="filter"
-                        size={24}
-                        style={appJournalstyle.iconButton}
-                    />
+                        style={{color: theme.colors.TEXT, ...appJournalstyle.iconButton}}
+                        // color={theme.colors.TEXT}
+                    /> */}
+                    <FAB style={appJournalstyle.iconButton} color={theme.colors.TEXT} icon="filter" onSelect />
                 </ModalDropdown>
             </View>
-
             <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <Card key={index} style={appJournalstyle.card}>
-                        <Card.Content>
-                            <TouchableOpacity onPress={() => handleView(entry)}>
-                                <Title style={appJournalstyle.title}>{entry.Title}</Title>
-                                <Subheading style={appJournalstyle.subheading}>{entry.DateCreated && formatDate(new Date(entry.DateCreated))}</Subheading>
-                                <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                                <Paragraph>{entry.Text}</Paragraph>
-                                <Image
-                                    style={{ height: 200, width: 200 }}
-                                    source={{ uri: entry.Images }}
-                                />
-                            </TouchableOpacity>
-                        </Card.Content>
-                    </Card>
+                    <JournalEntry
+                        navigation={navigation}
+                        entry={entry}
+                        index={index}
+                        handleExitView={handleExitView}
+                        title={entry.Title}
+                        date={formatDate(new Date(entry.DateCreated))}
+                        location={displayAddress[index]}
+                        text={entry.Text}
+                        image={entry.Images}
+                    />
                 ))}
             </ScrollView>
-            <FAB style={appJournalstyle.fab} icon="plus" onPress={moveNewEntry} />
+            <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewEntry} />
         </SafeAreaView>
     );
 };
