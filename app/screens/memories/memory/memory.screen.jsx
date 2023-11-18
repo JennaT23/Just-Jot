@@ -22,7 +22,7 @@ export const Memories = ({ navigation }) => {
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
-    const screen = 'memories';
+    const screen = 'memory';
 
     const auth = getAuth()
     const user = auth.currentUser;

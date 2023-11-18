@@ -38,6 +38,7 @@ const DARKBROWN = '#463f3a';        // dark background
 
 const LIGHTERGRAY = '#c9c9c9';
 const DARKGRAY = '#787878';
+const RED = '#e61212';
 
 const common = {
     DELETE: RED,

@@ -318,7 +318,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                                 </View>
                             )}
                         </View>
-                        {screen === 'memories' && (
+                        {screen === 'memory' && (
                             <View>
                                 <View style={editTemplatestyle.dateContainer}>
                                     <Text style={editTemplatestyle.label}>Notification Date:</Text>
