@@ -356,42 +356,6 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                                 )}
                             </View>
                         )}
-                        {/* <View>
-                            <View style={editTemplatestyle.dateContainer}>
-                                <Text style={editTemplatestyle.label}>Notification Date:</Text>
-                                <TouchableOpacity style={editTemplatestyle.textBox} onPress={() => { setShowDateMarkedPicker(true) && setShowTimeMarkedPicker(false) }}>
-                                    <TextInput
-                                        value={formatCustomDateTime(dateMarked)}
-                                        style={editTemplatestyle.textInput}
-                                        editable={false}
-                                    />
-                                </TouchableOpacity>
-                            </View>
-                            {showDateMarkedPicker && (
-                                <View>
-                                    <DateTimePicker
-                                        testID='datePicker'
-                                        value={dateMarked}
-                                        mode='date'
-                                        is24Hour={false}
-                                        display='spinner'
-                                        onChange={handleDateMarkedChange}
-                                    />
-                                </View>
-                            )}
-                            {showTimeMarkedPicker && (
-                                <View>
-                                    <DateTimePicker
-                                        testID='timePicker'
-                                        value={dateMarked}
-                                        mode='time'
-                                        is24Hour={false}
-                                        display='clock'
-                                        onChange={handleTimeMarkedChange}
-                                    />
-                                </View>
-                            )}
-                        </View> */}
                         <View>
                             <View style={editTemplatestyle.dateContainer}>
                                 <Text style={editTemplatestyle.label}>Location:</Text>

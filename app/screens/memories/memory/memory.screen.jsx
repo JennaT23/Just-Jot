@@ -108,7 +108,6 @@ export const Memories = ({ navigation }) => {
     };
 
     return (
-        // <SafeAreaView style={appstyle.pageContainer}>
         <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
@@ -127,26 +126,6 @@ export const Memories = ({ navigation }) => {
                         text={memory.Text}
                         image={memory.Images}
                     />
-                    // <Card key={index} style={appJournalstyle.card}>
-                    //     <Card.Content>
-                    //         <TouchableOpacity onPress={() => handleView(memory)}>
-                    //             <Title style={appJournalstyle.title}>{memory.Title}</Title>
-                    //             <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
-                    //             <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
-                    //             <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                    //             <Paragraph>{memory.Text}</Paragraph>
-                    //             <Image
-                    //                 style={{ height: 200, width: 200 }}
-                    //                 source={{ uri: memory.Images }}
-                    //             />
-                    //         </TouchableOpacity>
-                    //         {/* <Card.Actions>
-                    //             <TouchableOpacity onPress={() => handleView(entry)}>
-                    //                 <Text>View</Text>
-                    //             </TouchableOpacity>
-                    //         </Card.Actions> */}
-                    //     </Card.Content>
-                    // </Card>
                 ))}
             </ScrollView>
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
