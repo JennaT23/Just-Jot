@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image, KeyboardAvoidingView, Modal } from 'react-native';
 import { IconButton, Card } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from 'firebase/auth';
@@ -122,6 +122,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
 
 
     const takePicture = async () => {
+        console.log("cameraRef: ", camRef);
         if (camRef) {
             let photo = await camRef.current.takePictureAsync();
             setImage(photo.uri);
@@ -138,7 +139,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
         setShowCamera(false);
     }
 
-    function camerView() {
+    function cameraView() {
         return (
             <View style={entryTemplatestyle.cameraContainer} >
                 <Camera style={entryTemplatestyle.camera} type={type} ref={camRef} >
@@ -173,7 +174,7 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
 
 
     const saveEntry = async () => {
-        const url = image ? await writePicsToFirebase(image, 'JournalEntries') : '';
+        const url = image ? await writePicsToFirebase(image, 'Memories') : '';
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
         const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: memory.id };
@@ -423,8 +424,11 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                                 <View style={editTemplatestyle.entry}>
                                     <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' />
 
+                                    {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                                    {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />} */}
                                     {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                                    {imageUrl && <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />}
+                                    {/* {hasCameraPermission && showCamera ? (cameraView()) : (null)} */}
+                                    {/* <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} /> */}
                                 </View>
                             </ScrollView>
                         </KeyboardAvoidingView>
@@ -437,6 +441,14 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
             </ScrollView>
             </KeyboardAvoidingView>
             {/* </View> */}
+
+            <Modal
+                visible={hasCameraPermission && showCamera}
+                onRequestClose={closeCamera}
+            >
+                {cameraView()}
+            </Modal>
+
         </SafeAreaView>
     )
 
