@@ -279,8 +279,8 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                 </TouchableOpacity>
             </View>
             {/* <View style={editTemplatestyle.content}> */}
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={editTemplatestyle.content}>
-            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" contentContainerStyle={editTemplatestyle.help}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.content}>
+            <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true} contentContainerStyle={editTemplatestyle.help}>
             {/* <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={editTemplatestyle.help}> */}
                 <View style={editTemplatestyle.card}>
                 {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={editTemplatestyle.card}>
@@ -418,8 +418,8 @@ export const EditTemplate = ({ navigation, memory, writeToFirebase, handleExitVi
                     <View style={editTemplatestyle.entryContainer}>
                         <Text style={editTemplatestyle.label}>Entry:</Text>
                         {/* <View style={editTemplatestyle.scrollContainer}> */}
-                        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={editTemplatestyle.scrollContainer}>
-                            <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive">
+                        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
+                            <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
                                 <View style={editTemplatestyle.entry}>
                                     <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' />
 

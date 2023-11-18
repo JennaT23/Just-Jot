@@ -70,6 +70,7 @@ export const editTemplatestyle = (theme) =>
         // flexGrow: 1,
         // maxHeight: 200,
         // height: '50%',
+        // paddingBottom: 30,
     },
     scrollContainer: {
         borderColor: theme.colors.TEXTBOXBORDER,
