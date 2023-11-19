@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { appstyle as app_style } from '../../../../appStyles/appstyle'
 import { getAuth } from 'firebase/auth'
@@ -32,12 +32,31 @@ export const Memories = ({ navigation }) => {
     const [refreshData, setRefreshData] = useState(0);
     const [displayedAddresses, setDisplayedAddresses] = useState([]);
 
-    const fetchMemories = async () => {
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+    // const fetchMemories = async () => {
+    //     try {
+    //         const entries = await fetchMemoriesFromFirebase();
+    //         setMemories(entries);
+    //     } catch (error) {
+    //         console.log('Error fetching', error);
+    //     }
+    // };
+
+    const fetchMemories = async (page = 1) => {
         try {
-            const entries = await fetchMemoriesFromFirebase();
-            setMemories(entries);
+            const entries = await fetchMemoriesFromFirebase(page);
+            setMemories((prevMemories) => [...prevMemories, ...entries]);
         } catch (error) {
             console.log('Error fetching', error);
+        }
+    };
+    
+
+    const fetchMoreMemories = () => {
+        if (memories.length > 0) {
+            setCurrentPage((prevPage) => prevPage + 1);
         }
     };
 
@@ -48,6 +67,19 @@ export const Memories = ({ navigation }) => {
         fetchMemories();
     }, [refreshData]);
 
+    // const fetchAndDisplayAddresses = async () => {
+    //     const addresses = await Promise.all(
+    //         memories.map(async (memory) => {
+    //             const address = await displayAddress(memory.Location);
+    //             return address;
+    //         })
+    //     );
+    //     setDisplayedAddresses(addresses);
+    // };
+
+    // useEffect(() => {
+    //     fetchAndDisplayAddresses();
+    // }, [memories]);
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
             memories.map(async (memory) => {
@@ -55,12 +87,12 @@ export const Memories = ({ navigation }) => {
                 return address;
             })
         );
-        setDisplayedAddresses(addresses);
+        setDisplayedAddresses((prevAddresses) => [...prevAddresses, ...addresses]);
     };
-
     useEffect(() => {
-        fetchAndDisplayAddresses();
-    }, [memories]);
+        fetchMemories(currentPage);
+    }, [currentPage]);
+    
 
     const handleExitView = () => {
         navigation.navigate('NavBar');
@@ -108,12 +140,14 @@ export const Memories = ({ navigation }) => {
         return formattedLocation;
     };
 
+
+
     return (
         <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            <ScrollView>
+            {/* <ScrollView>
                 {memories.map((memory, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -124,7 +158,25 @@ export const Memories = ({ navigation }) => {
                         screen={screen}
                     />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
+
+            <FlatList
+                data={memories}
+                keyExtractor={(index) => index.id}
+                renderItem={( memory, index ) => (
+                    <ViewTemplate
+                        navigation={navigation}
+                        data={memory}
+                        index={index}
+                        handleExitView={handleExitView}
+                        location={displayedAddresses[index]}
+                        screen={screen}
+                    />
+                )}
+                onEndReached={fetchMoreMemories} // Load more memories when reaching the end
+                onEndReachedThreshold={0.1} // Trigger onEndReached when the scroll position is 10% from the bottom
+            />
+
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
         </SafeAreaView >
     )
