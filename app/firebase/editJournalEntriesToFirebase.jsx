@@ -12,6 +12,7 @@ export const editJournalEntriesToFirebase = async (entry) => {
             Location: entry.Location,
             Title: entry.Title,
             Text: entry.Text,
+            Images: entry.Images,
             uid: entry.uid,
         });
         Alert.alert('Entry Saved');

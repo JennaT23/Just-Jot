@@ -27,7 +27,7 @@ import { editTemplateStyle as editTemplate_style } from './editTemplate.style'
 
 export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handleExitView }) => {
 
-    console.log("data:", data);
+    // console.log("data:", data);
 
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
@@ -123,7 +123,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
 
 
     const takePicture = async () => {
-        console.log("cameraRef: ", camRef);
+        // console.log("cameraRef: ", camRef);
         if (camRef) {
             let photo = await camRef.current.takePictureAsync();
             setImage(photo.uri);
@@ -186,15 +186,16 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
             
         }
         else{
-            Alert.alert('Error with navigation');
+            Alert.alert('Error saving data');
             return;
         }
         const url = image ? await writePicsToFirebase(image, folder) : '';
+        console.log("url:", url);
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
         const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
 
-        console.log(dateMarked);
+        // console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
         if (notificationPreference === 'enabled') {
             const content = {
@@ -264,7 +265,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
 
             if (location && location.length > 0) {
                 setSearchResults(prevResults => [...prevResults, ...location]);
-                console.log('Search results:', location);
+                // console.log('Search results:', location);
             } else {
                 console.warn('No results found for the given address');
                 setSearchResults([]);
@@ -402,7 +403,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                             {searchResults.length > 0 && (
                                 <ScrollView style={editTemplatestyle.searchResults} contentContainerStyle={{ minHeight: 10 }}>
                                     {searchResults.map((result, index) => {
-                                        console.log(`Rendering result ${index}:`, result);
+                                        // console.log(`Rendering result ${index}:`, result);
                                         const infoText = `Latitude: ${result.latitude}, Longitude: ${result.longitude}`;
                                         return (
                                             <Pressable

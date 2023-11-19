@@ -7,12 +7,12 @@ export const editMemoriesToFirebase = async (memory) => {
         const memoryRef = doc(db, "Memories", memory.id);
 
         await updateDoc(memoryRef, {
-            // id: entry.id,
             DateCreated: memory.DateCreated,
             DateMarked: memory.DateMarked,
             Location: memory.Location,
             Title: memory.Title,
             Text: memory.Text,
+            Images: memory.Images,
             uid: memory.uid,
         });
         Alert.alert('Entry Saved');
