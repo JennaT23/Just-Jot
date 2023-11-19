@@ -175,7 +175,21 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
 
 
     const saveEntry = async () => {
-        const url = image ? await writePicsToFirebase(image, 'Memories') : '';
+        let folder;
+        if(screen === 'memory')
+        {
+            folder = 'Memories';
+        }
+        else if(screen === 'journal')
+        {
+            folder = 'JournalEntries';
+            
+        }
+        else{
+            Alert.alert('Error with navigation');
+            return;
+        }
+        const url = image ? await writePicsToFirebase(image, folder) : '';
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
         const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };

@@ -129,8 +129,8 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
                     {screen === 'memory' && (<Subheading style={viewTemplatestyle.subheading}>Marked: {formatDate(data.DateMarked)}</Subheading>)}
                     <Subheading style={viewTemplatestyle.subheading}>Location: {location}</Subheading>
                     <Paragraph style={{color: theme.colors.TEXT}} numberOfLines={expanded ? undefined : 1}>{data.Text}</Paragraph>
-                    {data.Image && expanded && (
-                        <Image style={{ height: 200, width: 200 }} source={{ uri: data.Image }} />
+                    {data.Images && expanded && (
+                        <Image style={{ height: 200, width: 200 }} source={{ uri: data.Images }} />
                     )}
                     {!expanded && (
                         <TouchableOpacity onPress={toggleExpansion}>

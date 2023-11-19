@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 export const viewTemplateStyle = (theme) => StyleSheet.create({
     card: {
-        padding: 5,
         margin: 5,
         elevation: 1,
         backgroundColor: theme.colors.SPACE,
@@ -12,6 +11,7 @@ export const viewTemplateStyle = (theme) => StyleSheet.create({
         fontSize: 20,
         color: theme.colors.TEXT,
         marginTop: 0,
+        paddingTop: 0,
     },
     subheading: {
         color: theme.colors.SUBHEADING,
@@ -21,8 +21,8 @@ export const viewTemplateStyle = (theme) => StyleSheet.create({
         flexDirection: "row",
         justifyContent: "flex-end",
         columnGap: -20,
-        marginTop: -25,
-        marginBottom: -35,
+        marginTop: -20,
+        marginBottom: -15,
         marginRight: -10,
     },
     iconButton: {
