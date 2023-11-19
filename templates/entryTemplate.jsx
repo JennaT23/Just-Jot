@@ -277,7 +277,6 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         placeholder='Start writing...' 
                         placeholderTextColor={theme.colors.SUBHEADING}
                         />
-
                             {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                             {hasCameraPermission && showCamera ? (cameraView()) : (null)}
                             <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />

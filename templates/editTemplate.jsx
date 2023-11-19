@@ -319,6 +319,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                                 <View style={editTemplatestyle.textBox}>
                                     <TextInput
                                         placeholder='New Entry'
+                                        placeholderTextColor={theme.colors.SUBHEADING}
                                         value={title}
                                         onChangeText={text => setTitle(text)}
                                         style={editTemplatestyle.textInput}
@@ -393,6 +394,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                                 <View style={editTemplatestyle.textBox}>
                                     <TextInput
                                         placeholder="Search address..."
+                                        placeholderTextColor={theme.colors.SUBHEADING}
                                         value={searchText}
                                         onChangeText={handleTextChange}
                                         onSubmitEditing={handleSearch}
@@ -423,7 +425,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
                                 <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
                                     <View style={editTemplatestyle.entry}>
-                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' />
+                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING}/>
 
                                         {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
                                     </View>
