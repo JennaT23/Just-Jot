@@ -311,7 +311,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                 </TouchableOpacity>
             </View>
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.content}>
-                <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true} contentContainerStyle={editTemplatestyle.help}>
+                <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
                     <View style={editTemplatestyle.card}>
                             <View style={editTemplatestyle.titleContainer}>
                                 <Text style={editTemplatestyle.label}>Title:</Text>
