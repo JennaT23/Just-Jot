@@ -15,6 +15,7 @@ import { GeoPoint } from "firebase/firestore";
 import { displayAddress } from '../../../location/geocode'
 import { Memory } from './memory'
 import { ViewTemplate } from '../../../../templates/viewTemplate'
+import Pagination from 'react-native-pagination'
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -32,33 +33,33 @@ export const Memories = ({ navigation }) => {
     const [refreshData, setRefreshData] = useState(0);
     const [displayedAddresses, setDisplayedAddresses] = useState([]);
 
-    const [currentPage, setCurrentPage] = useState(1);
+    // const [currentPage, setCurrentPage] = useState(1);
 
 
-    // const fetchMemories = async () => {
-    //     try {
-    //         const entries = await fetchMemoriesFromFirebase();
-    //         setMemories(entries);
-    //     } catch (error) {
-    //         console.log('Error fetching', error);
-    //     }
-    // };
-
-    const fetchMemories = async (page = 1) => {
+    const fetchMemories = async () => {
         try {
-            const entries = await fetchMemoriesFromFirebase(page);
-            setMemories((prevMemories) => [...prevMemories, ...entries]);
+            const entries = await fetchMemoriesFromFirebase();
+            setMemories(entries);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
+
+    // const fetchMemories = async (page = 1) => {
+    //     try {
+    //         const entries = await fetchMemoriesFromFirebase(page);
+    //         setMemories((prevMemories) => [...prevMemories, ...entries]);
+    //     } catch (error) {
+    //         console.log('Error fetching', error);
+    //     }
+    // };
     
 
-    const fetchMoreMemories = () => {
-        if (memories.length > 0) {
-            setCurrentPage((prevPage) => prevPage + 1);
-        }
-    };
+    // const fetchMoreMemories = () => {
+    //     if (memories.length > 0) {
+    //         setCurrentPage((prevPage) => prevPage + 1);
+    //     }
+    // };
 
     useEffect(() => {
         if (user) {
@@ -67,19 +68,6 @@ export const Memories = ({ navigation }) => {
         fetchMemories();
     }, [refreshData]);
 
-    // const fetchAndDisplayAddresses = async () => {
-    //     const addresses = await Promise.all(
-    //         memories.map(async (memory) => {
-    //             const address = await displayAddress(memory.Location);
-    //             return address;
-    //         })
-    //     );
-    //     setDisplayedAddresses(addresses);
-    // };
-
-    // useEffect(() => {
-    //     fetchAndDisplayAddresses();
-    // }, [memories]);
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
             memories.map(async (memory) => {
@@ -87,12 +75,25 @@ export const Memories = ({ navigation }) => {
                 return address;
             })
         );
-        setDisplayedAddresses((prevAddresses) => [...prevAddresses, ...addresses]);
+        setDisplayedAddresses(addresses);
     };
+
+    // const fetchAndDisplayAddresses = async () => {
+    //     const addresses = await Promise.all(
+    //         memories.map(async (memory) => {
+    //             const address = await displayAddress(memory.Location);
+    //             return address;
+    //         })
+    //     );
+    //     setDisplayedAddresses((prevAddresses) => [...prevAddresses, ...addresses]);
+    // };
+    // useEffect(() => {
+    //     fetchMemories(currentPage);
+    // }, [currentPage]);
+
     useEffect(() => {
-        fetchMemories(currentPage);
-    }, [currentPage]);
-    
+        fetchAndDisplayAddresses();
+    }, [memories]);
 
     const handleExitView = () => {
         navigation.navigate('NavBar');
@@ -147,7 +148,7 @@ export const Memories = ({ navigation }) => {
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            {/* <ScrollView>
+            <ScrollView>
                 {memories.map((memory, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -158,9 +159,13 @@ export const Memories = ({ navigation }) => {
                         screen={screen}
                     />
                 ))}
-            </ScrollView> */}
+            </ScrollView>
 
-            <FlatList
+            <Pagination
+                
+            />
+
+            {/* <FlatList
                 data={memories}
                 keyExtractor={(index) => index.id}
                 renderItem={( memory, index ) => (
@@ -175,7 +180,7 @@ export const Memories = ({ navigation }) => {
                 )}
                 onEndReached={fetchMoreMemories} // Load more memories when reaching the end
                 onEndReachedThreshold={0.1} // Trigger onEndReached when the scroll position is 10% from the bottom
-            />
+            /> */}
 
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
         </SafeAreaView >
