@@ -33,6 +33,7 @@ import ModalDropdown from "react-native-modal-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
 // import Pagination from "react-native-pagination";
 import { JournalEntry } from "./journalEntry";
+import { ViewTemplate } from "../../../../templates/viewTemplate";
 
 export const Journal = ({ navigation }) => {
     const theme = useTheme();
@@ -225,16 +226,13 @@ export const Journal = ({ navigation }) => {
             </View>
             <ScrollView>
                 {journalEntries.map((entry, index) => (
-                    <JournalEntry
+                    <ViewTemplate
                         navigation={navigation}
-                        entry={entry}
+                        data={entry}
                         index={index}
                         handleExitView={handleExitView}
-                        title={entry.Title}
-                        date={formatDate(new Date(entry.DateCreated))}
                         location={displayAddress[index]}
-                        text={entry.Text}
-                        image={entry.Images}
+                        screen={screen}
                     />
                 ))}
             </ScrollView>

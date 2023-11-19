@@ -14,6 +14,7 @@ import { appJournalStyle as appJournal_style } from '../../journal/appJournal/jo
 import { GeoPoint } from "firebase/firestore";
 import { displayAddress } from '../../../location/geocode'
 import { Memory } from './memory'
+import { ViewTemplate } from '../../../../templates/viewTemplate'
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -114,17 +115,13 @@ export const Memories = ({ navigation }) => {
             </View>
             <ScrollView>
                 {memories.map((memory, index) => (
-                    <Memory
+                    <ViewTemplate
                         navigation={navigation}
-                        memory={memory}
+                        data={memory}
                         index={index}
                         handleExitView={handleExitView}
-                        title={memory.Title}
-                        dateCreated={formatDate(memory.DateCreated)}
-                        dateMarked={formatDate(memory.DateMarked)}
                         location={displayedAddresses[index]}
-                        text={memory.Text}
-                        image={memory.Images}
+                        screen={screen}
                     />
                 ))}
             </ScrollView>

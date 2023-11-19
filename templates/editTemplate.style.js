@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions, useWindowDimensions } from "react-native";
 
-export const editTemplatestyle = (theme) =>
-  StyleSheet.create({
+export const editTemplateStyle = (theme) => StyleSheet.create({
     pageContainer: {
         flex: 1,
         // height: '100%',

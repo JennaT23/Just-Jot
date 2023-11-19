@@ -21,7 +21,7 @@ import { getNotificationPreference } from '../app/notifications/notificationPref
 import { appstyle as app_style } from '../appStyles/appstyle';
 import { newEntrystyle as newEntry_style } from '../app/screens/journal/newEntry/newEntry.style';
 import { entryTemplatestyle as entryTemplate_style } from './entryTemplate.style';
-import { editTemplatestyle as editTemplate_style } from './editTemplate.style'
+import { editTemplateStyle as editTemplate_style } from './editTemplate.style'
 
 
 
