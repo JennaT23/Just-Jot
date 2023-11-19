@@ -33,33 +33,27 @@ export const Memories = ({ navigation }) => {
     const [refreshData, setRefreshData] = useState(0);
     const [displayedAddresses, setDisplayedAddresses] = useState([]);
 
-    // const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
 
 
-    const fetchMemories = async () => {
-        try {
-            const entries = await fetchMemoriesFromFirebase();
-            setMemories(entries);
-        } catch (error) {
-            console.log('Error fetching', error);
-        }
-    };
-
-    // const fetchMemories = async (page = 1) => {
+    // const fetchMemories = async () => {
     //     try {
-    //         const entries = await fetchMemoriesFromFirebase(page);
-    //         setMemories((prevMemories) => [...prevMemories, ...entries]);
+    //         const entries = await fetchMemoriesFromFirebase();
+    //         setMemories(entries);
     //     } catch (error) {
     //         console.log('Error fetching', error);
     //     }
     // };
-    
 
-    // const fetchMoreMemories = () => {
-    //     if (memories.length > 0) {
-    //         setCurrentPage((prevPage) => prevPage + 1);
-    //     }
-    // };
+    const fetchMemories = async (page = 1) => {
+        try {
+            const entries = await fetchMemoriesFromFirebase(page);
+            setMemories((prevMemories) => [...prevMemories, ...entries]);
+        } catch (error) {
+            console.log('Error fetching', error);
+        }
+    };
+    
 
     useEffect(() => {
         if (user) {
@@ -67,6 +61,13 @@ export const Memories = ({ navigation }) => {
         }
         fetchMemories();
     }, [refreshData]);
+
+
+    const fetchMoreMemories = () => {
+        if (memories.length > 0) {
+            setCurrentPage((prevPage) => prevPage + 1);
+        }
+    };
 
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
@@ -141,14 +142,29 @@ export const Memories = ({ navigation }) => {
         return formattedLocation;
     };
 
+    // const [itemOffset, setItemOffset] = useState(0);
+    // const [currentPage, setCurrentPage] = useState(0);
+    // const [totalPages, setTotalPages] = useState(0);
+    // const itemsPerPage = 10;
 
+    // useEffect(() => {
+    //     const endOffset = itemOffset + itemsPerPage;
+    //     setCurrentPage(memories.slice(itemOffset, endOffset));
+    //     setTotalPages(Math.ceil(memories / itemsPerPage));
+    // }, [itemOffset, itemsPerPage, memories]);
+    // // const pageCount = Math.ceil(journalEntries.length / itemsPerPage);
+
+    // const handlePageClick = (event) => {
+    //     const newOffset = (event.selected * itemsPerPage) % memories.length;
+    //     setItemOffset(newOffset);
+    // }
 
     return (
         <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            <ScrollView>
+            {/* <ScrollView>
                 {memories.map((memory, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -159,13 +175,13 @@ export const Memories = ({ navigation }) => {
                         screen={screen}
                     />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
 
             <Pagination
                 
             />
 
-            {/* <FlatList
+            <FlatList
                 data={memories}
                 keyExtractor={(index) => index.id}
                 renderItem={( memory, index ) => (
@@ -180,7 +196,7 @@ export const Memories = ({ navigation }) => {
                 )}
                 onEndReached={fetchMoreMemories} // Load more memories when reaching the end
                 onEndReachedThreshold={0.1} // Trigger onEndReached when the scroll position is 10% from the bottom
-            /> */}
+            />
 
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
         </SafeAreaView >
