@@ -36,23 +36,26 @@ export const Memories = ({ navigation }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
 
-    // const fetchMemories = async () => {
-    //     try {
-    //         const entries = await fetchMemoriesFromFirebase();
-    //         setMemories(entries);
-    //     } catch (error) {
-    //         console.log('Error fetching', error);
-    //     }
-    // };
-
-    const fetchMemories = async (page = 1) => {
+    const fetchMemories = async () => {
         try {
-            const entries = await fetchMemoriesFromFirebase(page);
-            setMemories((prevMemories) => [...prevMemories, ...entries]);
+            const entries = await fetchMemoriesFromFirebase();
+            setMemories(entries);
         } catch (error) {
             console.log('Error fetching', error);
         }
     };
+
+    // const fetchMemories = async (page) => {
+    //     try {
+    //         setCurrentPage(page)
+    //         const entries = await fetchMemoriesFromFirebase(currentPage);
+            
+    //         setMemories((prevMemories) => [...prevMemories, ...entries]);
+
+    //     } catch (error) {
+    //         console.log('Error fetching', error);
+    //     }
+    // };
     
 
     useEffect(() => {
@@ -63,11 +66,12 @@ export const Memories = ({ navigation }) => {
     }, [refreshData]);
 
 
-    const fetchMoreMemories = () => {
-        if (memories.length > 0) {
-            setCurrentPage((prevPage) => prevPage + 1);
-        }
-    };
+    // const fetchMoreMemories = () => {
+    //     console.log(entries);
+    //     if (memories.length > 0) {
+    //         setCurrentPage((prevPage) => prevPage + 1);
+    //     }
+    // };
 
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
@@ -164,7 +168,7 @@ export const Memories = ({ navigation }) => {
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            {/* <ScrollView>
+            <ScrollView>
                 {memories.map((memory, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -175,13 +179,23 @@ export const Memories = ({ navigation }) => {
                         screen={screen}
                     />
                 ))}
-            </ScrollView> */}
+            </ScrollView>
+{/* 
+             <Pagination
+                breakLabel={<Text>{"..."}</Text>}
+                nextLabel={<Text>{"next >"}</Text>}
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={3}
+                pageCount={pageCount}
+                previousLabel={<Text>{"< previous"}</Text>}
+                renderOnZeroPageCount={null}
+                containerClassName="pagination"
+                pageLinkClassName="page-num"
+                previousLinkClassName="page-num"
+            /> 
+*/}
 
-            <Pagination
-                
-            />
-
-            <FlatList
+            {/* <FlatList
                 data={memories}
                 keyExtractor={(index) => index.id}
                 renderItem={( memory, index ) => (
@@ -194,10 +208,9 @@ export const Memories = ({ navigation }) => {
                         screen={screen}
                     />
                 )}
-                onEndReached={fetchMoreMemories} // Load more memories when reaching the end
+                onEndReached={fetchMemories} // Load more memories when reaching the end
                 onEndReachedThreshold={0.1} // Trigger onEndReached when the scroll position is 10% from the bottom
-            />
-
+            />  */}
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />
         </SafeAreaView >
     )
