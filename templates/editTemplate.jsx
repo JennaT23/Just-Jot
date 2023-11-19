@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image, KeyboardAvoidingView, Modal } from 'react-native';
+import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image, KeyboardAvoidingView, Modal, Alert } from 'react-native';
 import { IconButton, Card } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from 'firebase/auth';
@@ -178,7 +178,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         const url = image ? await writePicsToFirebase(image, 'Memories') : '';
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const uid = user.uid;
-        const newMemory = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
+        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
 
         console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
@@ -191,8 +191,24 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
             await schedulePushNotification(content, trigger);
         }
 
-        writeToFirebase(newMemory);
-        navigation.navigate('ViewMemory', { newMemory, handleExitView });
+        writeToFirebase(newData);
+
+        let homeScreen;
+        if(screen === 'memory')
+        {
+            homeScreen = 'Memories';
+        }
+        else if(screen === 'journal')
+        {
+            homeScreen = 'Journal';
+            
+        }
+        else{
+            Alert.alert('Error with navigation');
+            return;
+        }
+        handleExitView();
+        navigation.navigate('NavBar');
     }
 
     // const formattedTime = entryTime.toLocaleTimeString('en-US', {

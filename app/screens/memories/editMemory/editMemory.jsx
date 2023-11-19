@@ -11,6 +11,6 @@ export const EditMemory = ({ navigation, route }) => {
 
     return (
         // <MemoryTemplate navigation={navigation} memory={editMemory} writeToFirebase={editMemoriesToFirebase} />
-        <EditTemplate navigation={navigation} data={editMemory} screen={screen} writeToFirebase={editMemoriesToFirebase} />
+        <EditTemplate navigation={navigation} data={editMemory} screen={screen} writeToFirebase={editMemoriesToFirebase} handleExitView={route.params.handleExitView}/>
     )
 }

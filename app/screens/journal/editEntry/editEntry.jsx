@@ -12,6 +12,6 @@ export const EditEntry = ({ navigation, route }) => {
 
     return (
         // <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={editJournalEntriesToFirebase} />
-        <EditTemplate navigation={navigation} data={entry} screen={screen} writeToFirebase={editJournalEntriesToFirebase} />
+        <EditTemplate navigation={navigation} data={entry} screen={screen} writeToFirebase={editJournalEntriesToFirebase} handleExitView={route.params.handleExitView}/>
     )
 }
