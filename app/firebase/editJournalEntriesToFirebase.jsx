@@ -8,7 +8,7 @@ export const editJournalEntriesToFirebase = async (entry) => {
 
         await updateDoc(entryRef, {
             // id: entry.id,
-            Date: entry.Date,
+            DateCreated: entry.DateCreated,
             Location: entry.Location,
             Title: entry.Title,
             Text: entry.Text,

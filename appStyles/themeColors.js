@@ -36,8 +36,19 @@ const LIGHTBROWN = '#90827A';       // light button
 const BROWN = '#8a817c';            // dark space
 const DARKBROWN = '#463f3a';        // dark background
 
+const LIGHTERGRAY = '#c9c9c9';
+const DARKGRAY = '#787878';
+const RED = '#e61212';
+
+const common = {
+    DELETE: RED,
+    TEXTBOXBORDER: LIGHTERGRAY,
+    SEPARATIONLINE: DARKGRAY,
+};
+
 const purple = {
     light: {
+        ...common,
         BACKGROUND: LILAC,
         BUTTON_TEXT: WHITE,
         BUTTON_COLOR: PURPLE,
@@ -48,6 +59,7 @@ const purple = {
 
     },
     dark: {
+        ...common,
         BACKGROUND: DARKPURPLE,
         BUTTON_TEXT: WHITE,
         BUTTON_COLOR: PURPLE,
@@ -60,6 +72,7 @@ const purple = {
 
 const blue = {
     light: {
+        ...common,
         BACKGROUND: BLUE,
         BUTTON_TEXT: WHITE,
         BUTTON_COLOR: PURPLE,
@@ -71,6 +84,7 @@ const blue = {
         SPACE: PALEBLUE,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKBLUE,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
@@ -83,6 +97,7 @@ const blue = {
 
 const green = {
     light: {
+        ...common,
         BACKGROUND: SAGEGREEN,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -92,6 +107,7 @@ const green = {
         SPACE: MINTCREAM,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKGREEN,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
@@ -105,6 +121,7 @@ const green = {
 
 const pink = {
     light: {
+        ...common,
         BACKGROUND: PINK,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -114,6 +131,7 @@ const pink = {
         SPACE: SNOW,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKPINK,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
@@ -126,6 +144,7 @@ const pink = {
 
 const brown = {
     light: {
+        ...common,
         BACKGROUND: NUDE,
         BUTTON_TEXT: WHITE,
         TEXT: BLACK,
@@ -135,6 +154,7 @@ const brown = {
         SPACE: WHITESMOKE,
     },
     dark: {
+        ...common,
         BACKGROUND: DARKBROWN,
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,

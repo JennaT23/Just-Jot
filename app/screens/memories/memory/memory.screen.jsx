@@ -14,6 +14,7 @@ import { appJournalStyle as appJournal_style } from '../../journal/appJournal/jo
 import { GeoPoint } from "firebase/firestore";
 import { displayAddress } from '../../../location/geocode'
 import { Memory } from './memory'
+import { ViewTemplate } from '../../../../templates/viewTemplate'
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -22,6 +23,7 @@ export const Memories = ({ navigation }) => {
     const newEntrystyle = useThemedStyles(newEntry_style);
 
     const { navigate } = useNavigation()
+    const screen = 'memory';
 
     const auth = getAuth()
     const user = auth.currentUser;
@@ -67,7 +69,7 @@ export const Memories = ({ navigation }) => {
 
     const moveNewMemory = () => {
         const memory = { Text: '', Title: '', Location: null, Images: "", DateCreated: new Date(), DateMarked: new Date(), uid: user.uid };
-        navigation.navigate('NewMemory', { memory, handleExitView });
+        navigation.navigate('NewMemory', { memory, screen, handleExitView });
     }
 
     function formatDate(date) {
@@ -95,7 +97,7 @@ export const Memories = ({ navigation }) => {
     }
 
     const handleView = (newMemory) => {
-        navigation.navigate('ViewMemory', { newMemory, handleExitView });
+        navigation.navigate('ViewMemory', { newMemory, screen, handleExitView });
     };
 
     const formatGeoPoint = (geopoint) => {
@@ -107,45 +109,20 @@ export const Memories = ({ navigation }) => {
     };
 
     return (
-        // <SafeAreaView style={appstyle.pageContainer}>
         <SafeAreaView style={appJournalstyle.container}>
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
             <ScrollView>
                 {memories.map((memory, index) => (
-                    <Memory
+                    <ViewTemplate
                         navigation={navigation}
-                        memory={memory}
+                        data={memory}
                         index={index}
                         handleExitView={handleExitView}
-                        title={memory.Title}
-                        dateCreated={formatDate(memory.DateCreated)}
-                        dateMarked={formatDate(memory.DateMarked)}
                         location={displayedAddresses[index]}
-                        text={memory.Text}
-                        image={memory.Images}
+                        screen={screen}
                     />
-                    // <Card key={index} style={appJournalstyle.card}>
-                    //     <Card.Content>
-                    //         <TouchableOpacity onPress={() => handleView(memory)}>
-                    //             <Title style={appJournalstyle.title}>{memory.Title}</Title>
-                    //             <Subheading style={appJournalstyle.subheading}>Created: {memory.DateCreated && formatDate(new Date(memory.DateCreated))}</Subheading>
-                    //             <Subheading style={appJournalstyle.subheading}>Marked: {memory.DateMarked && formatDate(new Date(memory.DateMarked))}</Subheading>
-                    //             <Subheading style={appJournalstyle.subheading}>Location: {displayedAddresses[index]}</Subheading>
-                    //             <Paragraph>{memory.Text}</Paragraph>
-                    //             <Image
-                    //                 style={{ height: 200, width: 200 }}
-                    //                 source={{ uri: memory.Images }}
-                    //             />
-                    //         </TouchableOpacity>
-                    //         {/* <Card.Actions>
-                    //             <TouchableOpacity onPress={() => handleView(entry)}>
-                    //                 <Text>View</Text>
-                    //             </TouchableOpacity>
-                    //         </Card.Actions> */}
-                    //     </Card.Content>
-                    // </Card>
                 ))}
             </ScrollView>
             <FAB style={appJournalstyle.fab} color={theme.colors.TEXT} icon="plus" onPress={moveNewMemory} />

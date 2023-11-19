@@ -22,6 +22,7 @@ export const ViewMemory = ({ navigation, route }) => {
     const newEntrystyle = useThemedStyles(newEntry_style);
     const handleExitView = route.params.handleExitView;
     const memory = route.params.newMemory;
+    const screen = route.params.screen;
     const [displayLocation, setDisplayLocation] = useState('');
     const [displaySubtitle, setDisplaySubtitle] = useState('');
 
@@ -61,7 +62,7 @@ export const ViewMemory = ({ navigation, route }) => {
     };
 
     const moveToEditMemory = () => {
-        navigation.navigate('EditMemory', { memory });
+        navigation.navigate('EditMemory', { memory, screen });
     }
 
     const formatGeoPoint = (geopoint) => {

@@ -12,6 +12,7 @@ export const Memory = ({ navigation, memory, index, handleExitView, title, dateC
     const appJournalstyle = useThemedStyles(appJournal_style);
     const [expanded, setExpanded] = useState(false);
     const [newMemory, setNewMemory] = useState(memory);
+    const screen = 'memory';
     console.log('new memory', newMemory);
 
     const toggleExpansion = () => {
@@ -19,7 +20,7 @@ export const Memory = ({ navigation, memory, index, handleExitView, title, dateC
     };
 
     const handleView = (newMemory) => {
-        navigation.navigate("ViewMemory", { newMemory, handleExitView });
+        navigation.navigate("ViewMemory", { newMemory, screen, handleExitView });
     };
 
     return (

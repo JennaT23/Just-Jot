@@ -23,6 +23,7 @@ export const ViewEntry = ({ navigation, route }) => {
     const handleExitView = route.params.handleExitView;
     const theme = useTheme();
     const entry = route.params.entry;
+    const screen = route.params.screen;
     const [displayLocation, setDisplayLocation] = useState('');
     const [displaySubtitle, setDisplaySubtitle] = useState('');
 
@@ -30,7 +31,7 @@ export const ViewEntry = ({ navigation, route }) => {
         const fetchDisplayAddress = async () => {
             const address = await displayAddress(entry.Location);
             setDisplayLocation(address || '');
-            setDisplaySubtitle((entry.Date && formatCustomDateTime(new Date(entry.Date))) + "\nLocation: " + displayLocation);
+            setDisplaySubtitle((entry.DateCreated && formatCustomDateTime(new Date(entry.DateCreated))) + "\nLocation: " + displayLocation);
         };
 
         fetchDisplayAddress();
@@ -72,7 +73,7 @@ export const ViewEntry = ({ navigation, route }) => {
     };
 
     const moveToEditEntry = () => {
-        navigation.navigate("EditEntry", { entry });
+        navigation.navigate("EditEntry", { entry, screen });
     };
 
     const formatGeoPoint = (geopoint) => {
