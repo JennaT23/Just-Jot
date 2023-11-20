@@ -55,23 +55,10 @@ export const appJournalStyle = theme => StyleSheet.create({
         // tintColor: '#fff',
         backgroundColor: theme.colors.BUTTON_COLOR,
     },
-    modalDropdownOption: {
-        padding: 15,
-        borderBottomWidth: 2,
-        borderBottomColor: '#ccc',
-        textAlign: 'center',
-        fontSize: 16,
-      },
-      modalContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: theme.colors.BACKGROUND,
-        margin: 'auto',
-        height: 50,
-        
-        // borderTopLeftRadius: 20,
-        // borderTopRightRadius: 20,  will uncomment when i get the modal window size to change
+    filterDropdown: {
+        height: 40,
+        width: 150,
+        marginRight: 10,
       },
       searchBarContainer: {
         flexDirection: 'row',
