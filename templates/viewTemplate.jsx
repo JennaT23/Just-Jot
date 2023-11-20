@@ -5,8 +5,8 @@ import { Card, Title, Subheading, IconButton } from "react-native-paper";
 import { TouchableOpacity, Image, Alert, View } from "react-native";
 import useTheme from "../appStyles/useTheme";
 import { viewTemplateStyle as viewTemplate_style } from "./viewTemplate.style";
-import { deleteJournalEntryFromFirebase } from "../app/firebase/deleteJournalEntryFromFirebase"; 
-import { deleteMemoryFromFirebase } from "../app/firebase/deleteMemoryFromFirebase"; 
+import { deleteJournalEntryFromFirebase } from "../app/firebase/deleteJournalEntryFromFirebase";
+import { deleteMemoryFromFirebase } from "../app/firebase/deleteMemoryFromFirebase";
 
 
 export const ViewTemplate = ({ navigation, data, index, handleExitView, location, screen }) => {
@@ -33,12 +33,11 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
                     onPress: async () => {
                         try {
                             let homeScreen;
-                            if(screen === 'journal') 
-                            {
+                            if (screen === 'journal') {
                                 await deleteJournalEntryFromFirebase(entryId);
                                 homeScreen = "Journal";
                             }
-                            else if(screen === 'memory') {
+                            else if (screen === 'memory') {
                                 await deleteMemoryFromFirebase(entryId);
                                 homeScreen = "Memories";
                             }
@@ -87,16 +86,14 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
 
     const handleView = () => {
         let editScreen;
-        if(screen === 'memory')
-        {
+        if (screen === 'memory') {
             editScreen = 'EditMemory';
         }
-        else if(screen === 'journal')
-        {
+        else if (screen === 'journal') {
             editScreen = 'EditEntry';
-            
+
         }
-        else{
+        else {
             Alert.alert('Error with navigation');
             return;
         }
@@ -108,27 +105,27 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
         <Card key={index} style={viewTemplatestyle.card}>
             <Card.Content>
                 <TouchableOpacity onPress={() => handleView()}>
-                <View style={viewTemplatestyle.iconContainer}>
-                    <IconButton
-                        icon="delete-forever"
-                        size={31}
-                        onPress={() => handleDeleteEntry(data.id)}
-                        style={viewTemplatestyle.iconButton}
-                        iconColor={theme.colors.DELETE}
-                    />
-                    <IconButton
-                        icon="pencil"
-                        size={30}
-                        onPress={handleView}
-                        style={viewTemplatestyle.iconButton}
-                        iconColor={theme.colors.TEXT}
-                    />
-                </View>
+                    <View style={viewTemplatestyle.iconContainer}>
+                        <IconButton
+                            icon="delete-forever"
+                            size={31}
+                            onPress={() => handleDeleteEntry(data.id)}
+                            style={viewTemplatestyle.iconButton}
+                            iconColor={theme.colors.DELETE}
+                        />
+                        <IconButton
+                            icon="pencil"
+                            size={30}
+                            onPress={handleView}
+                            style={viewTemplatestyle.iconButton}
+                            iconColor={theme.colors.TEXT}
+                        />
+                    </View>
                     <Title style={viewTemplatestyle.title}>{data.Title}</Title>
                     <Subheading style={viewTemplatestyle.subheading}>Created: {formatDate(data.DateCreated)}</Subheading>
                     {screen === 'memory' && (<Subheading style={viewTemplatestyle.subheading}>Marked: {formatDate(data.DateMarked)}</Subheading>)}
                     <Subheading style={viewTemplatestyle.subheading}>Location: {location}</Subheading>
-                    <Paragraph style={{color: theme.colors.TEXT}} numberOfLines={expanded ? undefined : 1}>{data.Text}</Paragraph>
+                    <Paragraph style={{ color: theme.colors.TEXT }} numberOfLines={expanded ? undefined : 1}>{data.Text}</Paragraph>
                     {data.Images && expanded && (
                         <Image style={{ height: 200, width: 200 }} source={{ uri: data.Images }} />
                     )}
