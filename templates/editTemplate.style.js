@@ -31,7 +31,7 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
     },
     card: {
         height: '90%',
-        minHeight: 450,
+        minHeight: 610,
         padding: 10,
         marginLeft: 10,
         marginRight: 10,
@@ -39,14 +39,16 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
         backgroundColor: theme.colors.SPACE,
     },
     textBox: {
+        justifyContent: 'center',
         borderColor: theme.colors.TEXTBOXBORDER,
         borderWidth: 2,
-        marginLeft: 3,
+        marginBottom: 8,
+        margin: 5,
         paddingLeft: 7,
         paddingRight: 7,
         borderRadius: 5,
         height: 35,
-        width: '100%',
+        width: '98%',
     },
     titleContainer: {
         alignItems: 'flex-start',
@@ -54,6 +56,7 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
     },
     label: {
         fontSize: 18,
+        margin: 5,
     },
     dateContainer: {
         marginBottom: 5,
@@ -62,6 +65,8 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
     textInput: {
         color: theme.colors.TEXT,
         fontSize: 18,
+        textAlignVertical: 'center',
+        heigh: '100%',
     },
     scrollView: {
         minHeight: '55%',
@@ -80,13 +85,14 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
     },
     entryContainer: {
         alignItems: 'flex-start',
+        width: '98%',
+        height: '100%',
     },
     entry: {
         flex: 1,
     },
     entryText: {
         textAlignVertical: 'top',
-        flex: 1,
     },
     image: {
         width: 200,
@@ -115,4 +121,4 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
     buttonText: {
         fontSize: 18,
     },
-  })
+})

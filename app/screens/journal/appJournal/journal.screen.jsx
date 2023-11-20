@@ -231,7 +231,7 @@ export const Journal = ({ navigation }) => {
                         data={entry}
                         index={index}
                         handleExitView={handleExitView}
-                        location={displayAddress[index]}
+                        location={displayedAddresses[index]}
                         screen={screen}
                     />
                 ))}

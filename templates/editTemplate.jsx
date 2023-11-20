@@ -16,6 +16,7 @@ import useTheme from '../appStyles/useTheme';
 import { schedulePushNotification } from '../App';
 import { writePicsToFirebase } from '../app/firebase/writePicsToFirebase'
 import { getNotificationPreference } from '../app/notifications/notificationPreferences';
+import { displayAddress } from '../app/location/geocode';
 
 // Styles
 import { appstyle as app_style } from '../appStyles/appstyle';
@@ -57,6 +58,15 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
     const camRef = useRef();
     const auth = getAuth()
     const user = auth.currentUser;
+
+    const fetchAndDisplayAddress = async () => {
+        const address = await displayAddress(coordinates);
+        setSearchText(address);
+    };
+
+    useEffect(() => {
+        fetchAndDisplayAddress();
+    }, [coordinates]);
 
     const showCameraScreen = () => {
         setShowCamera(true);
@@ -176,16 +186,14 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
 
     const saveEntry = async () => {
         let folder;
-        if(screen === 'memory')
-        {
+        if (screen === 'memory') {
             folder = 'Memories';
         }
-        else if(screen === 'journal')
-        {
+        else if (screen === 'journal') {
             folder = 'JournalEntries';
-            
+
         }
-        else{
+        else {
             Alert.alert('Error saving data');
             return;
         }
@@ -209,16 +217,14 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         writeToFirebase(newData);
 
         let homeScreen;
-        if(screen === 'memory')
-        {
+        if (screen === 'memory') {
             homeScreen = 'Memories';
         }
-        else if(screen === 'journal')
-        {
+        else if (screen === 'journal') {
             homeScreen = 'Journal';
-            
+
         }
-        else{
+        else {
             Alert.alert('Error with navigation');
             return;
         }
@@ -288,7 +294,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
     }
 
 
-    return(
+    return (
         <SafeAreaView style={editTemplatestyle.pageContainer}>
             <View style={editTemplatestyle.toolBar}>
                 <IconButton
@@ -312,20 +318,20 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                 </TouchableOpacity>
             </View>
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.content}>
-                <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
+                <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                     <View style={editTemplatestyle.card}>
-                            <View style={editTemplatestyle.titleContainer}>
-                                <Text style={editTemplatestyle.label}>Title:</Text>
-                                <View style={editTemplatestyle.textBox}>
-                                    <TextInput
-                                        placeholder='New Entry'
-                                        placeholderTextColor={theme.colors.SUBHEADING}
-                                        value={title}
-                                        onChangeText={text => setTitle(text)}
-                                        style={editTemplatestyle.textInput}
-                                    />
-                                </View>
+                        <View style={editTemplatestyle.titleContainer}>
+                            <Text style={editTemplatestyle.label}>Title:</Text>
+                            <View style={editTemplatestyle.textBox}>
+                                <TextInput
+                                    placeholder='New Entry'
+                                    placeholderTextColor={theme.colors.SUBHEADING}
+                                    value={title}
+                                    onChangeText={text => setTitle(text)}
+                                    style={editTemplatestyle.textInput}
+                                />
                             </View>
+                        </View>
                         <View>
                             <View style={editTemplatestyle.dateContainer}>
                                 <Text style={editTemplatestyle.label}>Date Created:</Text>
@@ -423,9 +429,9 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                         <View style={editTemplatestyle.entryContainer}>
                             <Text style={editTemplatestyle.label}>Entry:</Text>
                             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
-                                <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled = {true}>
+                                <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                                     <View style={editTemplatestyle.entry}>
-                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING}/>
+                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING} />
 
                                         {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
                                     </View>
