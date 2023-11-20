@@ -66,7 +66,7 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
         color: theme.colors.TEXT,
         fontSize: 18,
         textAlignVertical: 'center',
-        heigh: '100%',
+        height: '100%',
     },
     scrollView: {
         minHeight: '55%',
