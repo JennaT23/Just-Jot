@@ -44,6 +44,7 @@ const common = {
     DELETE: RED,
     TEXTBOXBORDER: LIGHTERGRAY,
     SEPARATIONLINE: DARKGRAY,
+    CAPTURE: WHITE,
 };
 
 const purple = {
@@ -80,7 +81,6 @@ const blue = {
         TEXT: BLACK,
         SUBHEADING: GRAY,
         BUTTON_COLOR: PICTONBLUE,
-        CAPTURE: WHITE,
         SPACE: PALEBLUE,
     },
     dark: {
@@ -90,7 +90,6 @@ const blue = {
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
         BUTTON_COLOR: MIDBLUE,
-        CAPTURE: WHITE,
         SPACE: SPACEBLUE,
     }
 };
@@ -103,7 +102,6 @@ const green = {
         TEXT: BLACK,
         SUBHEADING: GRAY,
         BUTTON_COLOR: DARKSAGEGREEN,
-        CAPTURE: WHITE,
         SPACE: MINTCREAM,
     },
     dark: {
@@ -113,7 +111,6 @@ const green = {
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
         BUTTON_COLOR: DARKSAGEGREEN,
-        CAPTURE: WHITE,
         CARD_BACKGROUND: MINTCREAM,
         SPACE: SPACEGREEN,
     }
@@ -127,7 +124,6 @@ const pink = {
         TEXT: BLACK,
         SUBHEADING: GRAY,
         BUTTON_COLOR: BLUSHPINK,
-        CAPTURE: WHITE,
         SPACE: SNOW,
     },
     dark: {

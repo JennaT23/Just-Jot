@@ -2,8 +2,9 @@ import { getFirestore, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { Alert } from "react-native";
 
 export const deleteJournalEntryFromFirebase = async (entryId) => {
-  try {
-    const db = getFirestore();
+    try {
+        const db = getFirestore();
+        const storage = getStorage();
 
     const entryRef = doc(db, "JournalEntries", entryId);
     const entrySnapshot = await getDoc(entryRef);

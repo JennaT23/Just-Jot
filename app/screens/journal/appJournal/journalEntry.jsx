@@ -1,8 +1,7 @@
-import { Paragraph } from "react-native-paper";
 import { appJournalStyle as appJournal_style } from "./journal.style";
 import useThemedStyles from "../../../../appStyles/useThemedStyles";
 import { useState } from "react";
-import { Card, Title, Subheading } from "react-native-paper";
+import { Card, Title, Subheading, Paragraph } from "react-native-paper";
 import { TouchableOpacity, Image } from "react-native";
 import useTheme from "../../../../appStyles/useTheme";
 
@@ -26,18 +25,18 @@ export const JournalEntry = ({ navigation, entry, index, handleExitView, title, 
                     <Title style={appJournalstyle.title}>{title}</Title>
                     <Subheading style={appJournalstyle.subheading}>{date}</Subheading>
                     <Subheading style={appJournalstyle.subheading}>Location: {location}</Subheading>
-                    <Paragraph style={{color: theme.colors.TEXT}} numberOfLines={expanded ? undefined : 1}>{text}</Paragraph>
+                    <Paragraph style={{ color: theme.colors.TEXT }} numberOfLines={expanded ? undefined : 1}>{text}</Paragraph>
                     {image && expanded && (
                         <Image style={{ height: 200, width: 200 }} source={{ uri: image }} />
                     )}
                     {!expanded && (
                         <TouchableOpacity onPress={toggleExpansion}>
-                            <Subheading style={{color:theme.colors.SUBHEADING}}>Show more...</Subheading>
+                            <Subheading style={{ color: theme.colors.SUBHEADING }}>Show more...</Subheading>
                         </TouchableOpacity>
                     )}
                     {expanded && (
                         <TouchableOpacity onPress={toggleExpansion}>
-                            <Subheading style={{color:theme.colors.SUBHEADING }}>Show less...</Subheading>
+                            <Subheading style={{ color: theme.colors.SUBHEADING }}>Show less...</Subheading>
                         </TouchableOpacity>
                     )}
                 </TouchableOpacity>
