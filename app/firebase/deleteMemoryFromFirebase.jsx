@@ -3,24 +3,26 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 import { Alert } from "react-native";
 
 export const deleteMemoryFromFirebase = async (entryId) => {
-  try {
-    const db = getFirestore();
-    const storage = getStorage();
+    try {
+        const db = getFirestore();
+        const storage = getStorage();
 
-    const entryRef = doc(db, "Memories", entryId);
-    const entrySnapshot = await getDoc(entryRef);
-    const image = entrySnapshot.data().Images;
+        const entryRef = doc(db, "Memories", entryId);
+        const entrySnapshot = await getDoc(entryRef);
+        const image = entrySnapshot.data().Images;
 
-    // delete image from storage
-    const imageRef = ref(storage, image);
-    await deleteObject(imageRef);
+        if (image !== '') {
+            // delete image from storage
+            const imageRef = ref(storage, image);
+            await deleteObject(imageRef);
+        }
 
-    // delete document
-    await deleteDoc(entryRef);
+        // delete document
+        await deleteDoc(entryRef);
 
-    Alert.alert('Entry Deleted');
-  } catch (error) {
-    console.error('Error deleting memory:', error);
-    throw error;
-  }
+        Alert.alert('Entry Deleted');
+    } catch (error) {
+        console.error('Error deleting memory:', error);
+        throw error;
+    }
 };
