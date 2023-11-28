@@ -161,7 +161,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         const url = image ? await writePicsToFirebase(image, 'JournalEntries') : '';
         const geopoint = new GeoPoint(location.latitude, location.longitude);
         const uid = user.uid;
-        const entry = { Date: entryDate, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: entryData.id };
+        const entry = { DateCreated: entryDate, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: entryData.id };
 
         writeToFirebase(entry);
 
@@ -230,12 +230,12 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                 </View>
                 <View style={newEntrystyle.container}>
                     <TextInput
-                    value={title}
-                    onChangeText={text => setTitle(text)}
-                    style={newEntrystyle.cardTitle}
-                    editable placeholder='Add title...'
-                    placeholderTextColor={theme.colors.SUBHEADING}
-                />
+                        value={title}
+                        onChangeText={text => setTitle(text)}
+                        style={newEntrystyle.cardTitle}
+                        editable placeholder='Add title...'
+                        placeholderTextColor={theme.colors.SUBHEADING}
+                    />
                     <TouchableOpacity onPress={() => setShowDatePicker(true)} style={entryTemplatestyle.date}>
                         <Text style={entryTemplatestyle.dateText}>Date: {entryDate.toDateString()}</Text>
                         <IconButton
@@ -267,16 +267,16 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                         />
                     </TouchableOpacity>
 
-                <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
-                    <View style={entryTemplatestyle.textInput}>
-                        <TextInput 
-                        value={text} 
-                        onChangeText={text => setText(text)} 
-                        style={newEntrystyle.noteBody} 
-                        multiline editable 
-                        placeholder='Start writing...' 
-                        placeholderTextColor={theme.colors.SUBHEADING}
-                        />
+                    <ScrollView contentContainerStyle={newEntrystyle.scrollView} style={newEntrystyle.scroll}>
+                        <View style={entryTemplatestyle.textInput}>
+                            <TextInput
+                                value={text}
+                                onChangeText={text => setText(text)}
+                                style={newEntrystyle.noteBody}
+                                multiline editable
+                                placeholder='Start writing...'
+                                placeholderTextColor={theme.colors.SUBHEADING}
+                            />
                             {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
                             {hasCameraPermission && showCamera ? (cameraView()) : (null)}
                             <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
