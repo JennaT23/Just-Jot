@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 // import { Memory } from './memory';
 
-const MyPaginationComponent = ({ data, itemsPerPage }) => {
+const PaginationComponent = ({ data, itemsPerPage }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -13,7 +13,7 @@ const MyPaginationComponent = ({ data, itemsPerPage }) => {
   };
 
   const renderItem = ({ item }) => (
-    <Text>Hello world my name is temple tran!</Text>
+    <Text>entries will be populated here</Text>
   );
 
   return (
@@ -36,4 +36,4 @@ const MyPaginationComponent = ({ data, itemsPerPage }) => {
   );
 };
 
-export default MyPaginationComponent;
+export default PaginationComponent;

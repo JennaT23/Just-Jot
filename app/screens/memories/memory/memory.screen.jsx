@@ -16,7 +16,7 @@ import { displayAddress } from '../../../location/geocode'
 import { Memory } from './memory'
 import { ViewTemplate } from '../../../../templates/viewTemplate'
 import Pagination from 'react-native-pagination'
-import MyPaginationComponent from './PaginationComponent'
+import PaginationComponent from './PaginationComponent'
 
 export const Memories = ({ navigation }) => {
     const theme = useTheme();
@@ -170,8 +170,10 @@ export const Memories = ({ navigation }) => {
             <View>
                 <Text style={appstyle.title}>Hello {username}!</Text>
             </View>
-            {/* <ScrollView>
-                {memories.map((memory, index) => (
+             {/* <ScrollView>
+                
+            
+               {memories.map((memory, index) => (
                     <ViewTemplate
                         navigation={navigation}
                         data={memory}
@@ -180,11 +182,10 @@ export const Memories = ({ navigation }) => {
                         location={displayedAddresses[index]}
                         screen={screen}
                     />
-                ))}
+                ))} 
             </ScrollView> */}
 
-
-            <MyPaginationComponent data={[]} itemsPerPage={1}/>
+            <PaginationComponent data={memories} itemsPerPage={3}/>
 
 {/* 
              <Pagination
