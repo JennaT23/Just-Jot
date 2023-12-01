@@ -33,6 +33,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 // import Pagination from "react-native-pagination";
 import { JournalEntry } from "./journalEntry";
 import { ViewTemplate } from "../../../../templates/viewTemplate";
+import PaginationComponent from "../../../../templates/PaginationComponent";
 
 export const Journal = ({ navigation }) => {
   const theme = useTheme();

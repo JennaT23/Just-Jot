@@ -26,8 +26,7 @@ import { ViewTemplate } from "../../../../templates/viewTemplate";
 import { TextInput } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DropDownPicker from "react-native-dropdown-picker";
-import Pagination from 'react-native-pagination'
-import PaginationComponent from './PaginationComponent'
+import PaginationComponent from "../../../../templates/PaginationComponent";
 
 export const Memories = ({ navigation }) => {
   const theme = useTheme();
@@ -61,17 +60,6 @@ export const Memories = ({ navigation }) => {
         }
     };
 
-    // const fetchMemories = async (page) => {
-    //     try {
-    //         setCurrentPage(page)
-    //         const entries = await fetchMemoriesFromFirebase(currentPage);
-            
-    //         setMemories((prevMemories) => [...prevMemories, ...entries]);
-
-    //     } catch (error) {
-    //         console.log('Error fetching', error);
-    //     }
-    // };
     
 
   useEffect(() => {
@@ -82,12 +70,6 @@ export const Memories = ({ navigation }) => {
   }, [refreshData]);
 
 
-    // const fetchMoreMemories = () => {
-    //     console.log(entries);
-    //     if (memories.length > 0) {
-    //         setCurrentPage((prevPage) => prevPage + 1);
-    //     }
-    // };
 
     const fetchAndDisplayAddresses = async () => {
         const addresses = await Promise.all(
@@ -99,18 +81,6 @@ export const Memories = ({ navigation }) => {
         setDisplayedAddresses(addresses);
     };
 
-    // const fetchAndDisplayAddresses = async () => {
-    //     const addresses = await Promise.all(
-    //         memories.map(async (memory) => {
-    //             const address = await displayAddress(memory.Location);
-    //             return address;
-    //         })
-    //     );
-    //     setDisplayedAddresses((prevAddresses) => [...prevAddresses, ...addresses]);
-    // };
-    // useEffect(() => {
-    //     fetchMemories(currentPage);
-    // }, [currentPage]);
 
   useEffect(() => {
     fetchAndDisplayAddresses();
@@ -217,22 +187,6 @@ export const Memories = ({ navigation }) => {
         return formattedLocation;
     };
 
-    // const [itemOffset, setItemOffset] = useState(0);
-    // const [currentPage, setCurrentPage] = useState(0);
-    // const [totalPages, setTotalPages] = useState(0);
-    // const itemsPerPage = 10;
-
-    // useEffect(() => {
-    //     const endOffset = itemOffset + itemsPerPage;
-    //     setCurrentPage(memories.slice(itemOffset, endOffset));
-    //     setTotalPages(Math.ceil(memories / itemsPerPage));
-    // }, [itemOffset, itemsPerPage, memories]);
-    // // const pageCount = Math.ceil(journalEntries.length / itemsPerPage);
-
-    // const handlePageClick = (event) => {
-    //     const newOffset = (event.selected * itemsPerPage) % memories.length;
-    //     setItemOffset(newOffset);
-    // }
 
   return (
     <SafeAreaView style={appJournalstyle.container}>
@@ -288,7 +242,7 @@ export const Memories = ({ navigation }) => {
           />
         </View>
       </View>
-      <ScrollView>
+      {/* <ScrollView>
         {memories.map((memory, index) => (
           <ViewTemplate
             navigation={navigation}
@@ -299,9 +253,17 @@ export const Memories = ({ navigation }) => {
             screen={screen}
           />
         ))}
-      </ScrollView>
+      </ScrollView> */}
 
-      {/* <PaginationComponent data={memories} itemsPerPage={3}/> */}
+      <PaginationComponent 
+        data={memories} 
+        itemsPerPage={3}
+        navigation={navigation}
+        handleExitView={handleExitView}
+        // location={displayedAddresses[index]}
+        // screen={screen}
+        />
+
       <FAB
         style={appJournalstyle.fab}
         color={theme.colors.TEXT}
