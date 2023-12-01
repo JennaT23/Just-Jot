@@ -105,14 +105,9 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
         <Card key={index} style={viewTemplatestyle.card}>
             <Card.Content>
                 <TouchableOpacity onPress={() => handleView()}>
-                    <View style={viewTemplatestyle.iconContainer}>
-                        <IconButton
-                            icon="delete-forever"
-                            size={31}
-                            onPress={() => handleDeleteEntry(data.id)}
-                            style={viewTemplatestyle.iconButton}
-                            iconColor={theme.colors.DELETE}
-                        />
+                    <Card.Content style={viewTemplatestyle.iconContainer}>
+                        {/* <View style={viewTemplatestyle.iconContainer}> */}
+                        <Title style={viewTemplatestyle.title}>{data.Title}</Title>
                         <IconButton
                             icon="pencil"
                             size={30}
@@ -120,8 +115,15 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
                             style={viewTemplatestyle.iconButton}
                             iconColor={theme.colors.TEXT}
                         />
-                    </View>
-                    <Title style={viewTemplatestyle.title}>{data.Title}</Title>
+                        <IconButton
+                            icon="delete-forever"
+                            size={31}
+                            onPress={() => handleDeleteEntry(data.id)}
+                            style={viewTemplatestyle.iconButton}
+                            iconColor={theme.colors.DELETE}
+                        />
+                        {/* </View> */}
+                    </Card.Content>
                     <Subheading style={viewTemplatestyle.subheading}>Created: {formatDate(data.DateCreated)}</Subheading>
                     {screen === 'memory' && (<Subheading style={viewTemplatestyle.subheading}>Marked: {formatDate(data.DateMarked)}</Subheading>)}
                     <Subheading style={viewTemplatestyle.subheading}>Location: {location}</Subheading>

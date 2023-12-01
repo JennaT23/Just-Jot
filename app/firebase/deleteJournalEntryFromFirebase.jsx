@@ -1,4 +1,4 @@
-import { getFirestore, doc, getDoc, deleteDoc } from "firebase/firestore";
+import { getFirestore, getStorage, doc, getDoc, deleteDoc } from "firebase/firestore";
 import { Alert } from "react-native";
 
 export const deleteJournalEntryFromFirebase = async (entryId) => {
