@@ -209,58 +209,61 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
             navigation.navigate("ViewMemory", { entry, screen, handleExitView });
     };
 
+    const message = "Ready to jot down today's reflections? \n Your thoughts are waiting!";
+
     return (
         <SafeAreaView style={appJournalstyle.container}>
-            <View>
-                <Text style={appJournalstyle.journalTitle}>Hello {username}!</Text>
-            </View>
+            <View style={appJournalstyle.headingContainer}>
+            <Text style={appJournalstyle.journalTitle}>Welcome {username}!</Text>
+            <Text style={appJournalstyle.journalMessage}>{message}</Text> 
+        </View>
             <View style={appJournalstyle.header}>
                 <View style={appJournalstyle.searchBarContainer}>
-                    <TextInput
-                        style={{
-                            color: theme.colors.TEXT,
-                            textShadowColor: theme.colors.SUBHEADING,
-                            ...appJournalstyle.searchBar,
-                        }}
-                        placeholder="Search..."
-                        placeholderTextColor={theme.colors.SUBHEADING}
-                        value={searchQuery}
-                        onChangeText={(text) => setSearchQuery(text)}
+                <TextInput
+                    style={{
+                    color: theme.colors.TEXT,
+                    textShadowColor: theme.colors.SUBHEADING,
+                    ...appJournalstyle.searchBar,
+                    }}
+                    placeholder="Search..."
+                    placeholderTextColor={theme.colors.SUBHEADING}
+                    value={searchQuery}
+                    onChangeText={(text) => setSearchQuery(text)}
+                />
+                <TouchableOpacity onPress={handleSearch}>
+                    <MaterialCommunityIcons
+                    name="magnify"
+                    size={24}
+                    color={theme.colors.TEXT}
                     />
-                    <TouchableOpacity onPress={handleSearch}>
-                        <MaterialCommunityIcons
-                            name="magnify"
-                            size={24}
-                            color={theme.colors.TEXT}
-                        />
+                </TouchableOpacity>
+                {searchQuery.length > 0 && (
+                    <TouchableOpacity onPress={handleClearSearch}>
+                    <Text>Clear</Text>
                     </TouchableOpacity>
-                    {searchQuery.length > 0 && (
-                        <TouchableOpacity onPress={handleClearSearch}>
-                            <Text>Clear</Text>
-                        </TouchableOpacity>
-                    )}
+                )}
                 </View>
                 <View style={{ position: "relative", zIndex: 1 }}>
-                    <DropDownPicker
-                        items={[
-                            { label: "Sort By", value: null },
-                            { label: "Oldest to Newest", value: "Oldest to Newest" },
-                            { label: "Newest to Oldest", value: "Newest to Oldest" },
-                        ]}
-                        defaultValue={selectedFilter}
-                        containerStyle={appJournalstyle.filterDropdown}
-                        style={{ backgroundColor: theme.colors.BACKGROUND }}
-                        itemStyle={{
-                            justifyContent: "flex-start",
-                        }}
-                        dropDownStyle={{ backgroundColor: "#fafafa" }}
-                        onChangeItem={(item) => {
-                            console.log("tried to change items in dropdown");
-                            if (item.value) {
-                                handleFilter(item.value === "Oldest to Newest");
-                            }
-                        }}
-                    />
+                <DropDownPicker
+                    items={[
+                    { label: "Sort By", value: null },
+                    { label: "Oldest to Newest", value: "Oldest to Newest" },
+                    { label: "Newest to Oldest", value: "Newest to Oldest" },
+                    ]}
+                    defaultValue={selectedFilter}
+                    containerStyle={appJournalstyle.filterDropdown}
+                    style={{ backgroundColor: theme.colors.BACKGROUND }}
+                    itemStyle={{
+                    justifyContent: "flex-start",
+                    }}
+                    dropDownStyle={{ backgroundColor: "#fafafa" }}
+                    onChangeItem={(item) => {
+                    console.log("tried to change items in dropdown");
+                    if (item.value) {
+                        handleFilter(item.value === "Oldest to Newest");
+                    }
+                    }}
+                />
                 </View>
             </View>
             <ScrollView>
