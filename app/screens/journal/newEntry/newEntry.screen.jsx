@@ -12,7 +12,7 @@ import { EditTemplate } from '../../../../templates/editTemplate';
 
 export const NewEntry = ({ navigation, route }) => {
     const appstyle = useThemedStyles(app_style);
-    const entry = route.params.entry;
+    const entry = route.params.newEntry;
     const screen = route.params.screen;
     const displayDate = new Date().toDateString();
     const location = getLocation();
