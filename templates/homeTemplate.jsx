@@ -30,7 +30,7 @@ import { displayAddress } from "../app/location/geocode";
 import DropDownPicker from "react-native-dropdown-picker";
 import { JournalEntry } from "../app/screens/journal/appJournal/journalEntry";
 import { ViewTemplate } from "./viewTemplate";
-import PaginationComponent from "./PaginationComponent";
+import PaginationComponent from "./paginationTemplate";
 
 export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }) => {
     const theme = useTheme();

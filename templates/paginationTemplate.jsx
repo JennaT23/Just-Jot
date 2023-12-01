@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native
 import { paginationStyle as pagination_style } from './pagination.style';
 import useThemedStyles from '../appStyles/useThemedStyles';
 
-const PaginationComponent = ({ data, itemsPerPage, navigation, handleExitView, screen }) => {
+const PaginationTemplate = ({ data, itemsPerPage, navigation, handleExitView, screen }) => {
 
   const paginationstyle = useThemedStyles(pagination_style);
   const [displayedAddresses, setDisplayedAddresses] = useState([]);
@@ -49,4 +49,4 @@ const PaginationComponent = ({ data, itemsPerPage, navigation, handleExitView, s
   );
 };
 
-export default PaginationComponent;
+export default PaginationTemplate;
