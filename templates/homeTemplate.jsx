@@ -266,7 +266,7 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                 />
                 </View>
             </View>
-            <ScrollView>
+            <ScrollView style={appJournalstyle.scrollView}>
                 {entries.map((entry, index) => (
                     <ViewTemplate
                         navigation={navigation}

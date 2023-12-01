@@ -4,10 +4,10 @@ export const appJournalStyle = theme => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.BACKGROUND,
-        // padding: 16,
+        // padding: 10,
         // paddingTop: 0,
         margin: 0,
-        alignItems: 'center',
+        //alignItems: 'center',
     },
     headingContainer: {
         backgroundColor: theme.colors.BUTTON_COLOR,
@@ -46,6 +46,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         fontSize: 24,
         textAlign: 'center',
         marginBottom: 20,
+        //marginTop:-10,
     },
     journalMessage: {
         fontSize: 14,
