@@ -52,7 +52,8 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
     const [expanded, setExpanded] = useState(false);
 
     // filter stuff
-    const [selectedFilter, setSelectedFilter] = useState(null);
+    const [selectedFilter, setSelectedFilter] = useState(0);
+    const [open, setOpen] = useState(false);
 
     // grab journal entries from firebase and display them on login
     const fetchEntries = async () => {
@@ -119,8 +120,9 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
             navigation.navigate("NewMemory", { newEntry, screen, handleExitView });
     };
 
-    const handleFilter = (oldestToNewest) => {
+    const handleFilter = ({ oldestToNewest }) => {
         Alert.alert("Dropdown clicked");
+        console.log("filter");
         const sortedEntries = [...entries].sort((a, b) => {
             const dateA = new Date(a.DateCreated);
             const dateB = new Date(b.DateCreated);
@@ -240,16 +242,27 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                         </TouchableOpacity>
                     )}
                 </View>
-                <View style={{ position: "relative", zIndex: 1 }}>
+                {/* position: "relative", */}
+                {/* style={{ zIndex: 1 }} */}
+                <View>
+                    <TouchableOpacity>
+                        <IconButton
+                            icon="filter"
+                            size={35}
+                            iconColor={theme.colors.BUTTON_COLOR}
+                            onPress={() => { setOpen(!open); console.log("open") }}
+                        />
+                    </TouchableOpacity>
                     <DropDownPicker
+                        open={open}
+                        setOpen={setOpen}
                         items={[
-                            { label: "Sort By", value: null },
-                            { label: "Oldest to Newest", value: "Oldest to Newest" },
-                            { label: "Newest to Oldest", value: "Newest to Oldest" },
+                            { label: "Oldest to Newest", value: 0 },
+                            { label: "Newest to Oldest", value: 1 },
                         ]}
                         defaultValue={selectedFilter}
                         containerStyle={appJournalstyle.filterDropdown}
-                        style={{ backgroundColor: theme.colors.BACKGROUND }}
+                        style={{ backgroundColor: theme.colors.BACKGROUND, display: 'none', borderColor: "#ffffff" }}
                         itemStyle={{
                             justifyContent: "flex-start",
                         }}
@@ -257,7 +270,7 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                         onChangeItem={(item) => {
                             console.log("tried to change items in dropdown");
                             if (item.value) {
-                                handleFilter(item.value === "Oldest to Newest");
+                                handleFilter(item.value);
                             }
                         }}
                     />
