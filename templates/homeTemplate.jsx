@@ -28,9 +28,9 @@ import { getLocation } from "../app/location/getLocation";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { displayAddress } from "../app/location/geocode";
 import DropDownPicker from "react-native-dropdown-picker";
-// import Pagination from "react-native-pagination";
 import { JournalEntry } from "../app/screens/journal/appJournal/journalEntry";
 import { ViewTemplate } from "./viewTemplate";
+import PaginationComponent from "./PaginationComponent";
 
 export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }) => {
     const theme = useTheme();
@@ -263,7 +263,7 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                     />
                 </View>
             </View>
-            <ScrollView>
+            {/* <ScrollView>
                 {entries.map((entry, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -274,7 +274,14 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                         screen={screen}
                     />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
+            <PaginationComponent
+                data={entries}
+                itemsPerPage={3}
+                navigation={navigation}
+                handleExitView={handleExitView}
+                screen={screen}
+            />
             <FAB
                 style={appJournalstyle.fab}
                 color={theme.colors.TEXT}

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
-import { ViewTemplate } from './viewTemplate';
+import { View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';import { ViewTemplate } from './viewTemplate';
 import { paginationStyle as pagination_style } from './pagination.style';
 import useThemedStyles from '../appStyles/useThemedStyles';
 
@@ -38,11 +37,11 @@ const PaginationComponent = ({ data, itemsPerPage, navigation, handleExitView, s
         />
         <View style={paginationstyle.paginationContainer}>
           <TouchableOpacity onPress={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
-            <Text style={paginationstyle.buttonText}>Previous</Text>
+            <Text style={paginationstyle.previousText}>Previous</Text>
           </TouchableOpacity>
           <Text style={paginationstyle.pageText}>Page {currentPage} of {totalPages}</Text>
           <TouchableOpacity onPress={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>
-            <Text style={paginationstyle.buttonText}>Next</Text>
+            <Text style={paginationstyle.nextText}>Next</Text>
           </TouchableOpacity>
         </View>
       </View>
