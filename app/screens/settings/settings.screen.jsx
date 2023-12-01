@@ -12,6 +12,7 @@ import { getAuth, signOut } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { schedulePushNotification } from "../../../App";
 import { colors } from '../../../appStyles/themeColors'
+import { getNotificationPreference, setNotificationPreference } from "../../notifications/notificationPreferences";
 
 
 export const Settings = ({ navigation }) => {
@@ -42,7 +43,7 @@ export const Settings = ({ navigation }) => {
             items: [
                 { label: 'Enable Notifications', value: notificationEnabled, type: 'boolean', action: () => handleNotifications() },
                 { label: 'Dark Mode', value: theme.isDarkTheme, type: 'boolean', action: theme.toggleLightDark },
-                { label: 'Testing', type: 'picker', action: () => theme.changeThemeColor() }
+                { label: 'Color Theme', type: 'picker', action: () => theme.changeThemeColor() }
             ],
         },
         {
@@ -164,21 +165,21 @@ export const Settings = ({ navigation }) => {
 
                                         {type === 'picker' && (
                                             <ModalDropdown
-                                            options={colorOptions} // Adding a 'Select a color' option
-                                            onSelect={(idx, color) => {
-                                              if (color !== 'Select a color') {
-                                                theme.changeThemeColor(color);
-                                                setSelectedColor(color); // Update the selected color state
-                                              }
-                                            }}
-                                            dropdownTextStyle={settingstyle.dropdownTextStyle}
-                                            style={settingstyle.dropdown}
-                                          >
-                                            <View style={settingstyle.selectedColor}>
-                                              <Text style={settingstyle.selectedColor}>{selectedColor ? ` ${selectedColor}` : 'Select a color'}</Text>
-                                              
-                                            </View>
-                                          </ModalDropdown>
+                                                options={colorOptions} // Adding a 'Select a color' option
+                                                onSelect={(idx, color) => {
+                                                    if (color !== 'Select a color') {
+                                                        theme.changeThemeColor(color);
+                                                        setSelectedColor(color); // Update the selected color state
+                                                    }
+                                                }}
+                                                dropdownTextStyle={settingstyle.dropdownTextStyle}
+                                                style={settingstyle.dropdown}
+                                            >
+                                                <View style={settingstyle.selectedColor}>
+                                                    <Text style={settingstyle.selectedColor}>{selectedColor ? ` ${selectedColor}` : 'Select a color'}</Text>
+
+                                                </View>
+                                            </ModalDropdown>
                                         )}
 
                                     </View>

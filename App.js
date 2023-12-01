@@ -23,6 +23,7 @@ import { EditTemplate as NewEditEntry } from './templates/editTemplate'
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device'
 import { JournalEntry } from './app/screens/journal/appJournal/journalEntry';
+import { LogBox } from 'react-native';
 
 
 const Stack = createNativeStackNavigator();
@@ -88,11 +89,15 @@ export async function registerForPushNotificationsAsync() {
     let token;
 
     if (Platform.OS === 'android') {
-        await Notifications.setNotificationChannelAsync('default', {
-            importance: Notifications.AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#FF231F7C',
-        });
+        try {
+            await Notifications.setNotificationChannelAsync('default', {
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        } catch (exception) {
+            console.warn(exception);
+        }
     }
 
     if (Device.isDevice) {
@@ -146,19 +151,21 @@ const App = () => {
         };
     }, []);
 
+    LogBox.ignoreAllLogs();
+
     return (
         <ThemeProvider>
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="Login">
-                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="NavBar" component={NavBar} />
-                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Login" component={Login} />
-                    <Stack.Screen options={{ headerShown: false,  headerTitleAlign: 'center', title: 'Register' }} name="Register" component={Register} />
-                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "Forgot Password" }} name="ForgotPassword" component={ForgotPassword} />
-                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="Map" component={Map} />
-                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center',  }} name="Settings" component={Settings} />
-                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Journal" component={Journal} />
-                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center',  }} name="Memories" component={Memories} />
-                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "New Memory" }} name="NewMemory">
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center', }} name="NavBar" component={NavBar} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center', }} name="Login" component={Login} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center', title: 'Register' }} name="Register" component={Register} />
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "Forgot Password" }} name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', }} name="Map" component={Map} />
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', }} name="Settings" component={Settings} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center', }} name="Journal" component={Journal} />
+                    <Stack.Screen options={{ headerShown: false, headerTitleAlign: 'center', }} name="Memories" component={Memories} />
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "New Memory" }} name="NewMemory">
                         {props => <NewMemory {...props} />}
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "New Entry" }} name="NewEntry">
@@ -185,7 +192,7 @@ const App = () => {
                     <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "View Memory" }} name="ViewMemory">
                         {props => <ViewMemory {...props} />}
                     </Stack.Screen>
-                    <Stack.Screen options={{ headerShown: true,  headerTitleAlign: 'center', title: "Edit Memory" }} name="NewEditEntry">
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "Edit Memory" }} name="NewEditEntry">
                         {props => <NewEditEntry {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
