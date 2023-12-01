@@ -4,9 +4,10 @@ import { ViewTemplate } from './viewTemplate';
 import { paginationStyle as pagination_style } from './pagination.style';
 import useThemedStyles from '../appStyles/useThemedStyles';
 
-const PaginationComponent = ({ data, itemsPerPage, navigation, handleExitView }) => {
+const PaginationComponent = ({ data, itemsPerPage, navigation, handleExitView, screen }) => {
 
   const paginationstyle = useThemedStyles(pagination_style);
+  const [displayedAddresses, setDisplayedAddresses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
@@ -17,12 +18,14 @@ const PaginationComponent = ({ data, itemsPerPage, navigation, handleExitView })
   };
 
   const renderItem = ({ item, index }) => (
-      <ViewTemplate
-        navigation={navigation}
-        data={item}
-        index={index}
-        handleExitView={handleExitView}
-      />
+    <ViewTemplate
+      navigation={navigation}
+      data={item}
+      index={index}
+      handleExitView={handleExitView}
+      location={displayedAddresses[index]}
+      screen={screen}
+    />
   );
 
   return (

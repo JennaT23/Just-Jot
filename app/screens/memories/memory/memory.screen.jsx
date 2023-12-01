@@ -261,7 +261,7 @@ export const Memories = ({ navigation }) => {
         navigation={navigation}
         handleExitView={handleExitView}
         // location={displayedAddresses[index]}
-        // screen={screen}
+        screen={screen}
         />
 
       <FAB
