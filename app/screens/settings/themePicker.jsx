@@ -40,7 +40,9 @@ export const ThemePicker = ({ navigation }) => {
                             key={index}
                             style={[settingstyle.colorOption, { backgroundColor: colors[color].light.BACKGROUND }]}
                             onPress={() => theme.changeThemeColor(color)}
-                        />
+                        >
+                            <Text style={settingstyle.colorOptionText}>{color}</Text>
+                        </TouchableOpacity>
                     ))}
                 </View>
             </View>

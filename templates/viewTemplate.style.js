@@ -10,8 +10,10 @@ export const viewTemplateStyle = (theme) => StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 20,
         color: theme.colors.TEXT,
-        marginTop: 0,
+        marginLeft: -15,
         paddingTop: 0,
+        flex: 1,
+        //justifyContent: "space-evenly",
     },
     subheading: {
         color: theme.colors.SUBHEADING,
@@ -19,11 +21,11 @@ export const viewTemplateStyle = (theme) => StyleSheet.create({
     iconContainer: {
         flex: 0,
         flexDirection: "row",
-        justifyContent: "flex-end",
+        //justifyContent: "flex-end",
         columnGap: -20,
         marginTop: -20,
-        marginBottom: -15,
         marginRight: -10,
+        alignItems: "baseline",
     },
     iconButton: {
         marginHorizontal: 5,
