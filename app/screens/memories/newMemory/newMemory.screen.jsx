@@ -13,7 +13,7 @@ import { EditTemplate } from '../../../../templates/editTemplate';
 
 export const NewMemory = ({ navigation, route }) => {
     const appstyle = useThemedStyles(app_style);
-    const memory = route.params.memory;
+    const memory = route.params.newEntry;
     const screen = route.params.screen;
     const displayDate = new Date().toDateString();
     const location = getLocation();
@@ -27,7 +27,7 @@ export const NewMemory = ({ navigation, route }) => {
 
     return (
         // <MemoryTemplate navigation={navigation} memory={memory} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />
-        <EditTemplate navigation={navigation} data={memory} screen={screen} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView}/>
+        <EditTemplate navigation={navigation} data={memory} screen={screen} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />
 
     )
 }
