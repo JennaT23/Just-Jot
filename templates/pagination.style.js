@@ -7,7 +7,7 @@ export const paginationStyle = (theme) => StyleSheet.create({
       },
     paginationContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         padding: 10,
     },
     pageText: {
