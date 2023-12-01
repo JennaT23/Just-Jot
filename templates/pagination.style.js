@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native';
 
 export const paginationStyle = (theme) => StyleSheet.create({
+    containerLayout: {
+        flex: 'column',
+    },
     mainContainer: {
         flex: 1,
         justifyContent: 'space-between',
+        alignSelf: 'flex-start',
       },
     paginationContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignContent: 'stretch',
+        alignSelf: 'flex-end',
         padding: 10,
     },
     pageText: {
