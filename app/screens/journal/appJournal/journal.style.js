@@ -4,26 +4,27 @@ export const appJournalStyle = theme => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.BACKGROUND,
-        padding: 16,
+        padding: 10,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 16,
         paddingHorizontal: 12, // padding to adjust space between buttons
-      },
+    },
     card: {
         padding: 5,
         margin: 5,
         elevation: 1,
         backgroundColor: theme.colors.SPACE,
-        
+
     },
     journalTitle: {
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 24,
         textAlign: 'center',
         marginBottom: 10,
+        marginTop: -10,
     },
     title: {
         fontWeight: 'bold',
@@ -59,8 +60,8 @@ export const appJournalStyle = theme => StyleSheet.create({
         height: 40,
         width: 150,
         marginRight: 10,
-      },
-      searchBarContainer: {
+    },
+    searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         flex: 1,
@@ -70,9 +71,9 @@ export const appJournalStyle = theme => StyleSheet.create({
         borderRadius: 9,
         paddingHorizontal: 8,
         backgroundColor: theme.colors.SPACE,
-      },
-      searchBar: {
+    },
+    searchBar: {
         flex: 1,
         paddingVertical: 8,
-      },
+    },
 })
