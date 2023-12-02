@@ -279,7 +279,7 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                     />
                 </View>
             </View>
-            <ScrollView>
+            <ScrollView style={appJournalstyle.scrollView}>
                 {entries.map((entry, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -291,13 +291,13 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                     />
                 ))}
             </ScrollView>
-            <PaginationComponent
+            {/* <PaginationComponent
                 data={entries}
                 itemsPerPage={3}
                 navigation={navigation}
                 handleExitView={handleExitView}
                 screen={screen}
-            />
+            /> */}
             <FAB
                 style={appJournalstyle.fab}
                 color={theme.colors.TEXT}

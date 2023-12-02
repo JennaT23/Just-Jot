@@ -1,6 +1,8 @@
 import { StyleSheet, Dimensions, useWindowDimensions } from "react-native";
 
-export const editTemplateStyle = (theme) => StyleSheet.create({
+// const getHeight = 
+
+export const editTemplateStyle = (theme, screen) => StyleSheet.create({
     pageContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -22,16 +24,16 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
         borderRadius: 5,
     },
     content: {
-        marginTop: 30,
+        marginTop: 10,
         padding: 5,
         paddingTop: 25,
         width: '100%',
-        height: '90%',
-        minHeight: '90%',
+        height: '95%',
+        minHeight: '95%',
     },
     card: {
-        height: '90%',
-        minHeight: 610,
+        height: '85%',
+        minHeight: 525,
         padding: 10,
         marginLeft: 10,
         marginRight: 10,
@@ -66,7 +68,7 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
         color: theme.colors.TEXT,
         fontSize: 18,
         textAlignVertical: 'center',
-        height: '100%',
+        // height: '100%',
     },
     scrollView: {
         minHeight: '55%',
@@ -79,20 +81,22 @@ export const editTemplateStyle = (theme) => StyleSheet.create({
         paddingLeft: 7,
         paddingRight: 7,
         borderRadius: 5,
-        height: '55%',
+        height: '45%',
         maxHeight: 200,
-        width: '100%',
+        width: '98%',
     },
     entryContainer: {
         alignItems: 'flex-start',
-        width: '98%',
-        height: '100%',
+        height: screen === 'journal' ? '100%' : '50%',
     },
     entry: {
         flex: 1,
+        // height: '100%',
     },
     entryText: {
         textAlignVertical: 'top',
+        flex: 1,
+        // height: '100%',
     },
     image: {
         width: 200,

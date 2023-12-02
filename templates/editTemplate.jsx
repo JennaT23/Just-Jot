@@ -34,7 +34,9 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
     const appstyle = useThemedStyles(app_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
     const entryTemplatestyle = useThemedStyles(entryTemplate_style);
-    const editTemplatestyle = useThemedStyles(editTemplate_style);
+    const editTemplatestyle = editTemplate_style(theme, screen);
+    // const editTemplatestyle = useThemedStyles(editTemplate_style);
+
 
     const [title, setTitle] = useState(data.Title);
     const [text, setText] = useState(data.Text);
@@ -431,7 +433,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
                                 <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                                     <View style={editTemplatestyle.entry}>
-                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.entryText, editTemplatestyle.textInput]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING} />
+                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.textInput, editTemplatestyle.entryText]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING} />
 
                                         {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
                                     </View>
