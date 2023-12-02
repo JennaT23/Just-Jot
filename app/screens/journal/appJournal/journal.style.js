@@ -4,27 +4,53 @@ export const appJournalStyle = theme => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.BACKGROUND,
+        // padding: 10,
+        // paddingTop: 0,
+        margin: 0,
+        //alignItems: 'center',
+    },
+    headingContainer: {
+        backgroundColor: theme.colors.BUTTON_COLOR,
+        borderBottomRightRadius: 30,
+        borderBottomLeftRadius: 30,
+        // height: '35%',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         padding: 10,
+        paddingBottom: 35,
+        marginTop: -30,
+        marginBottom: 45,
     },
     header: {
+        position: 'absolute',
+        marginTop: 110,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
-        paddingHorizontal: 12, // padding to adjust space between buttons
-    },
+        paddingHorizontal: 16, // padding to adjust space between buttons
+        marginBottom: 10,
+      },
+    scrollView: {
+        padding: 16,
+        paddingTop: 0,
+      },
     card: {
         padding: 5,
         margin: 5,
         elevation: 1,
         backgroundColor: theme.colors.SPACE,
-
+        
     },
     journalTitle: {
         fontWeight: 'bold',
         fontSize: 24,
         textAlign: 'center',
-        marginBottom: 10,
-        marginTop: -10,
+        marginBottom: 20,
+        //marginTop:-10,
+    },
+    journalMessage: {
+        fontSize: 14,
+        textAlign: 'center',
     },
     title: {
         fontWeight: 'bold',
@@ -57,8 +83,9 @@ export const appJournalStyle = theme => StyleSheet.create({
         backgroundColor: theme.colors.BUTTON_COLOR,
     },
     filterDropdown: {
-        height: 40,
+        // height: 40,
         width: 150,
+        // marginRight: 10,
         marginLeft: -80,
         marginTop: 60,
         position: 'absolute',
@@ -73,9 +100,9 @@ export const appJournalStyle = theme => StyleSheet.create({
         borderRadius: 9,
         paddingHorizontal: 8,
         backgroundColor: theme.colors.SPACE,
-    },
+      },
     searchBar: {
         flex: 1,
         paddingVertical: 8,
-    },
+      },
 })

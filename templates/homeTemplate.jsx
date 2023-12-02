@@ -211,36 +211,39 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
             navigation.navigate("ViewMemory", { entry, screen, handleExitView });
     };
 
+    const message = "Ready to jot down today's reflections? \n Your thoughts are waiting!";
+
     return (
         <SafeAreaView style={appJournalstyle.container}>
-            <View>
-                <Text style={appJournalstyle.journalTitle}>Hello {username}!</Text>
-            </View>
+            <View style={appJournalstyle.headingContainer}>
+            <Text style={appJournalstyle.journalTitle}>Welcome {username}!</Text>
+            <Text style={appJournalstyle.journalMessage}>{message}</Text> 
+        </View>
             <View style={appJournalstyle.header}>
                 <View style={appJournalstyle.searchBarContainer}>
-                    <TextInput
-                        style={{
-                            color: theme.colors.TEXT,
-                            textShadowColor: theme.colors.SUBHEADING,
-                            ...appJournalstyle.searchBar,
-                        }}
-                        placeholder="Search..."
-                        placeholderTextColor={theme.colors.SUBHEADING}
-                        value={searchQuery}
-                        onChangeText={(text) => setSearchQuery(text)}
+                <TextInput
+                    style={{
+                    color: theme.colors.TEXT,
+                    textShadowColor: theme.colors.SUBHEADING,
+                    ...appJournalstyle.searchBar,
+                    }}
+                    placeholder="Search..."
+                    placeholderTextColor={theme.colors.SUBHEADING}
+                    value={searchQuery}
+                    onChangeText={(text) => setSearchQuery(text)}
+                />
+                <TouchableOpacity onPress={handleSearch}>
+                    <MaterialCommunityIcons
+                    name="magnify"
+                    size={24}
+                    color={theme.colors.TEXT}
                     />
-                    <TouchableOpacity onPress={handleSearch}>
-                        <MaterialCommunityIcons
-                            name="magnify"
-                            size={24}
-                            color={theme.colors.TEXT}
-                        />
+                </TouchableOpacity>
+                {searchQuery.length > 0 && (
+                    <TouchableOpacity onPress={handleClearSearch}>
+                    <Text>Clear</Text>
                     </TouchableOpacity>
-                    {searchQuery.length > 0 && (
-                        <TouchableOpacity onPress={handleClearSearch}>
-                            <Text>Clear</Text>
-                        </TouchableOpacity>
-                    )}
+                )}
                 </View>
                 {/* position: "relative", */}
                 {/* style={{ zIndex: 1 }} */}
@@ -276,7 +279,7 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                     />
                 </View>
             </View>
-            {/* <ScrollView>
+            <ScrollView>
                 {entries.map((entry, index) => (
                     <ViewTemplate
                         navigation={navigation}
@@ -287,7 +290,7 @@ export const HomeTemplate = ({ navigation, fetchFromFirebase, screen, newEntry }
                         screen={screen}
                     />
                 ))}
-            </ScrollView> */}
+            </ScrollView>
             <PaginationComponent
                 data={entries}
                 itemsPerPage={3}
