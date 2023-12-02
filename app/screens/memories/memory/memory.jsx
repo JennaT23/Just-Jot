@@ -7,6 +7,7 @@ import { TouchableOpacity, Image } from "react-native";
 import useTheme from '../../../../appStyles/useTheme';
 
 
+
 export const Memory = ({ navigation, memory, index, handleExitView, title, dateCreated, dateMarked, location, text, image }) => {
     const theme = useTheme();
     const appJournalstyle = useThemedStyles(appJournal_style);
