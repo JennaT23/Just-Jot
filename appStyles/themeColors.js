@@ -32,7 +32,7 @@ const DARKPINK = '#5B2032';         // dark background
 
 const WHITESMOKE = '#FAF9F6';       // Light brown space
 const NUDE = '#bcb8b1';             // light background
-const LIGHTBROWN = '#90827A';       // light button
+const LIGHTBROWN = '#81756D';       // light button
 const BROWN = '#8a817c';            // dark space
 const DARKBROWN = '#463f3a';        // dark background
 

@@ -13,7 +13,7 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
     const theme = useTheme();
     const viewTemplatestyle = useThemedStyles(viewTemplate_style);
     const [expanded, setExpanded] = useState(false);
-    console.log('data', data);
+    // console.log('data', data);
 
     const toggleExpansion = () => {
         setExpanded(!expanded);

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, View, Switch, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native"
+import { SafeAreaView, View, Switch, Image, TouchableOpacity } from "react-native"
 import ModalDropdown from 'react-native-modal-dropdown';
-import { TabView } from 'react-native-paper'
 import Text from '../../../appStyles/customStyle'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
 import { settingsStyle as settings_style } from './settings.style'
@@ -30,7 +29,6 @@ export const Settings = ({ navigation }) => {
 
     const auth = getAuth();
     const user = auth.currentUser;
-    const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [notificationEnabled, setNotificationEnabled] = useState(true);
@@ -92,10 +90,6 @@ export const Settings = ({ navigation }) => {
         }
     };
 
-    const handleThemeChange = () => {
-
-    }
-
     return (
 
         <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
@@ -147,12 +141,7 @@ export const Settings = ({ navigation }) => {
 
                                         <View style={settingstyle.rowSpacer} />
 
-                                        {/* {type === 'input' && (
-                                            <Text style={settingstyle.rowValue}>{value}</Text>
-                                        )} */}
-
                                         {type === 'boolean' && <Switch value={value} onValueChange={action} />}
-
 
                                         {(type === 'link' &&
                                             <TouchableOpacity onPress={action}>
@@ -176,12 +165,11 @@ export const Settings = ({ navigation }) => {
                                                 style={settingstyle.dropdown}
                                             >
                                                 <View style={settingstyle.selectedColor}>
-                                                    <Text style={settingstyle.selectedColor}>{selectedColor ? ` ${selectedColor}` : 'Select a color'}</Text>
+                                                    <Text style={settingstyle.selectedColor}> {selectedColor}</Text>
 
                                                 </View>
                                             </ModalDropdown>
                                         )}
-
                                     </View>
 
                                 </View>

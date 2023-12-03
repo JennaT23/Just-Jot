@@ -1,32 +1,23 @@
 import { StyleSheet } from 'react-native';
 
 export const paginationStyle = (theme) => StyleSheet.create({
-    containerLayout: {
-        flex: 'column',
-    },
     mainContainer: {
         flex: 1,
-        justifyContent: 'space-between',
-        alignSelf: 'flex-start',
+        padding: 16,
+        paddingTop: 1,
       },
     paginationContainer: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignSelf: 'flex-end',
-        padding: 10,
+        justifyContent: 'space-around',
+        padding: 5,
+        paddingBottom: 10,
     },
     pageText: {
+        fontSize: 14,
         alignSelf: 'center',
-        color: theme.colors.TEXT,
-    },
-    previousText: {
-        alignContent:'flex-start',
         color:theme.colors.TEXT,
-        textDecorationLine: 'underline',
     },
-    nextText: {
-        alignSelf: 'flex-end',
+    moveButton: {
         color:theme.colors.TEXT,
-        textDecorationLine: 'underline',
     },
 })

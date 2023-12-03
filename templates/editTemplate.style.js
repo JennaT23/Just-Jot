@@ -114,7 +114,7 @@ export const editTemplateStyle = (theme, screen) => StyleSheet.create({
         marginHorizontal: 5,
     },
     saveButton: {
-        backgroundColor: theme.colors.BUTTON_COLOR,
+        backgroundColor: theme.colors.SPACE,
         padding: 5,
         borderRadius: 10,
         alignItems: 'center',
@@ -124,5 +124,6 @@ export const editTemplateStyle = (theme, screen) => StyleSheet.create({
     },
     buttonText: {
         fontSize: 18,
+        color: theme.colors.TEXT,
     },
 })
