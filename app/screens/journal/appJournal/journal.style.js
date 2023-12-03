@@ -27,7 +27,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         marginTop: 110,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 16, // padding to adjust space between buttons
+        paddingHorizontal: 16, 
         marginBottom: 10,
       },
     scrollView: {
@@ -105,4 +105,37 @@ export const appJournalStyle = theme => StyleSheet.create({
         flex: 1,
         paddingVertical: 8,
       },
+      centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 10,
+        backgroundColor: theme.colors.BACKGROUND,
+        borderRadius: 20,
+        padding: 50,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 10
+    },
+    openButton: {
+        backgroundColor: theme.colors.BUTTON_COLOR,
+        borderRadius: 20,
+        padding: 15,
+        margin: 7,
+        elevation: 0
+    },
+    textStyle: {
+        color: "black",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
 })
