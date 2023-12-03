@@ -214,8 +214,8 @@ export const HomeTemplate = ({
       navigation.navigate("ViewMemory", { entry, screen, handleExitView });
   };
 
-  const message =
-    "Ready to jot down today's reflections? \n Your thoughts are waiting!";
+  const message = screen === 'journal' ? 
+    "Ready to jot down today's reflections? \n Your thoughts are waiting!" : "Want to remember a memory in the future? \n Write it down and set a date!";
 
   return (
     <SafeAreaView style={appJournalstyle.container}>
@@ -252,11 +252,13 @@ export const HomeTemplate = ({
         {/* position: "relative", */}
         {/* style={{ zIndex: 1 }} */}
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity style={appJournalstyle.sortButton}>
             <IconButton
               icon="filter"
               size={35}
-              iconColor={theme.colors.BUTTON_COLOR}
+              iconColor={theme.colors.TEXT}
+              containerColor={theme.colors.BUTTON_COLOR}
+              style={appJournalstyle.sortButton}
               onPress={() => {
                 setOpen(!open);
                 console.log("open");

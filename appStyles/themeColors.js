@@ -39,6 +39,8 @@ const DARKBROWN = '#463f3a';        // dark background
 const LIGHTERGRAY = '#c9c9c9';
 const DARKGRAY = '#787878';
 const RED = '#e61212';
+const MEDIUMPURPLE = '#af92d5';
+const MEDIUMPURPLE2 = '#5F428A';
 
 const common = {
     DELETE: RED,
@@ -57,7 +59,7 @@ const purple = {
         SUBHEADING: GRAY,
         TEXT_ENTRY: PALEPURPLE,
         SPACE: PALEPURPLE,
-
+        HEADING: MEDIUMPURPLE,
     },
     dark: {
         ...common,
@@ -68,6 +70,7 @@ const purple = {
         SUBHEADING: LIGHTGRAY,
         TEXT_ENTRY: PURPLE,
         SPACE: SPACEPURPLE,
+        HEADING: MEDIUMPURPLE2,
     }
 };
 
