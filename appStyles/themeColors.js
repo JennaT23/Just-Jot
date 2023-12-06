@@ -40,7 +40,9 @@ const LIGHTERGRAY = '#c9c9c9';
 const DARKGRAY = '#787878';
 const RED = '#e61212';
 const MEDIUMPURPLE = '#af92d5';
-const MEDIUMPURPLE2 = '#5F428A';
+const DARKMEDIUMPURPLE = '#5F428A';
+const MEDIUMBLUE = '#8fc2e5';
+const DARKMEDIUMBLUE = '#346487';
 
 const common = {
     DELETE: RED,
@@ -70,7 +72,7 @@ const purple = {
         SUBHEADING: LIGHTGRAY,
         TEXT_ENTRY: PURPLE,
         SPACE: SPACEPURPLE,
-        HEADING: MEDIUMPURPLE2,
+        HEADING: DARKMEDIUMPURPLE,
     }
 };
 
@@ -79,12 +81,11 @@ const blue = {
         ...common,
         BACKGROUND: BLUE,
         BUTTON_TEXT: WHITE,
-        BUTTON_COLOR: PURPLE,
-        BUTTON_TEXT: WHITE,
         TEXT: BLACK,
         SUBHEADING: GRAY,
         BUTTON_COLOR: PICTONBLUE,
         SPACE: PALEBLUE,
+        HEADING: MEDIUMBLUE,
     },
     dark: {
         ...common,
@@ -94,6 +95,7 @@ const blue = {
         SUBHEADING: LIGHTGRAY,
         BUTTON_COLOR: MIDBLUE,
         SPACE: SPACEBLUE,
+        HEADING: DARKMEDIUMBLUE,
     }
 };
 

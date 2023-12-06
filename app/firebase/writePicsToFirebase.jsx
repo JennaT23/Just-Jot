@@ -20,7 +20,7 @@ export const writePicsToFirebase = async (image, folder) => {
         imgUrl = await getDownloadURL(storageRef);
         imgUrl = imgUrl.toString();
     } catch (e) {
-        console.error(e);
+        console.error("couldn't save image", e);
     }
     // Alert.alert(
     //   'Photo uploaded!'

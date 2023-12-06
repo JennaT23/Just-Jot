@@ -320,7 +320,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                     <Text style={[appstyle.buttonText, editTemplatestyle.buttonText]}>SAVE</Text>
                 </TouchableOpacity>
             </View>
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.content}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={200} style={editTemplatestyle.content}>
                 <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                     <View style={editTemplatestyle.card}>
                         <View style={editTemplatestyle.titleContainer}>
@@ -431,7 +431,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                         </View>
                         <View style={editTemplatestyle.entryContainer}>
                             <Text style={editTemplatestyle.label}>Entry:</Text>
-                            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
+                            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={200} style={editTemplatestyle.scrollContainer}>
                                 <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                                     <View style={editTemplatestyle.entry}>
                                         <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.textInput, editTemplatestyle.entryText]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING} />
