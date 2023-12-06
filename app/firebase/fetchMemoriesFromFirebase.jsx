@@ -15,6 +15,7 @@ export const fetchMemoriesFromFirebase = async () => {
             DateCreated: doc.data().DateCreated.toDate(),
             DateMarked: doc.data().DateMarked.toDate(),
             Location: doc.data().Location,
+            Address: doc.data().Address,
             Title: doc.data().Title,
             Text: doc.data().Text,
             Title: doc.data().Title,

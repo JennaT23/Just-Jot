@@ -32,6 +32,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { JournalEntry } from "../app/screens/journal/appJournal/journalEntry";
 import { ViewTemplate } from "./viewTemplate";
 import PaginationComponent from "./paginationTemplate";
+import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeTemplate = ({
   navigation,
@@ -71,31 +72,41 @@ export const HomeTemplate = ({
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      setUsername(user.displayName);
-    }
-    fetchEntries();
-  }, [refreshData]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setUsername(user.displayName);
+  //   }
+  //   fetchEntries();
+  // }, [refreshData]);
 
-  const fetchAndDisplayAddresses = async () => {
-    const addresses = await Promise.all(
-      entries.map(async (entry) => {
-        const address = await displayAddress(entry.Location);
-        return address;
-      })
-    );
-    setDisplayedAddresses(addresses);
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      if (user) {
+        setUsername(user.displayName);
+      }
+      fetchEntries();
+    }, [refreshData])
+);
 
-  useEffect(() => {
-    fetchAndDisplayAddresses();
-  }, [entries]);
+  // const fetchAndDisplayAddresses = async () => {
+  //   const addresses = await Promise.all(
+  //     entries.map(async (entry) => {
+  //       const address = await displayAddress(entry.Location);
+  //       return address;
+  //     })
+  //   );
+  //   setDisplayedAddresses(addresses);
+  // };
+
+  // useEffect(() => {
+  //   fetchAndDisplayAddresses();
+  // }, [entries]);
 
   const handleExitView = () => {
     navigation.navigate("NavBar");
     setRefreshData((prev) => prev + 1);
   };
+
 
   const moveNewEntry = () => {
     let newEntry;

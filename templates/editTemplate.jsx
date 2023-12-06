@@ -130,7 +130,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                 setHasCameraPermission(status === 'granted');
             })();
         }, [])
-      );
+    );
 
 
     const takePicture = async () => {
@@ -201,8 +201,10 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         const url = image ? await writePicsToFirebase(image, folder) : '';
         console.log("url:", url);
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
+        const address = await displayAddress(coordinates);
+        console.log("addr: ", address);
         const uid = user.uid;
-        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
+        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Address: address, Title: title, Text: text, Images: url, uid: uid, id: data.id };
 
         // console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
@@ -309,7 +311,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                     icon="camera"
                     size={30}
                     iconColor={theme.colors.TEXT}
-                    onPress={() => {setShowCamera(true)}}
+                    onPress={() => { setShowCamera(true) }}
                     style={editTemplatestyle.iconButton}
                 />
                 <TouchableOpacity
@@ -445,7 +447,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
 
             <Modal
                 style={editTemplatestyle.cameraModalContainer}
-                visible={ showCamera}
+                visible={showCamera}
                 onRequestClose={closeCamera}
             >
                 {cameraView()}

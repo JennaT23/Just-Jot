@@ -10,6 +10,7 @@ export const editMemoriesToFirebase = async (memory) => {
             DateCreated: memory.DateCreated,
             DateMarked: memory.DateMarked,
             Location: memory.Location,
+            Address: memory.Address,
             Title: memory.Title,
             Text: memory.Text,
             Images: memory.Images,
@@ -18,7 +19,7 @@ export const editMemoriesToFirebase = async (memory) => {
         Alert.alert('Entry Saved');
 
     } catch (error) {
-        console.error('Error saving journal entry:', error);
+        console.error('Error saving memory entry:', error);
         throw error;
     }
 }

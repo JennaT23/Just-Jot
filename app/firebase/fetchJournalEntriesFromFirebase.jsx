@@ -15,6 +15,7 @@ export const fetchJournalEntriesFromFirebase = async () => {
             id: doc.id,
             DateCreated: doc.data().DateCreated.toDate(),
             Location: doc.data().Location,
+            Address: doc.data().Address,
             Title: doc.data().Title,
             Text: doc.data().Text,
             Title: doc.data().Title,
