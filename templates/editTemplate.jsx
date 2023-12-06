@@ -130,7 +130,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                 setHasCameraPermission(status === 'granted');
             })();
         }, [])
-      );
+    );
 
 
     const takePicture = async () => {
@@ -309,7 +309,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                     icon="camera"
                     size={30}
                     iconColor={theme.colors.TEXT}
-                    onPress={() => {setShowCamera(true)}}
+                    onPress={() => { setShowCamera(true) }}
                     style={editTemplatestyle.iconButton}
                 />
                 <TouchableOpacity
@@ -445,7 +445,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
 
             <Modal
                 style={editTemplatestyle.cameraModalContainer}
-                visible={ showCamera}
+                visible={showCamera}
                 onRequestClose={closeCamera}
             >
                 {cameraView()}

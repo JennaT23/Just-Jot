@@ -5,6 +5,7 @@ import { ViewTemplate } from './viewTemplate';
 import { paginationStyle as pagination_style } from './pagination.style';
 import useThemedStyles from '../appStyles/useThemedStyles';
 import useTheme from "../appStyles/useTheme";
+import { displayAddress } from '../app/location/geocode';
 
 const PaginationTemplate = ({ data: entries, itemsPerPage, navigation, handleExitView, screen }) => {
   const theme = useTheme();
@@ -39,7 +40,7 @@ useEffect(() => {
     data={entries}
     index={index}
     handleExitView={handleExitView}
-    location={displayedAddresses[index]}
+    location={displayAddress[index]}
     screen={screen}
   />
   );

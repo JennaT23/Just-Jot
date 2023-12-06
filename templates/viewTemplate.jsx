@@ -1,23 +1,35 @@
 import { Paragraph } from "react-native-paper";
 import useThemedStyles from "../appStyles/useThemedStyles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, Title, Subheading, IconButton } from "react-native-paper";
 import { TouchableOpacity, Image, Alert, View } from "react-native";
 import useTheme from "../appStyles/useTheme";
 import { viewTemplateStyle as viewTemplate_style } from "./viewTemplate.style";
 import { deleteJournalEntryFromFirebase } from "../app/firebase/deleteJournalEntryFromFirebase";
 import { deleteMemoryFromFirebase } from "../app/firebase/deleteMemoryFromFirebase";
+import { displayAddress } from '../app/location/geocode';
 
 
 export const ViewTemplate = ({ navigation, data, index, handleExitView, location, screen }) => {
     const theme = useTheme();
     const viewTemplatestyle = useThemedStyles(viewTemplate_style);
     const [expanded, setExpanded] = useState(false);
+    const [coordinates, setCoordinates] = useState(data.Location);
+    const [loc, setLoc] = useState();
     // console.log('data', data);
 
     const toggleExpansion = () => {
         setExpanded(!expanded);
     };
+
+    const fetchAndDisplayAddress = async () => {
+        const address = await displayAddress(coordinates);
+        setLoc(address);
+    };
+
+    useEffect(() => {
+        fetchAndDisplayAddress();
+    }, [coordinates]);
 
     const handleDeleteEntry = async (entryId) => {
         Alert.alert(
@@ -126,7 +138,7 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
                     </Card.Content>
                     <Subheading style={viewTemplatestyle.subheading}>Created: {formatDate(data.DateCreated)}</Subheading>
                     {screen === 'memory' && (<Subheading style={viewTemplatestyle.subheading}>Marked: {formatDate(data.DateMarked)}</Subheading>)}
-                    <Subheading style={viewTemplatestyle.subheading}>Location: {location}</Subheading>
+                    <Subheading style={viewTemplatestyle.subheading}>Location: {loc}</Subheading>
                     <Paragraph style={{ color: theme.colors.TEXT }} numberOfLines={expanded ? undefined : 1}>{data.Text}</Paragraph>
                     {data.Images && expanded && (
                         <Image style={{ height: 200, width: 200 }} source={{ uri: data.Images }} />
