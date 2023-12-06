@@ -85,7 +85,7 @@ export const HomeTemplate = ({
                 setUsername(user.displayName);
             }
             fetchEntries();
-        }, [refreshData, entries])
+        }, [refreshData])//, entries])
     );
 
     // const fetchAndDisplayAddresses = async () => {
