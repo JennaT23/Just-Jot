@@ -9,6 +9,7 @@ export const writeJournalEntryToFirebase = async (entry) => {
     const docRef = await addDoc(collection(db, "JournalEntries"), {
         DateCreated: entry.DateCreated,
         Location: entry.Location,
+        Address: entry.Address,
         Title: entry.Title,
         Text: entry.Text, 
         Images: entry.Images,

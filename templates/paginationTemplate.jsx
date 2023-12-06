@@ -7,43 +7,110 @@ import useThemedStyles from '../appStyles/useThemedStyles';
 import useTheme from "../appStyles/useTheme";
 import { displayAddress } from '../app/location/geocode';
 
-const PaginationTemplate = ({ data: entries, itemsPerPage, navigation, handleExitView, screen }) => {
+const PaginationTemplate = ({ data, itemsPerPage, navigation, handleExitView, screen }) => {
   const theme = useTheme();
   const paginationstyle = useThemedStyles(pagination_style);
   const [displayedAddresses, setDisplayedAddresses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(entries.length / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+//   let displayedAddresses;
+// console.log("data[0]: ", data[0]);
   
   const fetchAndDisplayAddresses = async () => {
+    console.log("data: ", data);
     const addresses = await Promise.all(
-        entries.map(async (entry) => {
+        data.map(async (entry) => {
+            console.log("entry: ", entry.Location);
             const address = await displayAddress(entry.Location);
+            console.log("address:", address)
             return address;
         })
     );
+    // const addresses = await displayAddress(data);
     setDisplayedAddresses(addresses);
+    // displayedAddresses = addresses;
+    console.log("addresses: ", addresses);
 };
 
-useEffect(() => {
-    fetchAndDisplayAddresses();
-}, [entries]);
+// useEffect(() => {
+//     // fetchAndDisplayAddresses();
+//     const fetchAndDisplayAddresses = async () => {
+//         try{
+//             console.log("data: ", data);
+//             const addresses = await Promise.all(
+//                 data.map(async (entry) => {
+//                     console.log("entry: ", entry.Location);
+//                     const address = await displayAddress(entry.Location);
+//                     console.log("address:", address)
+//                     return address;
+//                 })
+//             );
+//             // const addresses = await displayAddress(data);
+//             setDisplayedAddresses(addresses);
+//             // displayedAddresses = addresses;
+//             console.log("addresses: ", addresses);
+//         }catch(error)
+//         {
+//             console.error(error);
+//         }
+
+//     };
+
+//     if (data.length > 0) {
+//         fetchAndDisplayAddresses();
+//       }
+// }, [data]);
+
+
+const useFetchAddress = (location) => {
+    const [address, setAddress] = useState(null);
+  
+    useEffect(() => {
+      const fetchAddress = async () => {
+        try {
+          const result = await displayAddress(location);
+          setAddress(result);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+  
+      fetchAddress();
+    }, [location]);
+  
+    return address;
+  };
+
 
   const getCurrentPageData = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return entries.slice(startIndex, endIndex);
+    return data.slice(startIndex, endIndex);
   };
 
-  const renderEntries = ({ item: entries, index }) => (
+  const renderEntries = ({ item, index }) => {
+    // const addressToDisplay = displayAddress(item.Location);
+    // const addressToDisplay = useFetchAddress(item.Location);
+
+    // console.log("Rendering Entry:", item, index);
+    // console.log("Data:", data);
+    // console.log("displayedAddresses:", addressToDisplay);
+    // if (!addressToDisplay) {
+    //     // Wait until displayedAddresses[index] is initialized
+    //     return null; // or a loading indicator or some placeholder
+    //   }
+    // console.log("displayedaddresses: ", addressToDisplay);
+    return(
+
   <ViewTemplate
     navigation={navigation}
-    data={entries}
+    data={item}
     index={index}
     handleExitView={handleExitView}
-    location={displayAddress[index]}
     screen={screen}
   />
-  );
+  )
+    };
 
   return (
     <View style={{flex:1}}>

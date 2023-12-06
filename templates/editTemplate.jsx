@@ -201,8 +201,10 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         const url = image ? await writePicsToFirebase(image, folder) : '';
         console.log("url:", url);
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
+        const address = await displayAddress(coordinates);
+        console.log("addr: ", address);
         const uid = user.uid;
-        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
+        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Address: address, Title: title, Text: text, Images: url, uid: uid, id: data.id };
 
         // console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
