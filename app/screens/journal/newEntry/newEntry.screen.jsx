@@ -22,8 +22,6 @@ export const NewEntry = ({ navigation, route }) => {
     const loc = new GeoPoint(location.coords.latitude, location.coords.longitude);
     entry.Location = loc;
 
-    console.log("entry:", entry);
-
     return (
         // <EntryTemplate navigation={navigation} entryData={entry} pickerDisplayDate={displayDate} writeToFirebase={writeJournalEntryToFirebase} handleExitView={route.params.handleExitView} />
         <EditTemplate navigation={navigation} data={entry} screen={screen} writeToFirebase={writeJournalEntryToFirebase} handleExitView={route.params.handleExitView} />

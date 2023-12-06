@@ -28,8 +28,6 @@ import { editTemplateStyle as editTemplate_style } from './editTemplate.style'
 
 export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handleExitView }) => {
 
-    // console.log("data:", data);
-
     const theme = useTheme();
     const appstyle = useThemedStyles(app_style);
     const newEntrystyle = useThemedStyles(newEntry_style);
@@ -199,7 +197,6 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
             return;
         }
         const url = image ? await writePicsToFirebase(image, folder) : '';
-        console.log("url:", url);
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
         const address = await displayAddress(coordinates);
         console.log("addr: ", address);

@@ -23,8 +23,6 @@ export const NewMemory = ({ navigation, route }) => {
     const loc = new GeoPoint(location.coords.latitude, location.coords.longitude);
     memory.Location = loc;
 
-    console.log("mem:", memory);
-
     return (
         // <MemoryTemplate navigation={navigation} memory={memory} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />
         <EditTemplate navigation={navigation} data={memory} screen={screen} writeToFirebase={writeMemoryToFirebase} handleExitView={route.params.handleExitView} />

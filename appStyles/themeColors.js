@@ -19,22 +19,30 @@ const DARKBLUE = '#1B3757';         // dark background
 const MINTCREAM = '#FCFFFB';        // Light green space
 const SAGEGREEN = '#C6E2BA';        // light background
 const DARKSAGEGREEN = '#74a366';    // light button
+const MEDIUMSAGEGREEN = '#9DC290'   // light medium
 const SPACEGREEN = '#43533E';       // dark green space
 const DARKGREEN = '#273822';        // dark background
+const DARKSAGEBUTTON = '#507340'    // dark button
+const MEDIUMDARKSAGE = '#49633F'    // dark medium
 
 
 const SNOW = '#FFF7F8';             // Light pink space
 const PINK = '#f9c8d0';             // light background
-const BLUSHPINK = '#F08285';         // light button
+const BLUSHPINK = '#F08285';        // light button
+const MEDIUMPINK = '#F4A5AA'        // light medium
 const SAGEPINK = '#B34B59';         // dark button
 const SPACEPINK = '#823B50';        // dark space
 const DARKPINK = '#5B2032';         // dark background
+const MEDIUMDARKPINK = '#873545'    // dark medium
 
 const WHITESMOKE = '#FAF9F6';       // Light brown space
 const NUDE = '#bcb8b1';             // light background
 const LIGHTBROWN = '#81756D';       // light button
+const MEDIUMBROWN = '#9E968F'       // light medium brown
 const BROWN = '#8a817c';            // dark space
 const DARKBROWN = '#463f3a';        // dark background
+const DARKBROWNBUTTON = '#705d50'   // dark button
+const MEDIUMDARKBUTTON = '#5B4E45'  // dark medium
 
 const LIGHTERGRAY = '#c9c9c9';
 const DARKGRAY = '#787878';
@@ -108,6 +116,7 @@ const green = {
         SUBHEADING: GRAY,
         BUTTON_COLOR: DARKSAGEGREEN,
         SPACE: MINTCREAM,
+        HEADING: MEDIUMSAGEGREEN,
     },
     dark: {
         ...common,
@@ -115,9 +124,10 @@ const green = {
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
-        BUTTON_COLOR: DARKSAGEGREEN,
+        BUTTON_COLOR: DARKSAGEBUTTON,
         CARD_BACKGROUND: MINTCREAM,
         SPACE: SPACEGREEN,
+        HEADING: MEDIUMDARKSAGE,
     }
 };
 
@@ -130,6 +140,7 @@ const pink = {
         SUBHEADING: GRAY,
         BUTTON_COLOR: BLUSHPINK,
         SPACE: SNOW,
+        HEADING: MEDIUMPINK,
     },
     dark: {
         ...common,
@@ -140,6 +151,7 @@ const pink = {
         BUTTON_COLOR: SAGEPINK,
         TEXT_ENTRY: WHITE,
         SPACE: SPACEPINK,
+        HEADING: MEDIUMDARKPINK,
     }
 };
 
@@ -153,6 +165,7 @@ const brown = {
         BUTTON_COLOR: LIGHTBROWN,
         TEXT_ENTRY: NUDE,
         SPACE: WHITESMOKE,
+        HEADING: MEDIUMBROWN,
     },
     dark: {
         ...common,
@@ -160,9 +173,10 @@ const brown = {
         BUTTON_TEXT: BLACK,
         TEXT: WHITE,
         SUBHEADING: LIGHTGRAY,
-        BUTTON_COLOR: LIGHTBROWN,
+        BUTTON_COLOR: DARKBROWNBUTTON,
         TEXT_ENTRY: NUDE,
         SPACE: BROWN,
+        HEADING: MEDIUMDARKBUTTON,
     }
 }
 
