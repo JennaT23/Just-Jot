@@ -9,6 +9,7 @@ export const writeMemoryToFirebase = async (entry) => {
             DateCreated: entry.DateCreated,
             DateMarked: entry.DateMarked,
             Location: entry.Location,
+            Address: entry.Address,
             Title: entry.Title,
             Text: entry.Text,
             Images: entry.Images,

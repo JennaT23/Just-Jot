@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image, KeyboardAvoidingView, Modal, Alert } from 'react-native';
+import { View, TextInput, TouchableOpacity, ScrollView, Pressable, Image, KeyboardAvoidingView, Modal, Alert, Dimensions } from 'react-native';
 import { IconButton, Card } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAuth } from 'firebase/auth';
@@ -8,7 +8,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Camera, CameraType, onCameraReady } from 'expo-camera';
 import { GeoPoint } from "firebase/firestore";
 import * as Location from 'expo-location';
-
+import { useFocusEffect } from '@react-navigation/native';
 // Custom imports
 import Text from '../appStyles/customStyle';
 import useThemedStyles from '../appStyles/useThemedStyles';
@@ -113,23 +113,22 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         }
     };
 
-    // ask user for access to use camera roll
-    useEffect(() => {
-        (async () => {
-            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== 'granted') {
-                alert('Sorry, we need camera roll permissions to make this work!');
-            }
-        })();
-    }, []);
+    useFocusEffect(
+        React.useCallback(() => {
 
-    // ask user for access to their camera
-    useEffect(() => {
-        (async () => {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasCameraPermission(status === 'granted');
-        })();
-    }, []);
+            (async () => {
+                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('Sorry, we need camera roll permissions to make this work!');
+                }
+            })();
+
+            (async () => {
+                const { status } = await Camera.requestCameraPermissionsAsync();
+                setHasCameraPermission(status === 'granted');
+            })();
+        }, [])
+    );
 
 
     const takePicture = async () => {
@@ -199,8 +198,10 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         }
         const url = image ? await writePicsToFirebase(image, folder) : '';
         const geopoint = new GeoPoint(coordinates.latitude, coordinates.longitude);
+        const address = await displayAddress(coordinates);
+        console.log("addr: ", address);
         const uid = user.uid;
-        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Title: title, Text: text, Images: url, uid: uid, id: data.id };
+        const newData = { DateCreated: dateCreated, DateMarked: dateMarked, Location: geopoint, Address: address, Title: title, Text: text, Images: url, uid: uid, id: data.id };
 
         // console.log(dateMarked);
         const notificationPreference = await getNotificationPreference();
@@ -307,7 +308,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                     icon="camera"
                     size={30}
                     iconColor={theme.colors.TEXT}
-                    onPress={showCameraScreen}
+                    onPress={() => { setShowCamera(true) }}
                     style={editTemplatestyle.iconButton}
                 />
                 <TouchableOpacity
@@ -316,7 +317,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                     <Text style={[appstyle.buttonText, editTemplatestyle.buttonText]}>SAVE</Text>
                 </TouchableOpacity>
             </View>
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.content}>
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={200} style={editTemplatestyle.content}>
                 <ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                     <View style={editTemplatestyle.card}>
                         <View style={editTemplatestyle.titleContainer}>
@@ -427,7 +428,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                         </View>
                         <View style={editTemplatestyle.entryContainer}>
                             <Text style={editTemplatestyle.label}>Entry:</Text>
-                            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={30} style={editTemplatestyle.scrollContainer}>
+                            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={200} style={editTemplatestyle.scrollContainer}>
                                 <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                                     <View style={editTemplatestyle.entry}>
                                         <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.textInput, editTemplatestyle.entryText]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING} />
@@ -442,7 +443,8 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
             </KeyboardAvoidingView>
 
             <Modal
-                visible={hasCameraPermission && showCamera}
+                style={editTemplatestyle.cameraModalContainer}
+                visible={showCamera}
                 onRequestClose={closeCamera}
             >
                 {cameraView()}

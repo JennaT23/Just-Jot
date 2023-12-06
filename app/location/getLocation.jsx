@@ -14,6 +14,7 @@ export const getLocation = () => {
 
       // get location
       let location = await Location.getCurrentPositionAsync({});
+      console.log(location)
       setLocation(location);
     })();
   }, []); // empty dependency array to run only once (according to ChatGPT)

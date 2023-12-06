@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions, useWindowDimensions } from "react-native";
 
-// const getHeight = 
+
 
 export const editTemplateStyle = (theme, screen) => StyleSheet.create({
     pageContainer: {
@@ -126,4 +126,7 @@ export const editTemplateStyle = (theme, screen) => StyleSheet.create({
         fontSize: 18,
         color: theme.colors.TEXT,
     },
+    cameraModalContainer:{
+    
+    }
 })

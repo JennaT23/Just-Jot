@@ -100,7 +100,7 @@ export async function registerForPushNotificationsAsync() {
         }
     }
 
-    if (Device.isDevice) {
+    // if (Device.isDevice) {
         const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
         if (existingStatus !== 'granted') {
@@ -112,9 +112,9 @@ export async function registerForPushNotificationsAsync() {
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync({ projectId: Constants.expoConfig.extra.eas.projectId })).data;
-    } else {
-        alert('Must use physical device for Push Notifications');
-    }
+    // } else {
+    //     alert('Must use physical device for Push Notifications');
+    // }
 
     return token;
 }

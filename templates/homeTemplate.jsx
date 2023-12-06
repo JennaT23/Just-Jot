@@ -32,6 +32,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { JournalEntry } from "../app/screens/journal/appJournal/journalEntry";
 import { ViewTemplate } from "./viewTemplate";
 import PaginationComponent from "./paginationTemplate";
+import { useFocusEffect } from '@react-navigation/native';
 
 export const HomeTemplate = ({
     navigation,
@@ -71,31 +72,41 @@ export const HomeTemplate = ({
         }
     };
 
-    useEffect(() => {
-        if (user) {
-            setUsername(user.displayName);
-        }
-        fetchEntries();
-    }, [refreshData]);
+    // useEffect(() => {
+    //   if (user) {
+    //     setUsername(user.displayName);
+    //   }
+    //   fetchEntries();
+    // }, [refreshData]);
 
-    const fetchAndDisplayAddresses = async () => {
-        const addresses = await Promise.all(
-            entries.map(async (entry) => {
-                const address = await displayAddress(entry.Location);
-                return address;
-            })
-        );
-        setDisplayedAddresses(addresses);
-    };
+    useFocusEffect(
+        React.useCallback(() => {
+            if (user) {
+                setUsername(user.displayName);
+            }
+            fetchEntries();
+        }, [refreshData, entries])
+    );
 
-    useEffect(() => {
-        fetchAndDisplayAddresses();
-    }, [entries]);
+    // const fetchAndDisplayAddresses = async () => {
+    //   const addresses = await Promise.all(
+    //     entries.map(async (entry) => {
+    //       const address = await displayAddress(entry.Location);
+    //       return address;
+    //     })
+    //   );
+    //   setDisplayedAddresses(addresses);
+    // };
+
+    // useEffect(() => {
+    //   fetchAndDisplayAddresses();
+    // }, [entries]);
 
     const handleExitView = () => {
         navigation.navigate("NavBar");
         setRefreshData((prev) => prev + 1);
     };
+
 
     const moveNewEntry = () => {
         let newEntry;
@@ -214,8 +225,8 @@ export const HomeTemplate = ({
             navigation.navigate("ViewMemory", { entry, screen, handleExitView });
     };
 
-    const message =
-        "Ready to jot down today's reflections? \n Your thoughts are waiting!";
+    const message = screen === 'journal' ?
+        "Ready to jot down today's reflections? \n Your thoughts are waiting!" : "Want to remember a memory in the future? \n Write it down and set a date!";
 
     return (
         <SafeAreaView style={appJournalstyle.container}>
@@ -252,11 +263,13 @@ export const HomeTemplate = ({
                 {/* position: "relative", */}
                 {/* style={{ zIndex: 1 }} */}
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity style={appJournalstyle.sortButton}>
                         <IconButton
                             icon="filter"
                             size={35}
-                            iconColor={theme.colors.BUTTON_COLOR}
+                            iconColor={theme.colors.TEXT}
+                            containerColor={theme.colors.BUTTON_COLOR}
+                            style={appJournalstyle.sortButton}
                             onPress={() => {
                                 setOpen(!open);
                                 console.log("open");
@@ -316,25 +329,25 @@ export const HomeTemplate = ({
                     </Modal>
                 </View>
             </View>
-            <ScrollView style={appJournalstyle.scrollView}>
-                {entries.map((entry, index) => (
-                    <ViewTemplate
-                        navigation={navigation}
-                        data={entry}
-                        index={index}
-                        handleExitView={handleExitView}
-                        location={displayAddress[index]}
-                        screen={screen}
-                    />
-                ))}
-            </ScrollView>
-            {/* <PaginationComponent
+            {/* <ScrollView style={appJournalstyle.scrollView}>
+        {entries.map((entry, index) => (
+          <ViewTemplate
+            navigation={navigation}
+            data={entry}
+            index={index}
+            handleExitView={handleExitView}
+            location={displayAddress[index]}
+            screen={screen}
+          />
+        ))}
+      </ScrollView> */}
+            <PaginationComponent
                 data={entries}
-                itemsPerPage={3}
+                itemsPerPage={5}    // number of entries shown on each page
                 navigation={navigation}
                 handleExitView={handleExitView}
                 screen={screen}
-            /> */}
+            />
             <FAB
                 style={appJournalstyle.fab}
                 color={theme.colors.TEXT}

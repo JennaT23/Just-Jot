@@ -10,6 +10,7 @@ export const editJournalEntriesToFirebase = async (entry) => {
             // id: entry.id,
             DateCreated: entry.DateCreated,
             Location: entry.Location,
+            Address: entry.Address,
             Title: entry.Title,
             Text: entry.Text,
             Images: entry.Images,

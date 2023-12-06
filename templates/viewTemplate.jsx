@@ -1,23 +1,47 @@
 import { Paragraph } from "react-native-paper";
 import useThemedStyles from "../appStyles/useThemedStyles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, Title, Subheading, IconButton } from "react-native-paper";
 import { TouchableOpacity, Image, Alert, View } from "react-native";
 import useTheme from "../appStyles/useTheme";
 import { viewTemplateStyle as viewTemplate_style } from "./viewTemplate.style";
 import { deleteJournalEntryFromFirebase } from "../app/firebase/deleteJournalEntryFromFirebase";
 import { deleteMemoryFromFirebase } from "../app/firebase/deleteMemoryFromFirebase";
+import { displayAddress } from '../app/location/geocode';
 
 
-export const ViewTemplate = ({ navigation, data, index, handleExitView, location, screen }) => {
+export const ViewTemplate = ({ navigation, data, index, handleExitView, screen }) => {
     const theme = useTheme();
     const viewTemplatestyle = useThemedStyles(viewTemplate_style);
     const [expanded, setExpanded] = useState(false);
+    // const [coordinates, setCoordinates] = useState(data.Location);
+    // const [loc, setLoc] = useState();
+    // const [displayedAddresses, setDisplayedAddresses] = useState("");
     // console.log('data', data);
 
     const toggleExpansion = () => {
         setExpanded(!expanded);
     };
+
+    // const fetchAndDisplayAddresses = async () => {
+    //     console.log("data: ", data);
+    //     // const addresses = await Promise.all(
+    //     //     data.map(async (entry) => {
+    //     //         const address = await displayAddress(entry.Location);
+    //     //         console.log("address:", address)
+    //     //         return address;
+    //     //     })
+    //     // );
+    //     const address = await displayAddress(data.Location);
+    //     setDisplayedAddresses(address);
+    //     // displayedAddresses = addresses;
+    //     console.log("addresses: ", address);
+    // };
+    
+    // useEffect(() => {
+    //     fetchAndDisplayAddresses();
+    //     console.log("addresses2: ", displayedAddresses);
+    // }, [displayedAddresses]);
 
     const handleDeleteEntry = async (entryId) => {
         Alert.alert(
@@ -126,7 +150,7 @@ export const ViewTemplate = ({ navigation, data, index, handleExitView, location
                     </Card.Content>
                     <Subheading style={viewTemplatestyle.subheading}>Created: {formatDate(data.DateCreated)}</Subheading>
                     {screen === 'memory' && (<Subheading style={viewTemplatestyle.subheading}>Marked: {formatDate(data.DateMarked)}</Subheading>)}
-                    <Subheading style={viewTemplatestyle.subheading}>Location: {location}</Subheading>
+                    <Subheading style={viewTemplatestyle.subheading}>Location: {data.Address}</Subheading>
                     <Paragraph style={{ color: theme.colors.TEXT }} numberOfLines={expanded ? undefined : 1}>{data.Text}</Paragraph>
                     {data.Images && expanded && (
                         <Image style={{ height: 200, width: 200 }} source={{ uri: data.Images }} />

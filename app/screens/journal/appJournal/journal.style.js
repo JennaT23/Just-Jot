@@ -10,7 +10,7 @@ export const appJournalStyle = theme => StyleSheet.create({
         //alignItems: 'center',
     },
     headingContainer: {
-        backgroundColor: theme.colors.BUTTON_COLOR,
+        backgroundColor: theme.colors.HEADING,
         borderBottomRightRadius: 30,
         borderBottomLeftRadius: 30,
         // height: '35%',
@@ -137,5 +137,8 @@ export const appJournalStyle = theme => StyleSheet.create({
         color: "black",
         fontWeight: "bold",
         textAlign: "center"
+    },
+    sortButton: {
+        borderRadius: 10,
     },
 })
