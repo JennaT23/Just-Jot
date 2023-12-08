@@ -9,21 +9,21 @@ export const profileStyle = (theme) => StyleSheet.create({
     },
     input: {
         backgroundColor: theme.colors.SPACE,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 15,
         borderRadius: 10,
         marginTop: 5,
         marginBottom: 10,
     },
     fieldContainer: {
         width: 250,
-        marginTop: 5,
+        marginTop: 15,
     },
     userInfo: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: 5,
+        marginTop: 40,
     },
     button: { 
         backgroundColor: theme.colors.BUTTON_COLOR,
@@ -31,7 +31,7 @@ export const profileStyle = (theme) => StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 50,
     },
     buttonText: {
         color: theme.colors.BUTTON_TEXT,
@@ -55,4 +55,12 @@ export const profileStyle = (theme) => StyleSheet.create({
         alignSelf: 'flex-end',
         margin: 40,
     },
+    PassButton: {
+        backgroundColor: theme.colors.BUTTON_COLOR,
+        width: 150,
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 20,
+    }
 })

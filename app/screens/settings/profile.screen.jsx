@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, View, TextInput, Image, TouchableOpacity } from "react-native"
+import { SafeAreaView, View, TextInput, Image, Alert, TouchableOpacity } from "react-native"
 import Text from '../../../appStyles/customStyle'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import useTheme from '../../../appStyles/useTheme'
 import { profileStyle as profile_style } from "./profile.style"
 import { appstyle as app_style } from "../../../appStyles/appstyle"
-import { getAuth } from 'firebase/auth'
+import { getAuth, deleteUser, updateEmail, sendPasswordResetEmail, updateProfile } from "firebase/auth"
 import { IconButton } from "react-native-paper";
 
 
@@ -17,9 +17,7 @@ export const Profile = ({ navigation }) => {
     const user = auth.currentUser;
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [newPasswordAgain, setNewPasswordAgain] = useState('');
+    const [passwordEmail, setPasswordEmail] = useState('');
 
     useEffect(() => {
         if (user) {
@@ -28,8 +26,96 @@ export const Profile = ({ navigation }) => {
         }
     }, [user])
 
+    const DeleteUserFromAuth = async () => {
+        console.log('Deleting')
+        // const auth = getAuth();
+        // const user = auth.currentUser;
+    
+        if (user) {
+            deleteUser(user)
+                .then(() => {
+                    console.log('Successfully deleted user');
+                    Alert.alert('Account successfully deleted')
+                    navigation.navigate('Login')
+                })
+                .catch((error) => {
+                    console.error('Error deleting user:', error);
+                });
+        } else {
+            console.log('No user signed in.');
+        }
+    }
+    
+    const UpdateEmail = ({ newEmail }) => {
+        // const auth = getAuth()
+        // const user = auth.currentUser;
+    
+        if (user) {
+            updateEmail(user, newEmail)
+                .then(() => {
+                    console.log('Email updated successfully.')
+                    // Alert.alert('Email updated successfully.')
+                    setEmail(newEmail);
+                })
+                .catch((error) => {
+                    console.error('Error updating email:', error.message);
+                    // Alert.alert('Error updating email:', error.message);
+                });
+        } else {
+            console.log('No user signed in.');
+        }
+    }
+    
+    const UpdatePassword = () => {
+
+        sendPasswordResetEmail(auth, passwordEmail)
+            .then(() => {
+                console.log("password email sent");
+                // Alert.alert('Update Password Email Sent', 'Please check your email for password update instructions.')
+            })
+            .catch((error) => {
+                console.error("error updating password", error.message)
+                // Alert.alert('Update Password failed', error.message)
+            })
+    }
+    
+    const UpdateUsername = ({ newUsername }) => {
+        // auth = getAuth();
+        // user = auth.currentUser;
+    
+        if (user) {
+            updateProfile(user, { displayName: newUsername })
+                .then(() => {
+                    console.log("Username updated successfully.");
+                    // Alert.alert("Username updated successfully.");
+                    setUsername(newUsername);
+                })
+                .catch((error) => {
+                    console.error("Error updating username:", error.message);
+                    // Alert.alert("Error updating username:", error);
+                })
+        } else {
+            console.log("No user signed in.");
+        }
+    }
+
     const saveChanges = () => {
-        
+        try {
+            console.log("email:", email);
+            UpdateEmail(email);
+            console.log("username:", username);
+            UpdateUsername(username);
+            console.log("pemail: ", passwordEmail);
+            if(passwordEmail !== '')
+            {
+                UpdatePassword();
+            }
+            console.log("Profile updated successfully");
+            Alert.alert("Profile updated successfully");
+        }catch(error){
+            console.error("Error updating profile:", error);
+            Alert.alert("Error updating profile:", error);
+        }
     }
 
     const changeProfileImage = () => {
@@ -76,45 +162,33 @@ export const Profile = ({ navigation }) => {
                         style={{color: theme.colors.TEXT, ...profilestyle.input}}
                     />
                 </View>
-                <View style={profilestyle.fieldContainer}>
-                    <Text>Current Password:</Text>
-                    <TextInput
-                        placeholder='Current Password'
-                        placeholderTextColor={theme.colors.SUBHEADING}
-                        value={currentPassword}
-                        onChangeText={text => setCurrentPassword(text)}
-                        style={{color: theme.colors.TEXT, ...profilestyle.input}}
-                        secureTextEntry
-                    />
-                </View>
-                <View style={profilestyle.fieldContainer}>
-                    <Text>New Password:</Text>
-                    <TextInput
-                        placeholder='New Password'
-                        placeholderTextColor={theme.colors.SUBHEADING}
-                        value={newPassword}
-                        onChangeText={text => setNewPassword(text)}
-                        style={{color: theme.colors.TEXT, ...profilestyle.input}}
-                        secureTextEntry
-                    />
-                </View>
-                <View style={profilestyle.fieldContainer}>
-                    <Text>Re-Enter New Password:</Text>
-                    <TextInput
-                        placeholder='New Password'
-                        placeholderTextColor={theme.colors.SUBHEADING}
-                        value={newPasswordAgain}
-                        onChangeText={text => setNewPasswordAgain(text)}
-                        style={{color: theme.colors.TEXT, ...profilestyle.input}}
-                        secureTextEntry
-                    />
+                <View>
+                    <View style={profilestyle.fieldContainer}>
+                        <Text>Enter Email to Update Password:</Text>
+                        <TextInput
+                            placeholder='Enter Email to Update Password'
+                            placeholderTextColor={theme.colors.SUBHEADING}
+                            value={passwordEmail}
+                            onChangeText={text => setPasswordEmail(text)}
+                            style={profilestyle.input}
+                            inputMode='email'
+                        />
+                    </View>
+
+                    {/* <TouchableOpacity
+                        onPress={UpdatePassword}
+                        style={profilestyle.PassButton}
+                    >
+                        <Text style={profilestyle.buttonText}>Update Password</Text>
+                    </TouchableOpacity> */}
+
                 </View>
 
                 <TouchableOpacity 
                     onPress={saveChanges}
                     style={profilestyle.button}
                 >
-                    <Text style={profilestyle.buttonText}>Save</Text>
+                    <Text style={profilestyle.buttonText}>Update</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
