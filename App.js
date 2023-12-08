@@ -24,6 +24,7 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device'
 import { JournalEntry } from './app/screens/journal/appJournal/journalEntry';
 import { LogBox } from 'react-native';
+import { Profile } from './app/screens/settings/profile.screen'
 
 
 const Stack = createNativeStackNavigator();
@@ -194,6 +195,9 @@ const App = () => {
                     </Stack.Screen>
                     <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "Edit Memory" }} name="NewEditEntry">
                         {props => <NewEditEntry {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen options={{ headerShown: true, headerTitleAlign: 'center', title: "Profile" }} name="Profile">
+                        {props => <Profile {...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
             </NavigationContainer>

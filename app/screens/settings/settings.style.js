@@ -123,4 +123,7 @@ export const settingsStyle = theme => StyleSheet.create({
         fontSize: 16,
         color: theme.colors.SUBHEADING
     },
+    iconButton: {
+        marginLeft: 70,
+    }
 })

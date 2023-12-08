@@ -12,6 +12,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import { schedulePushNotification } from "../../../App";
 import { colors } from '../../../appStyles/themeColors'
 import { getNotificationPreference, setNotificationPreference } from "../../notifications/notificationPreferences";
+import { IconButton } from "react-native-paper";
 
 
 export const Settings = ({ navigation }) => {
@@ -90,11 +91,15 @@ export const Settings = ({ navigation }) => {
         }
     };
 
+    const navigateEditProfile = () => {
+        navigation.navigate("Profile");
+    }
+
     return (
 
         <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
             {/* Profile section */}
-            <View style={settingstyle.section}>
+            <TouchableOpacity style={settingstyle.section} onPress={navigateEditProfile}>
                 <View style={settingstyle.sectionHeader}>
                     <Text style={appstyle.headerText}>Profile</Text>
                 </View>
@@ -110,9 +115,15 @@ export const Settings = ({ navigation }) => {
                         <Text style={settingstyle.profileHandle}>{email}</Text>
 
                     </View>
-
+                    <IconButton
+                            icon="pencil"
+                            size={30}
+                            onPress={navigateEditProfile}
+                            style={settingstyle.iconButton}
+                            iconColor={theme.colors.TEXT}
+                    />
                 </View>
-            </View>
+            </TouchableOpacity>
 
 
             {/* Displaying section headers of setting options */}
