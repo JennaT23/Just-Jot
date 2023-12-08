@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { writeJournalEntryToFirebase } from '../../../firebase/writeJournalEntriesToFirebase'
 import { EntryTemplate } from '../../../../templates/entryTemplate'
 import { getLocation } from '../../../location/getLocation'
-import { View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 import Text from '../../../../appStyles/customStyle'
 import { GeoPoint } from "firebase/firestore";
 import { appstyle as app_style } from "../../../../appStyles/appstyle";
@@ -17,7 +17,11 @@ export const NewEntry = ({ navigation, route }) => {
     const displayDate = new Date().toDateString();
     const location = getLocation();
     if (location === null) {
-        return <View style={appstyle.loadingContainer}><Text style={appstyle.loadingText}>Loading...</Text></View>;
+        return (
+            <View style={appstyle.loadingContainer}>
+                <ActivityIndicator size="large" color="#ffffff" />
+            </View>
+        );
     }
     const loc = new GeoPoint(location.coords.latitude, location.coords.longitude);
     entry.Location = loc;

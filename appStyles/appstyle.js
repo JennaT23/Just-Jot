@@ -60,8 +60,11 @@ export const appstyle = theme => StyleSheet.create({
         textAlign: 'center'
     },
     loadingContainer: {
-        width: "100%",
-        height:"100%",
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // width: "100%",
+        // height:"100%",
         backgroundColor: theme.colors.BACKGROUND,
     },
 

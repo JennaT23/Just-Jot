@@ -81,6 +81,14 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         }
     };
 
+    const handleTimeCreatedChange = (event, selectedDate) => {
+        if (selectedDate || event.type === 'dismissed') {
+            setDateCreated(selectedDate);
+
+            setShowTimeCreatedPicker(false);
+        }
+    };
+
     const handleDateMarkedChange = (event, selectedDate) => {
         if (selectedDate || event.type === 'dismissed') {
             setDateMarked(selectedDate);
@@ -212,6 +220,16 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
             };
             const trigger = new Date(dateMarked);
             await schedulePushNotification(content, trigger);
+
+            const oneYearAgo = new Date(dateCreated);
+            oneYearAgo.setFullYear(oneYearAgo.getFullYear() + 1);
+
+            const contentOneYearAgo = {
+                title: 'On This Day One Year Ago',
+                body: title,
+            };
+
+            await schedulePushNotification(contentOneYearAgo, oneYearAgo);
         }
 
         writeToFirebase(newData);
@@ -352,6 +370,18 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                                         is24Hour={false}
                                         display='spinner'
                                         onChange={handleDateCreatedChange}
+                                    />
+                                </View>
+                            )}
+                            {showTimeCreatedPicker && (
+                                <View>
+                                    <DateTimePicker
+                                        testID='timePicker'
+                                        value={dateCreated}
+                                        mode='time'
+                                        is24Hour={false}
+                                        display='clock'
+                                        onChange={handleTimeCreatedChange}
                                     />
                                 </View>
                             )}

@@ -60,8 +60,8 @@ export const Register = ({ navigation }) => {
         });
     }
 
-    const handleLogin = () => {          
-       navigate("Login")
+    const handleLogin = () => {
+        navigate("Login")
     }
 
     // useEffect(() => {                                               // checks if a user is already logged in
@@ -83,20 +83,12 @@ export const Register = ({ navigation }) => {
             <View style={userAuthstyle.inputContainer}>
 
                 <Text style={appstyle.title}>Register</Text>
-
-                <TextInput
-                    placeholder='Name'
-                    placeholderTextColor={theme.colors.SUBHEADING}
-                    value={name}
-                    onChangeText={text => setName(text)}
-                    style={{color: theme.colors.TEXT, ...appstyle.input}}
-                />
                 <TextInput
                     placeholder='Email'
                     placeholderTextColor={theme.colors.SUBHEADING}
                     value={email}
                     onChangeText={text => setEmail(text)}
-                    style={{color: theme.colors.TEXT, ...appstyle.input}}
+                    style={{ color: theme.colors.TEXT, ...appstyle.input }}
                     inputMode='email'
                 />
                 <TextInput
@@ -104,14 +96,14 @@ export const Register = ({ navigation }) => {
                     placeholderTextColor={theme.colors.SUBHEADING}
                     value={username}
                     onChangeText={text => setUsername(text)}
-                    style={{color: theme.colors.TEXT, ...appstyle.input}}
+                    style={{ color: theme.colors.TEXT, ...appstyle.input }}
                 />
                 <TextInput
                     placeholder='Password'
                     placeholderTextColor={theme.colors.SUBHEADING}
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    style={{color: theme.colors.TEXT, ...appstyle.input}}
+                    style={{ color: theme.colors.TEXT, ...appstyle.input }}
                     secureTextEntry
                 />
             </View>
