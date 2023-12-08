@@ -461,9 +461,20 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={200} style={editTemplatestyle.scrollContainer}>
                                 <ScrollView contentContainerStyle={editTemplatestyle.scrollView} keyboardShouldPersistTaps="handled" keyboardDismissMode="interactive" nestedScrollEnabled={true}>
                                     <View style={editTemplatestyle.entry}>
-                                        <TextInput value={text} onChangeText={text => setText(text)} style={[editTemplatestyle.textInput, editTemplatestyle.entryText]} multiline editable placeholder='Start writing...' placeholderTextColor={theme.colors.SUBHEADING} />
-
-                                        {image && <Image source={{ uri: image }} style={editTemplatestyle.image} />}
+                                        <TextInput
+                                            value={text}
+                                            onChangeText={text => setText(text)}
+                                            style={[editTemplatestyle.textInput, editTemplatestyle.entryText]}
+                                            multiline
+                                            editable
+                                            placeholder='Start writing...'
+                                            placeholderTextColor={theme.colors.SUBHEADING}
+                                        />
+                                        {image && (
+                                            <TouchableOpacity onPress={() => setImage(null)}>
+                                                <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+                                            </TouchableOpacity>
+                                        )}
                                     </View>
                                 </ScrollView>
                             </KeyboardAvoidingView>
