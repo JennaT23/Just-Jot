@@ -78,7 +78,7 @@ export const Login = ({ n }) => {
                     value={email}
                     onChangeText={text => setEmail(text)}
                     placeholderTextColor={theme.colors.SUBHEADING}
-                    style={{color: theme.colors.TEXT, ...appstyle.input}}
+                    style={{ color: theme.colors.TEXT, ...appstyle.input }}
                     inputMode='email'
                 />
                 <TextInput
@@ -86,7 +86,7 @@ export const Login = ({ n }) => {
                     placeholderTextColor={theme.colors.SUBHEADING}
                     value={password}
                     onChangeText={text => setPassword(text)}
-                    style={{color: theme.colors.TEXT, ...appstyle.input}}
+                    style={{ color: theme.colors.TEXT, ...appstyle.input }}
                     secureTextEntry
                 />
 
