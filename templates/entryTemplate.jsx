@@ -43,7 +43,7 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
     const [showTimePicker, setShowTimePicker] = useState(false);
 
     // camera and camera roll hooks
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState();
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [showCamera, setShowCamera] = useState(false);
     const [type, setType] = useState(CameraType.back);
@@ -201,6 +201,10 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
         return formattedLocation;
     }
 
+    const deleteImage = () => {
+        setImage(null);
+    }
+
     return (
         <SafeAreaView style={[newEntrystyle.container, newEntrystyle.entryContainer]}>
             <KeyboardAvoidingView
@@ -277,9 +281,13 @@ export const EntryTemplate = ({ navigation, entryData, pickerDisplayDate, writeT
                                 placeholder='Start writing...'
                                 placeholderTextColor={theme.colors.SUBHEADING}
                             />
-                            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                            {/* {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />} */}
                             {hasCameraPermission && showCamera ? (cameraView()) : (null)}
-                            <Image style={{ height: 200, width: 200 }} source={{ uri: imageUrl }} />
+                            {image && (
+                                <TouchableOpacity onPress={() => setImage(null)}>
+                                    <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </ScrollView>
                 </View>
