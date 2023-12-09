@@ -310,6 +310,25 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
         setSearchText(text);
         setSelectedLocation(null);
     }
+    
+    const deleteImage = () => {
+        Alert.alert(
+            "Confirm Deletion",
+            "Are you sure you want to delete the image?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    onPress:  () => setImage(null),
+                    style: "destructive",
+                },
+            ],
+            { cancelable: true }
+        );
+    }
 
 
     return (
@@ -471,7 +490,7 @@ export const EditTemplate = ({ navigation, data, screen, writeToFirebase, handle
                                             placeholderTextColor={theme.colors.SUBHEADING}
                                         />
                                         {image && (
-                                            <TouchableOpacity onPress={() => setImage(null)}>
+                                            <TouchableOpacity onPress={deleteImage}>
                                                 <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
                                             </TouchableOpacity>
                                         )}
