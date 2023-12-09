@@ -108,15 +108,15 @@ export const Settings = ({ navigation }) => {
                     text: "Delete",
                     onPress: async () => {
                         deleteUser(user)
-                        .then(() => {
-                            console.log('Successfully deleted user');
-                            Alert.alert("Account successfully deleted");
-                            replace("Login");
-                        })
-                        .catch((error) => {
-                            console.log('Error deleting user:', error);
-                            Alert.alert("Error deleting account:", error);
-                        });
+                            .then(() => {
+                                console.log('Successfully deleted user');
+                                Alert.alert("Account successfully deleted");
+                                replace("Login");
+                            })
+                            .catch((error) => {
+                                console.log('Error deleting user:', error);
+                                Alert.alert("Error deleting account:", error);
+                            });
                     },
                     style: "destructive",
                 },
@@ -129,7 +129,7 @@ export const Settings = ({ navigation }) => {
 
         <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
             {/* Profile section */}
-            <TouchableOpacity style={settingstyle.section} onPress={navigateEditProfile}>
+            <View style={settingstyle.section} onPress={navigateEditProfile}>
                 <View style={settingstyle.sectionHeader}>
                     <Text style={appstyle.headerText}>Profile</Text>
                 </View>
@@ -147,15 +147,15 @@ export const Settings = ({ navigation }) => {
 
                         </View>
                     </View>
-                    <IconButton
+                    {/* <IconButton
                             icon="pencil"
                             size={30}
                             onPress={navigateEditProfile}
                             style={settingstyle.iconButton}
                             iconColor={theme.colors.TEXT}
-                    />
+                    /> */}
                 </View>
-            </TouchableOpacity>
+            </View>
 
 
             {/* Displaying section headers of setting options */}
