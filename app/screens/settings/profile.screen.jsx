@@ -5,7 +5,7 @@ import useThemedStyles from '../../../appStyles/useThemedStyles'
 import useTheme from '../../../appStyles/useTheme'
 import { profileStyle as profile_style } from "./profile.style"
 import { appstyle as app_style } from "../../../appStyles/appstyle"
-import { getAuth, deleteUser, updateEmail, sendPasswordResetEmail, updateProfile } from "firebase/auth"
+import { getAuth, deleteUser, updateEmail, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "firebase/auth"
 import { IconButton } from "react-native-paper";
 
 
@@ -30,7 +30,7 @@ export const Profile = ({ navigation }) => {
         console.log('Deleting')
         // const auth = getAuth();
         // const user = auth.currentUser;
-    
+
         if (user) {
             deleteUser(user)
                 .then(() => {
@@ -45,27 +45,32 @@ export const Profile = ({ navigation }) => {
             console.log('No user signed in.');
         }
     }
-    
-    const UpdateEmail = ({ newEmail }) => {
+
+    const UpdateEmail = (newEmail) => {
         // const auth = getAuth()
         // const user = auth.currentUser;
-    
-        if (user) {
-            updateEmail(user, newEmail)
-                .then(() => {
-                    console.log('Email updated successfully.')
-                    // Alert.alert('Email updated successfully.')
-                    setEmail(newEmail);
-                })
-                .catch((error) => {
-                    console.error('Error updating email:', error.message);
-                    // Alert.alert('Error updating email:', error.message);
-                });
-        } else {
-            console.log('No user signed in.');
-        }
+
+        console.log('newEmail', newEmail);
+
+        updateEmail(auth.currentUser, newEmail).then(() => {
+            console.log('Email updated successfully.')
+            setEmail(newEmail);
+        }).catch((error) => {
+            console.error('Error updating email:', error.message);
+        })
+
+        // try {
+        //     if (user) {
+        //         await updateEmail(user, newEmail);
+        //         await sendEmailVerification(user);
+        //         // Alert.alert('Error updating email:', error.message);
+        //     } else {
+        //         console.log('No user signed in.');
+        //     }
+        // } catch (error) {
+        // }
     }
-    
+
     const UpdatePassword = () => {
 
         sendPasswordResetEmail(auth, passwordEmail)
@@ -78,11 +83,11 @@ export const Profile = ({ navigation }) => {
                 // Alert.alert('Update Password failed', error.message)
             })
     }
-    
-    const UpdateUsername = ({ newUsername }) => {
+
+    const UpdateUsername = (newUsername) => {
         // auth = getAuth();
         // user = auth.currentUser;
-    
+
         if (user) {
             updateProfile(user, { displayName: newUsername })
                 .then(() => {
@@ -106,13 +111,12 @@ export const Profile = ({ navigation }) => {
             console.log("username:", username);
             UpdateUsername(username);
             console.log("pemail: ", passwordEmail);
-            if(passwordEmail !== '')
-            {
+            if (passwordEmail !== '') {
                 UpdatePassword();
             }
             console.log("Profile updated successfully");
             Alert.alert("Profile updated successfully");
-        }catch(error){
+        } catch (error) {
             console.error("Error updating profile:", error);
             Alert.alert("Error updating profile:", error);
         }
@@ -122,7 +126,7 @@ export const Profile = ({ navigation }) => {
 
     }
 
-    return(
+    return (
         <SafeAreaView style={profilestyle.pageContainer}>
             <TouchableOpacity style={profilestyle.profileImageContainer} onPress={changeProfileImage}>
                 <Image
@@ -148,7 +152,7 @@ export const Profile = ({ navigation }) => {
                         placeholderTextColor={theme.colors.SUBHEADING}
                         value={email}
                         onChangeText={text => setEmail(text)}
-                        style={{color: theme.colors.TEXT, ...profilestyle.input}}
+                        style={{ color: theme.colors.TEXT, ...profilestyle.input }}
                         inputMode='email'
                     />
                 </View>
@@ -159,7 +163,7 @@ export const Profile = ({ navigation }) => {
                         placeholderTextColor={theme.colors.SUBHEADING}
                         value={username}
                         onChangeText={text => setUsername(text)}
-                        style={{color: theme.colors.TEXT, ...profilestyle.input}}
+                        style={{ color: theme.colors.TEXT, ...profilestyle.input }}
                     />
                 </View>
                 <View>
@@ -184,7 +188,7 @@ export const Profile = ({ navigation }) => {
 
                 </View>
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={saveChanges}
                     style={profilestyle.button}
                 >
