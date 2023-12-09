@@ -73,10 +73,10 @@ export const HomeTemplate = ({
     };
 
     // useEffect(() => {
-    //   if (user) {
-    //     setUsername(user.displayName);
-    //   }
-    //   fetchEntries();
+    //     if (user) {
+    //         setUsername(user.displayName);
+    //     }
+    //     fetchEntries();
     // }, [refreshData]);
 
     useFocusEffect(
@@ -103,8 +103,8 @@ export const HomeTemplate = ({
     // }, [entries]);
 
     const handleExitView = () => {
-        navigation.navigate("NavBar");
         setRefreshData((prev) => prev + 1);
+        navigation.navigate("NavBar");
     };
 
 

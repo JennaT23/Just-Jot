@@ -16,7 +16,7 @@ export const Register = ({ navigation }) => {
     const registerstyle = useThemedStyles(register_style);
     const userAuthstyle = useThemedStyles(userAuth_style);
 
-    const { navigate } = useNavigation()
+    // const { navigate } = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
@@ -27,41 +27,46 @@ export const Register = ({ navigation }) => {
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
+                updateProfile(user, { displayName: username }).then(() => {
+                    var displayName = user.displayName;
+                    Alert.alert('Account successfully created')
+                    navigation.replace('Login');
+                })
             })
             .catch((error) => {
                 Alert.alert('Failed to create new user', error.message)
             });
 
-        onAuthStateChanged(auth, function (user) {
+        // onAuthStateChanged(auth, function (user) {
 
-            if (user) {
+        //     if (user) {
 
-                // Updates the user attributes:
+        //         // Updates the user attributes:
 
-                updateProfile(user, { // <-- Update Method here
+        //         updateProfile(user, { // <-- Update Method here
 
-                    displayName: username,
+        //             displayName: username,
 
-                }).then(function () {
+        //         }).then(function () {
 
-                    // Profile updated successfully!
+        //             // Profile updated successfully!
 
-                    var displayName = user.displayName;
+        //             var displayName = user.displayName;
 
-                    Alert.alert('Account successfully created')
-                    navigation.replace('Login');
+        //             Alert.alert('Account successfully created')
+        //             navigation.replace('Login');
 
-                }, function (error) {
-                    // An error happened.
-                    Alert.alert('Something went wrong, please check your information and try again', error.message)
-                });
+        //         }, function (error) {
+        //             // An error happened.
+        //             Alert.alert('Something went wrong, please check your information and try again', error.message)
+        //         });
 
-            }
-        });
+        //     }
+        // });
     }
 
     const handleLogin = () => {
-        navigate("Login")
+        navigation.navigate("Login")
     }
 
     // useEffect(() => {                                               // checks if a user is already logged in
@@ -124,4 +129,3 @@ export const Register = ({ navigation }) => {
         </SafeAreaView>
     )
 }
-
