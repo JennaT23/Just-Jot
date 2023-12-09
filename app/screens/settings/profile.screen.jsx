@@ -25,53 +25,13 @@ export const Profile = ({ navigation }) => {
             setEmail(user.email)
         }
     }, [user])
-
-    const DeleteUserFromAuth = async () => {
-        console.log('Deleting')
-        // const auth = getAuth();
-        // const user = auth.currentUser;
-    
-        if (user) {
-            deleteUser(user)
-                .then(() => {
-                    console.log('Successfully deleted user');
-                    Alert.alert('Account successfully deleted')
-                    navigation.navigate('Login')
-                })
-                .catch((error) => {
-                    console.error('Error deleting user:', error);
-                });
-        } else {
-            console.log('No user signed in.');
-        }
-    }
-    
-    const UpdateEmail = ({ newEmail }) => {
-        // const auth = getAuth()
-        // const user = auth.currentUser;
-    
-        if (user) {
-            updateEmail(user, newEmail)
-                .then(() => {
-                    console.log('Email updated successfully.')
-                    // Alert.alert('Email updated successfully.')
-                    setEmail(newEmail);
-                })
-                .catch((error) => {
-                    console.error('Error updating email:', error.message);
-                    // Alert.alert('Error updating email:', error.message);
-                });
-        } else {
-            console.log('No user signed in.');
-        }
-    }
     
     const UpdatePassword = () => {
 
         sendPasswordResetEmail(auth, passwordEmail)
             .then(() => {
                 console.log("password email sent");
-                // Alert.alert('Update Password Email Sent', 'Please check your email for password update instructions.')
+                Alert.alert('Update Password Email Sent', 'Please check your email for password update instructions.')
             })
             .catch((error) => {
                 console.error("error updating password", error.message)
@@ -79,42 +39,48 @@ export const Profile = ({ navigation }) => {
             })
     }
     
-    const UpdateUsername = ({ newUsername }) => {
-        // auth = getAuth();
-        // user = auth.currentUser;
-    
-        if (user) {
-            updateProfile(user, { displayName: newUsername })
-                .then(() => {
-                    console.log("Username updated successfully.");
-                    // Alert.alert("Username updated successfully.");
-                    setUsername(newUsername);
-                })
-                .catch((error) => {
-                    console.error("Error updating username:", error.message);
-                    // Alert.alert("Error updating username:", error);
-                })
-        } else {
-            console.log("No user signed in.");
-        }
+
+    const UpdateProfile = () => {
+        user
+            .updateUser(user.uid, {
+                email: email,
+                displayName: username,
+                // photoURL: 'http://www.example.com/12345678/photo.png',
+            })
+            .then(() => {
+                console.log('Profile updated successfully.');
+                Alert.alert("Profile updated successfully");
+            })
+            .catch((error) => {
+                console.error('Error updating user profile:', error.message);
+                Alert.alert('Error updating user profile:', error.message);
+                // Handle the error or display an error message.
+            });
     }
 
     const saveChanges = () => {
-        try {
-            console.log("email:", email);
-            UpdateEmail(email);
-            console.log("username:", username);
-            UpdateUsername(username);
-            console.log("pemail: ", passwordEmail);
-            if(passwordEmail !== '')
-            {
-                UpdatePassword();
-            }
-            console.log("Profile updated successfully");
-            Alert.alert("Profile updated successfully");
-        }catch(error){
-            console.error("Error updating profile:", error);
-            Alert.alert("Error updating profile:", error);
+        // try {
+        //     // console.log("email:", email);
+        //     // UpdateEmail(email);
+        //     // console.log("username:", username);
+        //     // UpdateUsername(username);
+        //     UpdateProfile();
+        //     console.log("pemail: ", passwordEmail);
+        //     if(passwordEmail !== '')
+        //     {
+        //         UpdatePassword();
+        //     }
+        //     console.log("Profile updated successfully");
+        //     Alert.alert("Profile updated successfully");
+        // }catch(error){
+        //     console.error("Error updating profile:", error);
+        //     Alert.alert("Error updating profile:", error);
+        // }
+        UpdateProfile();
+        // console.log("pemail: ", passwordEmail);
+        if(passwordEmail !== '')
+        {
+            UpdatePassword();
         }
     }
 

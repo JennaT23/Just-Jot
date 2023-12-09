@@ -30,13 +30,16 @@ export const settingsStyle = theme => StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
     },
-    profile: {
+    profileContainer: {
         padding: 12,
         backgroundColor: theme.colors.SPACE,
         borderRadius: 12,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex',
+        justifyContent: 'space-between',
+    },
+    profileInfo: {
+        flexDirection: 'row',
     },
     profileAvatar: {
         width: 60,
@@ -124,6 +127,19 @@ export const settingsStyle = theme => StyleSheet.create({
         color: theme.colors.SUBHEADING
     },
     iconButton: {
-        marginLeft: 70,
-    }
+       
+    },
+    deleteButton: {
+        backgroundColor: theme.colors.DELETE,
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: 20,
+    },
+    buttonText: {
+        color: theme.colors.BUTTON_TEXT,
+        fontWeight: '700',
+        fontSize: 20,
+    },
 })

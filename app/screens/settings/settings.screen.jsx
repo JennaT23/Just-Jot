@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, View, Switch, Image, TouchableOpacity } from "react-native"
+import { SafeAreaView, View, Switch, Image, Alert, TouchableOpacity } from "react-native"
 import ModalDropdown from 'react-native-modal-dropdown';
 import Text from '../../../appStyles/customStyle'
 import { appstyle as app_style } from '../../../appStyles/appstyle'
@@ -7,7 +7,7 @@ import { settingsStyle as settings_style } from './settings.style'
 import useThemedStyles from '../../../appStyles/useThemedStyles'
 import useTheme from '../../../appStyles/useTheme'
 import { useNavigation } from '@react-navigation/core'
-import { getAuth, signOut } from 'firebase/auth'
+import { getAuth, signOut, deleteUser } from 'firebase/auth'
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { schedulePushNotification } from "../../../App";
 import { colors } from '../../../appStyles/themeColors'
@@ -95,6 +95,36 @@ export const Settings = ({ navigation }) => {
         navigation.navigate("Profile");
     }
 
+    const deleteAccount = () => {
+        Alert.alert(
+            "Confirm Deletion",
+            "Are you sure you want to delete your account?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Delete",
+                    onPress: async () => {
+                        deleteUser(user)
+                        .then(() => {
+                            console.log('Successfully deleted user');
+                            Alert.alert("Account successfully deleted");
+                            replace("Login");
+                        })
+                        .catch((error) => {
+                            console.log('Error deleting user:', error);
+                            Alert.alert("Error deleting account:", error);
+                        });
+                    },
+                    style: "destructive",
+                },
+            ],
+            { cancelable: true }
+        );
+    }
+
     return (
 
         <SafeAreaView style={appstyle.settingsContainer} behavior='padding'>
@@ -104,16 +134,18 @@ export const Settings = ({ navigation }) => {
                     <Text style={appstyle.headerText}>Profile</Text>
                 </View>
 
-                <View style={settingstyle.profile}>
-                    <Image
-                        alt=""
-                        source={{ uri: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-600x600.png' }}
-                        style={settingstyle.profileAvatar}
-                    />
-                    <View style={settingstyle.profileBody}>
-                        <Text style={settingstyle.profileName}>{username}</Text>
-                        <Text style={settingstyle.profileHandle}>{email}</Text>
+                <View style={settingstyle.profileContainer}>
+                    <View style={settingstyle.profileInfo}>
+                        <Image
+                            alt=""
+                            source={{ uri: 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-600x600.png' }}
+                            style={settingstyle.profileAvatar}
+                        />
+                        <View style={settingstyle.profileBody}>
+                            <Text style={settingstyle.profileName}>{username}</Text>
+                            <Text style={settingstyle.profileHandle}>{email}</Text>
 
+                        </View>
                     </View>
                     <IconButton
                             icon="pencil"
@@ -191,6 +223,9 @@ export const Settings = ({ navigation }) => {
             ))
             }
 
+            <TouchableOpacity style={settingstyle.deleteButton} onPress={deleteAccount}>
+                <Text style={settingstyle.buttonText}>DELETE ACCOUNT</Text>
+            </TouchableOpacity>
 
         </SafeAreaView >
     )
