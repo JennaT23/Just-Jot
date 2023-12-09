@@ -76,7 +76,7 @@ export const Profile = ({ navigation }) => {
         sendPasswordResetEmail(auth, passwordEmail)
             .then(() => {
                 console.log("password email sent");
-                // Alert.alert('Update Password Email Sent', 'Please check your email for password update instructions.')
+                Alert.alert('Update Password Email Sent', 'Please check your email for password update instructions.')
             })
             .catch((error) => {
                 console.error("error updating password", error.message)

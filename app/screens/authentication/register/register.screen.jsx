@@ -16,7 +16,7 @@ export const Register = ({ navigation }) => {
     const registerstyle = useThemedStyles(register_style);
     const userAuthstyle = useThemedStyles(userAuth_style);
 
-    const { navigate } = useNavigation()
+    // const { navigate } = useNavigation()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
@@ -66,7 +66,7 @@ export const Register = ({ navigation }) => {
     }
 
     const handleLogin = () => {
-        navigate("Login")
+        navigation.navigate("Login")
     }
 
     // useEffect(() => {                                               // checks if a user is already logged in
